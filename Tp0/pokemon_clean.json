@@ -1,0 +1,75 @@
+{
+    "jolteon": {
+      "type": ["ELECTRIC", "NONE"],
+      "stats": [65, 65, 60, 110, 95, 130],
+      "weight": 54,
+      "catch_rate": 45
+    },
+    "snorlax": {
+      "type": ["NORMAL", "NONE"],
+      "stats": [160, 110, 65, 65, 110, 30],
+      "weight": 1014.1,
+      "catch_rate": 25
+    },
+    "onix": {
+      "type": ["ROCK", "GROUND"],
+      "stats": [35, 45, 160, 30, 45, 70],
+      "weight": 463,
+      "catch_rate": 45
+    },
+    "charizard": {
+      "type": ["FIRE", "FLYING"],
+      "stats": [78, 84, 78, 109, 85, 100],
+      "weight": 90.5,
+      "catch_rate": 45
+    },
+    "bulbasaur": {
+      "type": ["GRASS", "POISON"],
+      "stats": [45, 49, 49, 65, 65, 45],
+      "weight": 6.9,
+      "catch_rate": 45
+    },
+    "squirtle": {
+      "type": ["WATER", "NONE"],
+      "stats": [44, 48, 65, 50, 64, 43],
+      "weight": 9,
+      "catch_rate": 45
+    },
+    "gyarados": {
+      "type": ["WATER", "FLYING"],
+      "stats": [95, 125, 79, 60, 100, 81],
+      "weight": 235,
+      "catch_rate": 45
+    },
+    "machamp": {
+      "type": ["FIGHTING", "NONE"],
+      "stats": [90, 130, 80, 65, 85, 55],
+      "weight": 130,
+      "catch_rate": 45
+    },
+    "alakazam": {
+      "type": ["PSYCHIC", "NONE"],
+      "stats": [55, 50, 45, 135, 95, 120],
+      "weight": 48,
+      "catch_rate": 50
+    },
+    "lapras": {
+      "type": ["WATER", "ICE"],
+      "stats": [130, 85, 80, 85, 95, 60],
+      "weight": 220,
+      "catch_rate": 45
+    },
+    "arcanine": {
+      "type": ["FIRE", "NONE"],
+      "stats": [90, 110, 80, 100, 80, 95],
+      "weight": 155,
+      "catch_rate": 75
+    },
+    "dragonite": {
+      "type": ["DRAGON", "FLYING"],
+      "stats": [91, 134, 95, 100, 100, 80],
+      "weight": 210,
+      "catch_rate": 45
+    }
+  }
+  
