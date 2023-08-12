@@ -21,10 +21,9 @@ class Node(object):
     def game_state(self):
         return self.gameState
     
-    def add_child(self, node):
-        assert isinstance(node, Node)
-        node.parent = self
-        self.children.append(node)
+    def add_child(self, gameState):
+        newNode = Node(gameState, parent = self, depth = self.depth + 1)
+        self.children.append(newNode)
     
     def remove_child(self, node):
         assert isinstance(node, Node)
@@ -34,8 +33,8 @@ class Node(object):
 
 class Tree(object):
     """Represents a tree"""
-    def __init__(self, root):
-        self.root = root
+    def __init__(self, initialGameState):
+        self.root = Node(initialGameState)
     
     def get_root(self):
         return self.root

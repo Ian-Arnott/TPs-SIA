@@ -1,3 +1,5 @@
+from tree import Tree
+
 def bfs(gameState):
     return 1,2,3
     
@@ -9,3 +11,13 @@ def greedy(gameState, heuristic):
     
 def astar(gameState, heuristic):
     return 1,2,3
+
+def general_solution():
+    exploredNodes = []
+    frontierNodes = []
+    #TODO:
+    initialState = None
+    tree = Tree(initialState)
+
+
+
