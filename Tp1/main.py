@@ -1,7 +1,7 @@
 import time
 import sys
 from utils import readCommand
-from game import layoutToGameState
+from game import layoutToGameState, getPlayerPosition, getNeighbours
 from algorithms import bfs, dfs, greedy, astar
 
 if __name__ == '__main__':
@@ -9,6 +9,13 @@ if __name__ == '__main__':
     
     gameState = layoutToGameState(layout)
     
+    print("Board:\n")
+    print(gameState)
+    print("\nPlayer position (i,j): ")
+    print(getPlayerPosition(gameState))
+    print("\nAvailable Neighbours: ")
+    print(getNeighbours(gameState))
+
     time_start = time.time()
 
     if method == 'bfs':
@@ -22,7 +29,7 @@ if __name__ == '__main__':
 
     time_end = time.time()
 
-    print('Result: ' + str(path))
+    print('\nResult: ' + str(path))
     print('Cost of the solution: ' + str(path))
     print('Amount of expanded nodes: ' + str(exploredNodes))
     print('Amount of frontier nodes: ' + str(frontierNodes))
