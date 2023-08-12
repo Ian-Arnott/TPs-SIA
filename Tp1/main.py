@@ -41,6 +41,7 @@ def transferToGameState(layout):
     # maxColsNum = max([len(x) for x in layout])
     # for irow in range(len(layout)):
     #     for icol in range(len(layout[irow])):
+              #TODO: Con un diccionario se resuelve el problema de los if
     #         if layout[irow][icol] == ' ': layout[irow][icol] = 0   # free space
     #         elif layout[irow][icol] == '#': layout[irow][icol] = 1 # wall
     #         elif layout[irow][icol] == 'P': layout[irow][icol] = 2 # player
