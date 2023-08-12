@@ -1,20 +1,31 @@
 import time
 import sys
 from utils import readCommand
-from game import layoutToGameState, getPlayerPosition, getNeighbours
+from game import *
 from algorithms import bfs, dfs, greedy, astar
 
 if __name__ == '__main__':
     layout, method, heuristic = readCommand(sys.argv[2:]).values()
+    print(layout)
+
+    initialState = layoutToGameState(layout)
     
-    gameState = layoutToGameState(layout)
-    
+    gameState = {
+        "P": getPlayerPosition(initialState),
+        "D": getBoxesPosition(initialState),
+        "*": getGoalsPosition(initialState)
+    }
+
+    print(initialState)
+
+    clearDynamicElements(initialState, gameState["P"], gameState["D"])
+
     print("Board:\n")
-    print(gameState)
+    print(initialState)
     print("\nPlayer position (i,j): ")
-    print(getPlayerPosition(gameState))
+    print(gameState['P'])
     print("\nAvailable Neighbours: ")
-    print(getNeighbours(gameState))
+    print(getNeighbours(initialState, gameState['P']))
 
     time_start = time.time()
 
