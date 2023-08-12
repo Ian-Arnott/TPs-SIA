@@ -34,8 +34,8 @@ class Node(object):
 
 class Tree(object):
     """Represents a tree"""
-    def __init__(self, root):
-        self.root = root
+    def __init__(self, initialGameState):
+        self.root = Node(initialGameState)
     
     def get_root(self):
         return self.root
