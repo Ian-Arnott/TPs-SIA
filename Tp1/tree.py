@@ -21,10 +21,9 @@ class Node(object):
     def game_state(self):
         return self.gameState
     
-    def add_child(self, node):
-        assert isinstance(node, Node)
-        node.parent = self
-        self.children.append(node)
+    def add_child(self, gameState):
+        newNode = Node(gameState, parent = self, depth = self.depth + 1)
+        self.children.append(newNode)
     
     def remove_child(self, node):
         assert isinstance(node, Node)

@@ -13,5 +13,11 @@ def astar(gameState, heuristic):
     return 1,2,3
 
 def general_solution():
-    tree = Tree()
+    exploredNodes = []
+    frontierNodes = []
+    #TODO:
+    initialState = None
+    tree = Tree(initialState)
+
+
 
