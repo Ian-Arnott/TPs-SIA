@@ -1,42 +1,29 @@
 import time
 import sys
 from utils import readCommand
-from game import *
+from game import layoutToGameState, clearDynamicElements, getPlayerPosition, getBoxesPosition, getGoalsPosition
 from algorithms import bfs, dfs, greedy, astar
 
 if __name__ == '__main__':
     layout, method, heuristic = readCommand(sys.argv[2:]).values()
-    print(layout)
-
-    initialState = layoutToGameState(layout)
-    
-    gameState = {
-        "P": getPlayerPosition(initialState),
-        "D": getBoxesPosition(initialState),
-        "*": getGoalsPosition(initialState)
+    boardMatrix = layoutToGameState(layout)
+    initialGameState = {
+        "P": getPlayerPosition(boardMatrix),
+        "D": getBoxesPosition(boardMatrix),
+        "*": sorted(getGoalsPosition(boardMatrix))
     }
-
-    print(initialState)
-
-    clearDynamicElements(initialState, gameState["P"], gameState["D"])
-
-    print("Board:\n")
-    print(initialState)
-    print("\nPlayer position (i,j): ")
-    print(gameState['P'])
-    print("\nAvailable Neighbours: ")
-    print(getNeighbours(initialState, gameState['P']))
+    clearDynamicElements(boardMatrix, initialGameState["P"], initialGameState["D"])
 
     time_start = time.time()
 
     if method == 'bfs':
-        path, exploredNodes, frontierNodes = bfs(gameState)
+        path, exploredNodes, frontierNodes = bfs(initialGameState, boardMatrix)
     elif method == 'dfs':
-        path, exploredNodes, frontierNodes = dfs(gameState)
+        path, exploredNodes, frontierNodes = dfs(initialGameState)
     elif method == 'greedy':
-        path, exploredNodes, frontierNodes = greedy(gameState, heuristic)
+        path, exploredNodes, frontierNodes = greedy(initialGameState, heuristic)
     else:
-        path, exploredNodes, frontierNodes = astar(gameState, heuristic)
+        path, exploredNodes, frontierNodes = astar(initialGameState, heuristic)
 
     time_end = time.time()
 
