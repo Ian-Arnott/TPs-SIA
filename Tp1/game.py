@@ -29,3 +29,19 @@ def getWallsPosition(gameState):
 
 def getGoalsPosition(gameState):
     return tuple(tuple(x) for x in np.argwhere((gameState == GOAL) | (gameState == BOX_ON_GOAL)))
+
+def isEndState(gameState):
+    return sorted(getBoxesPosition(gameState)) == sorted(getGoalsPosition(gameState))
+
+def getNeighbours(gameState):
+    (i, j) = getPlayerPosition(gameState)
+    neighbours = []
+    directions = [(1, 0), (-1, 0), (0, 1), (0, -1)] # down, up, right, left
+
+    for direction in directions:
+        (di, dj) = direction
+        if gameState[i + di, j + dj] != WALL:
+            neighbour = (i + di, j + dj)
+            neighbours.append(neighbour)
+
+    return neighbours
