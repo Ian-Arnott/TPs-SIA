@@ -66,9 +66,3 @@ def greedy(gameState, heuristic):
 def astar(gameState, heuristic):
     return 1,2,3
 
-    
-def _exploredState(exploredNodes, state):
-    for node in exploredNodes:
-        if compareStates(node.gameState, state):
-            return True
-    return False
