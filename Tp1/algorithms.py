@@ -15,15 +15,16 @@ def bfs(initialGameState:GameState, boardMatrix):
 
     tree = Tree(initialGameState)
     root = tree.get_root()
+    exploredStates.append(initialGameState)
     frontierNodes.append(root)
 
-    count = 0
+    #count = 0
     while len(frontierNodes) > 0:
         currentNode = frontierNodes.popleft()
         currentState = currentNode.gameState
 
-        print("Iteration: " + str(count) + "\t" + "Depth: " + str(currentNode.depth) + "\t" + str(currentState))
-        count += 1
+        #print("Iteration: " + str(count) + "\t" + "Depth: " + str(currentNode.depth) + "\t" + str(currentState))
+        #count += 1
 
         # Verifies if the current state is a solution
         if currentState.isSolved():
@@ -48,10 +49,11 @@ def bfs(initialGameState:GameState, boardMatrix):
 
             #TODO: Mejorar la comparacion con un Hash de los estados, en vez de compararlos elemento a elemento
             if nextState not in exploredStates:
+                exploredStates.append(nextState)
                 nextNode = currentNode.add_child(nextState)
                 frontierNodes.append(nextNode)
 
-        exploredStates.append(currentState)
+        #exploredStates.append(currentState)
 
     return 1, 0, len(exploredStates), len(frontierNodes)
 
