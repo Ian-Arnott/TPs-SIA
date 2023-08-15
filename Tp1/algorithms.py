@@ -19,12 +19,12 @@ def bfs(initialGameState, boardMatrix):
     root = tree.get_root()
     frontierNodes.append(root)
 
-    count = 0
+    #count = 0
     while len(frontierNodes) > 0:
         current = frontierNodes.popleft()
 
-        print("Iteration: " + str(count) + "\t" + "Depth: " + str(current.depth) + "\t" + "Player: " + str(current.gameState["P"]) + "\t" + "Boxes: " + str(current.gameState["D"]) + "\t" + "Goals: " + str(current.gameState["*"]))
-        count += 1
+        #print("Iteration: " + str(count) + "\t" + "Depth: " + str(current.depth) + "\t" + "Player: " + str(current.gameState["P"]) + "\t" + "Boxes: " + str(current.gameState["D"]) + "\t" + "Goals: " + str(current.gameState["*"]))
+        #count += 1
 
         # Verifies if the current state is a solution
         if isSolution(current.gameState["D"], current.gameState["*"]):
@@ -40,7 +40,7 @@ def bfs(initialGameState, boardMatrix):
             boxList = current.gameState["D"].copy()
 
             # If the neighbour is a box, move it
-            if isBox(boardMatrix, n):
+            if isBox(current.gameState["D"], n):
                 boxList.remove(n)
                 newBoxPos = (n[0] + (n[0] - current.gameState["P"][0]), n[1] + (n[1] - current.gameState["P"][1]))
                 boxList.append(newBoxPos)

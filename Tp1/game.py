@@ -52,8 +52,8 @@ def getNeighbours(boardMatrix, gameState, playerPos:tuple):
 
     return neighbours
 
-def isBox(boardMatrix, pos:tuple):
-    return boardMatrix[pos[0], pos[1]] == BOX
+def isBox(boxes:list[tuple], pos:tuple):
+    return pos in boxes
 
 def clearDynamicElements(gameState, playerPos:tuple, BoxesPos:list[tuple]):
     row, col = playerPos
