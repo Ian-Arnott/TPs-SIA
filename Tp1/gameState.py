@@ -7,9 +7,11 @@ class GameState(object):
 
 
     def __eq__(self, other):
-        return self.__class__ == other.__class__ and \
+        result =  self.__class__ == other.__class__ and \
             self.playerPos == other.playerPos and \
-            self.boxesPos == other.boxesPos 
+            sorted(self.boxesPos) == sorted(other.boxesPos)
+        #print("Comparo {} con {} y da {}".format(self, other, result))
+        return result
     
     def __hash__(self):
         return hash((self.playerPos, self.boxesPos))

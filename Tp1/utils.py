@@ -31,7 +31,7 @@ def readCommand(argv):
 
 
 def print_solution(path, boardMatrix):
-    print("Solution: ")
+    print("\nSolution: ")
     stepCount = 0;
     for step in path:
         print("Step " + str(stepCount) + ":")
