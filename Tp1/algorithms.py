@@ -11,7 +11,7 @@ from GameState import GameState
 
 #TODO: Extraer comportamientos comunes a todos los metodos de busqueda
 def bfs(initialGameState:GameState, boardMatrix):
-    exploredNodes:list[Node] = []
+    exploredStates:list[GameState] = []
     frontierNodes = deque()
 
     tree = Tree(initialGameState)
@@ -29,7 +29,7 @@ def bfs(initialGameState:GameState, boardMatrix):
         # Verifies if the current state is a solution
         if currentState.isSolved():
             print("\t\tI won the game")
-            return 1, len(exploredNodes), len(frontierNodes) #TODO: Cambiarlo para que no termine la ejecucion
+            return 1, len(exploredStates), len(frontierNodes) #TODO: Cambiarlo para que no termine la ejecucion
             # TODO: return path solution
         
         # Get the neighbours of the current state (only the ones that the player can move to)
@@ -48,13 +48,15 @@ def bfs(initialGameState:GameState, boardMatrix):
             nextState = GameState(n, boxList, currentState.goalsPos)
 
             #TODO: Mejorar la comparacion con un Hash de los estados, en vez de compararlos elemento a elemento
-            if nextState not in exploredNodes:
+            if nextState not in exploredStates:
+                print("\n\t\tAdding to frontier: " + str(nextState) + "\tFrontier states were: " +  str(frontierNodes))
                 nextNode = currentNode.add_child(nextState)
                 frontierNodes.append(nextNode)
+                print("\n \t\tFrontier states are: " + str(exploredStates) + "\n")
 
-        exploredNodes.append(currentNode)
+        exploredStates.append(currentState)
 
-    return 1, len(exploredNodes), len(frontierNodes)
+    return 1, len(exploredStates), len(frontierNodes)
 
     
 def dfs(gameState):
