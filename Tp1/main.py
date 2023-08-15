@@ -3,16 +3,14 @@ import sys
 from utils import readCommand
 from game import layoutToGameState, clearDynamicElements, getPlayerPosition, getBoxesPosition, getGoalsPosition
 from algorithms import bfs, dfs, greedy, astar
+from GameState import GameState
 
 if __name__ == '__main__':
     layout, method, heuristic = readCommand(sys.argv[2:]).values()
     boardMatrix = layoutToGameState(layout)
-    initialGameState = {
-        "P": getPlayerPosition(boardMatrix),
-        "D": getBoxesPosition(boardMatrix),
-        "*": sorted(getGoalsPosition(boardMatrix))
-    }
-    clearDynamicElements(boardMatrix, initialGameState["P"], initialGameState["D"])
+
+    initialGameState = GameState(getPlayerPosition(boardMatrix), getBoxesPosition(boardMatrix), getGoalsPosition(boardMatrix))
+    clearDynamicElements(boardMatrix, initialGameState)
 
     time_start = time.time()
 

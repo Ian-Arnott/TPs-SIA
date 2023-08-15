@@ -1,4 +1,5 @@
 import numpy as np
+from GameState import GameState
 
 PLAYER = 'P'
 WALL = '#'
@@ -34,7 +35,7 @@ def getGoalsPosition(gameState):
 def isEndState(gameState):
     return sorted(getBoxesPosition(gameState)) == sorted(getGoalsPosition(gameState))
 
-def getNeighbours(boardMatrix, gameState, playerPos:tuple):
+def getNeighbours(boardMatrix, playerPos:tuple):
     """ Returns possible moves from a given position"""
     i, j = playerPos
     neighbours = []
@@ -49,26 +50,12 @@ def getNeighbours(boardMatrix, gameState, playerPos:tuple):
                     continue
             neighbours.append(nextPos)
             
-
     return neighbours
 
-def isBox(boxes:list[tuple], pos:tuple):
-    return pos in boxes
+def clearDynamicElements(boardMatrix, initialGameState:GameState):
+    row, col = initialGameState.playerPos
+    boardMatrix[row][col] = FREE_SPACE
 
-def clearDynamicElements(gameState, playerPos:tuple, BoxesPos:list[tuple]):
-    row, col = playerPos
-    gameState[row][col] = FREE_SPACE
-
-    for boxPos in BoxesPos:
+    for boxPos in initialGameState.boxesPos:
         row, col = boxPos
-        gameState[row][col] = FREE_SPACE
-
-def generateGameState(playerPos:tuple, BoxesPos:list[tuple], GoalsPos:list[tuple]):
-    return {
-        "P": playerPos,
-        "D": BoxesPos,
-        "*": GoalsPos
-    }
-
-def compareStates(state1, state2):
-    return state1["P"] == state2["P"] and sorted(state1["D"]) == sorted(state2["D"])
+        boardMatrix[row][col] = FREE_SPACE
