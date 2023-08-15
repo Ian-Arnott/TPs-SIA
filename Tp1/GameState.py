@@ -20,3 +20,24 @@ class GameState(object):
     def isSolved(self) -> bool:
         """ Checks if all the boxes are on the goals """
         return sorted(self.boxesPos) == self.goalsPos
+    
+    def printGameState(self, boardMatrix):
+        """ Prints the game state in a readable format """
+        toPrint = ""
+        for i in range(len(boardMatrix)):
+            for j in range(len(boardMatrix[i])):
+                if (i,j) == self.playerPos:
+                    toPrint += "P"
+                elif (i,j) in self.boxesPos:
+                    if (i,j) in self.goalsPos:
+                        toPrint += "X"
+                    else:
+                        toPrint += "D"
+                elif (i,j) in self.goalsPos:
+                    toPrint += "*"
+                elif boardMatrix[i][j] == "#":
+                    toPrint += "#"
+                else:
+                    toPrint += " "
+            toPrint += "\n"
+        return toPrint

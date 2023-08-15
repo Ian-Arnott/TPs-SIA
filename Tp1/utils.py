@@ -30,11 +30,11 @@ def readCommand(argv):
     return args
 
 
-def print_solution(path):
+def print_solution(path, boardMatrix):
     print("Solution: ")
     stepCount = 0;
     for step in path:
         print("Step " + str(stepCount) + ":")
-        # print(step)
-        print("---------------------------------------")
+        print(step.print_game_state(boardMatrix))
+        print("---------------------------------------\n")
         stepCount += 1
