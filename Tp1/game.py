@@ -59,3 +59,7 @@ def clearDynamicElements(boardMatrix, initialGameState:GameState):
     for boxPos in initialGameState.boxesPos:
         row, col = boxPos
         boardMatrix[row][col] = FREE_SPACE
+
+def printBoard(gameState):
+    for row in gameState:
+        print(''.join(row))

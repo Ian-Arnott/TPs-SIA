@@ -1,5 +1,4 @@
 import os
-import sys
 from optparse import OptionParser
 
 SEARCH_METHODS = ['bfs', 'dfs', 'greedy', 'astar']
@@ -7,7 +6,7 @@ HEURISTICS = ['heu1', 'heu2']
 
 def readCommand(argv):
     parser = OptionParser()
-    parser.add_option('-l', '--level', dest='board', help='level of game to play', default='level1.txt')
+    parser.add_option('-l', '--level', dest='board', help='level of game to play', default='level3.txt')
     parser.add_option('-m', '--method', dest='method', help='research method', default='bfs')
     parser.add_option('-H', '--heuristic', dest='heuristic', help='heuristic', default='heu1')
     args = dict()
@@ -29,3 +28,13 @@ def readCommand(argv):
     args['method'] = options.method
     args['heuristic'] = options.heuristic
     return args
+
+
+def print_solution(path):
+    print("Solution: ")
+    stepCount = 0;
+    for step in path:
+        print("Step " + str(stepCount) + ":")
+        # print(step)
+        print("---------------------------------------")
+        stepCount += 1

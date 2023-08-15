@@ -1,6 +1,6 @@
 import time
 import sys
-from utils import readCommand
+from utils import readCommand, print_solution
 from game import layoutToGameState, clearDynamicElements, getPlayerPosition, getBoxesPosition, getGoalsPosition
 from algorithms import bfs, dfs, greedy, astar
 from GameState import GameState
@@ -15,20 +15,22 @@ if __name__ == '__main__':
     time_start = time.time()
 
     if method == 'bfs':
-        path, exploredNodes, frontierNodes = bfs(initialGameState, boardMatrix)
+        path, cost, exploredNodes, frontierNodes = bfs(initialGameState, boardMatrix)
     elif method == 'dfs':
-        path, exploredNodes, frontierNodes = dfs(initialGameState)
+        path, cost, exploredNodes, frontierNodes = dfs(initialGameState)
     elif method == 'greedy':
-        path, exploredNodes, frontierNodes = greedy(initialGameState, heuristic)
+        path, cost, exploredNodes, frontierNodes = greedy(initialGameState, heuristic)
     else:
-        path, exploredNodes, frontierNodes = astar(initialGameState, heuristic)
+        path, cost, exploredNodes, frontierNodes = astar(initialGameState, heuristic)
 
     time_end = time.time()
 
-    print('\nResult: ' + str(path))
-    print('Cost of the solution: ' + str(path))
+    print('\nResult: ') #TODO: Encontrado o no
+    print('Search method: ' + method)
+    print('Cost of the solution: ' + str(cost))
     print('Amount of expanded nodes: ' + str(exploredNodes))
     print('Amount of frontier nodes: ' + str(frontierNodes))
+    print_solution(path)
     # TODO: imprimir path (la solution)
     print('Runtime of %s: %.2f second.' %(method, time_end-time_start))
     print("DONE")
