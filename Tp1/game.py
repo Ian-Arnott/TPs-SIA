@@ -1,5 +1,5 @@
 import numpy as np
-from GameState import GameState
+from gameState import GameState
 
 PLAYER = 'P'
 WALL = '#'

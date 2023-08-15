@@ -1,7 +1,7 @@
-from Tree import Tree, Node
+from tree import Tree
 from collections import deque
 from game import *
-from GameState import GameState
+from gameState import GameState
 
 # https://docs.python.org/es/3/library/collections.html#collections.deque
 # collections.deque es una implementación alternativa de colas sin límites con operaciones atómicas rápidas
