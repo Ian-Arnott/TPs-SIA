@@ -52,7 +52,7 @@ def bfs(initialGameState, boardMatrix):
                 nextNode = current.add_child(nextState)
                 frontierNodes.append(nextNode)
 
-    exploredNodes.append(current)
+        exploredNodes.append(current)
 
     return 1, len(exploredNodes), len(frontierNodes)
 
@@ -70,6 +70,5 @@ def astar(gameState, heuristic):
 def _exploredState(exploredNodes, state):
     for node in exploredNodes:
         if compareStates(node.gameState, state):
-            print("\n\t\tI already explored this state\t\t\n")
             return True
     return False
