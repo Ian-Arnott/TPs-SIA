@@ -8,7 +8,6 @@ from gameState import GameState
 # append() y popleft() que no requieren bloqueo y también soportan indexación.
 
 
-
 #TODO: Extraer comportamientos comunes a todos los metodos de busqueda
 def bfs(initialGameState:GameState, boardMatrix):
     exploredStates:list[GameState] = []
@@ -29,7 +28,7 @@ def bfs(initialGameState:GameState, boardMatrix):
         # Verifies if the current state is a solution
         if currentState.isSolved():
             print("\t\tI won the game")
-            return 1, len(exploredStates), len(frontierNodes) #TODO: Cambiarlo para que no termine la ejecucion
+            return 1, 0, len(exploredStates), len(frontierNodes) #TODO: Cambiarlo para que no termine la ejecucion
             # TODO: return path solution
         
         # Get the neighbours of the current state (only the ones that the player can move to)
@@ -49,19 +48,17 @@ def bfs(initialGameState:GameState, boardMatrix):
 
             #TODO: Mejorar la comparacion con un Hash de los estados, en vez de compararlos elemento a elemento
             if nextState not in exploredStates:
-                print("\n\t\tAdding to frontier: " + str(nextState) + "\tFrontier states were: " +  str(frontierNodes))
                 nextNode = currentNode.add_child(nextState)
                 frontierNodes.append(nextNode)
-                print("\n \t\tFrontier states are: " + str(exploredStates) + "\n")
 
         exploredStates.append(currentState)
 
-    return 1, len(exploredStates), len(frontierNodes)
+    return 1, 0, len(exploredStates), len(frontierNodes)
 
-    
-def dfs(gameState):
+def dfs(initialGameState):
     return 1,2,3
-    
+
+
 def greedy(gameState, heuristic):
     return 1,2,3
     

@@ -1,5 +1,4 @@
 import os
-import sys
 from optparse import OptionParser
 
 SEARCH_METHODS = ['bfs', 'dfs', 'greedy', 'astar']
@@ -29,3 +28,13 @@ def readCommand(argv):
     args['method'] = options.method
     args['heuristic'] = options.heuristic
     return args
+
+
+def print_solution(path):
+    print("Solution: ")
+    stepCount = 0;
+    for step in path:
+        print("Step " + str(stepCount) + ":")
+        # print(step)
+        print("---------------------------------------")
+        stepCount += 1

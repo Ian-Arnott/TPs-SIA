@@ -18,6 +18,9 @@ class Node(object):
     def depth(self):
         return self.depth
     
+    def get_depth(self):
+        return self.depth
+    
     def game_state(self):
         return self.gameState
     
@@ -30,6 +33,15 @@ class Node(object):
         assert isinstance(node, Node)
         node.parent = None
         self.children.remove(node)
+
+    def get_root_path(self, node):
+        path = []
+        while node.parent is not None:
+            path.append(node)
+            node = node.parent
+        path.append(node)
+        path.reverse()
+        return path
     
 
 class Tree(object):
