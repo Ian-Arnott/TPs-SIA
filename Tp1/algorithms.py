@@ -10,12 +10,12 @@ from gameState import GameState
 
 #TODO: Extraer comportamientos comunes a todos los metodos de busqueda
 def bfs(initialGameState:GameState, boardMatrix):
-    exploredStates:list[GameState] = []
+    exploredStates = set()
     frontierNodes = deque()
 
     tree = Tree(initialGameState)
     root = tree.get_root()
-    exploredStates.append(initialGameState)
+    exploredStates.add(initialGameState)
     frontierNodes.append(root)
 
     #count = 0
@@ -48,7 +48,7 @@ def bfs(initialGameState:GameState, boardMatrix):
 
             #TODO: Mejorar la comparacion con un Hash de los estados, en vez de compararlos elemento a elemento
             if nextState not in exploredStates:
-                exploredStates.append(nextState)
+                exploredStates.add(nextState)
                 nextNode = currentNode.add_child(nextState)
                 frontierNodes.append(nextNode)
 

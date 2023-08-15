@@ -14,7 +14,7 @@ class GameState(object):
         return result
     
     def __hash__(self):
-        return hash((self.playerPos, self.boxesPos))
+        return hash((self.playerPos, tuple(self.boxesPos)))
     
     def __repr__(self) -> str:
         return f"Player: {self.playerPos}\tBoxes: {self.boxesPos}\tGoals: {self.goalsPos}"

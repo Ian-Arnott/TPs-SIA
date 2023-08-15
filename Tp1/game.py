@@ -34,7 +34,8 @@ def getGoalsPosition(gameState):
 
 def isEndState(gameState):
     return sorted(getBoxesPosition(gameState)) == sorted(getGoalsPosition(gameState))
-
+    
+# TODO: checker deadlocks
 def getNeighbours(boardMatrix, playerPos:tuple):
     """ Returns possible moves from a given position"""
     i, j = playerPos
