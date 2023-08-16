@@ -34,7 +34,7 @@ def bfs(initialGameState:GameState, boardMatrix):
             return currentNode.get_root_path(currentNode), currentNode.get_depth(), len(exploredStates), len(frontierNodes) #TODO: Cambiarlo para que no termine la ejecucion
         
         # Get the neighbours of the current state (only the ones that the player can move to)
-        neighbours = getNeighbours(boardMatrix, currentState.playerPos)
+        neighbours = getNeighbours(boardMatrix, currentState.goalsPos, currentState.boxesPos, currentState.playerPos)
 
         # For each neighbour, generate the new state and add it to the frontierNodes if it is not explored
         for n in neighbours:
@@ -81,7 +81,7 @@ def dfs(initialGameState:GameState, boardMatrix):
             return currentNode.get_root_path(currentNode), currentNode.get_depth(), len(exploredStates), len(frontierNodes) #TODO: Cambiarlo para que no termine la ejecucion
         
         # Get the neighbours of the current state (only the ones that the player can move to)
-        neighbours = getNeighbours(boardMatrix, currentState.playerPos)
+        neighbours = getNeighbours(boardMatrix, currentState.goalsPos, currentState.boxesPos, currentState.playerPos)
 
         # For each neighbour, generate the new state and add it to the frontierNodes if it is not explored
         for n in neighbours:
@@ -125,7 +125,7 @@ def greedy(initialGameState:GameState, boardMatrix, heuristic):
             return currentNode.get_root_path(currentNode), currentNode.get_depth(), len(exploredStates), len(frontierNodes) #TODO: Cambiarlo para que no termine la ejecucion
         
         # Get the neighbours of the current state (only the ones that the player can move to)
-        neighbours = getNeighbours(boardMatrix, currentState.playerPos)
+        neighbours = getNeighbours(boardMatrix, currentState.goalsPos, currentState.boxesPos, currentState.playerPos)
 
         # For each neighbour, generate the new state and add it to the frontierNodes if it is not explored
         for n in neighbours:
@@ -166,7 +166,7 @@ def astar(initialGameState:GameState, boardMatrix, heuristic):
             return currentNode.get_root_path(currentNode), currentNode.get_depth(), len(exploredStates), len(frontierNodes) #TODO: Cambiarlo para que no termine la ejecucion
         
         # Get the neighbours of the current state (only the ones that the player can move to)
-        neighbours = getNeighbours(boardMatrix, currentState.playerPos)
+        neighbours = getNeighbours(boardMatrix, currentState.goalsPos, currentState.boxesPos, currentState.playerPos)
 
         # For each neighbour, generate the new state and add it to the frontierNodes if it is not explored
         for n in neighbours:
@@ -194,7 +194,7 @@ def distanceHue(gameState:GameState, boardMatrix):
     boxList = gameState.boxesPos.copy()
     goalList = gameState.goalsPos.copy()
 
-    neighbours = getNeighbours(boardMatrix, gameState.playerPos)
+    neighbours = getNeighbours(boardMatrix, gameState.goalsPos, gameState.boxesPos, gameState.playerPos)
 
     
     distance = 0
