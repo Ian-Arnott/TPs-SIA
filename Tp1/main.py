@@ -28,12 +28,13 @@ if __name__ == '__main__':
 
     time_end = time.time()
 
-    print('\nResult: ') #TODO: Encontrado o no
+    print('\nResult: Found solution' if (path != 1) else '\nResult: Didn\'t find solution')
     print('Search method: ' + method)
     print('Cost of the solution: ' + str(cost))
     print('Amount of expanded nodes: ' + str(exploredNodes))
     print('Amount of frontier nodes: ' + str(frontierNodes))
     # TODO: imprimir path (la solution)
     print('Runtime of %s: %.3f second.' %(method, time_end-time_start))
-    print_solution(path, boardMatrix)
+    if path != 1:
+        print_solution(path, boardMatrix)
     print("DONE")

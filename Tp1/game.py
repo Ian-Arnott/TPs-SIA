@@ -45,9 +45,15 @@ def getNeighbours(boardMatrix, playerPos:tuple):
     for direction in directions:
         nextPos = (i + direction[0], j + direction[1])
         #TODO: En el sokoban, una vez que coloco una caja en un goal, queda fija?
-        if boardMatrix[nextPos[0], nextPos[1]] != WALL:# and boardMatrix[nextPos[0], nextPos[1]] != BOX_ON_GOAL: 
-            if boardMatrix[nextPos[0], nextPos[1]] == BOX or boardMatrix[nextPos[0], nextPos[1]] == BOX_ON_GOAL:
-                if boardMatrix[nextPos[0] + direction[0], nextPos[1] + direction[1]] == WALL or boardMatrix[nextPos[0] + direction[0], nextPos[1] + direction[1]] == BOX_ON_GOAL or boardMatrix[nextPos[0] + direction[0], nextPos[1] + direction[1]] == BOX:
+        if boardMatrix[nextPos[0], nextPos[1]] != WALL and boardMatrix[nextPos[0], nextPos[1]] != BOX_ON_GOAL: 
+            if boardMatrix[nextPos[0], nextPos[1]] == BOX:
+                if boardMatrix[nextPos[0] + direction[0], nextPos[1] + direction[1]] == WALL:
+                    print("hay una pared enfrete de la caja")
+                    continue
+                elif boardMatrix[nextPos[0] + direction[0], nextPos[1] + direction[1]] == BOX:
+                    print("hay una caja enfrete de la caja")
+                    continue
+                elif boardMatrix[nextPos[0] + direction[0], nextPos[1] + direction[1]] == BOX_ON_GOAL:
                     continue
             neighbours.append(nextPos)
             
