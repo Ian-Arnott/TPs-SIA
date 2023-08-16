@@ -2,7 +2,7 @@ import time
 import sys
 from utils import readCommand, print_solution
 from game import layoutToGameState, clearDynamicElements, getPlayerPosition, getBoxesPosition, getGoalsPosition
-from algorithms import bfs, dfs, greedy, astar, distanceHue
+from algorithms import bfs, dfs, greedy, astar, manhattan
 from gameState import GameState
 
 if __name__ == '__main__':
