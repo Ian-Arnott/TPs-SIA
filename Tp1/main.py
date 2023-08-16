@@ -17,7 +17,7 @@ if __name__ == '__main__':
     if method == 'bfs':
         path, cost, exploredNodes, frontierNodes = bfs(initialGameState, boardMatrix)
     elif method == 'dfs':
-        path, cost, exploredNodes, frontierNodes = dfs(initialGameState)
+        path, cost, exploredNodes, frontierNodes = dfs(initialGameState, boardMatrix)
     elif method == 'greedy':
         path, cost, exploredNodes, frontierNodes = greedy(initialGameState, heuristic)
     else:

@@ -6,8 +6,8 @@ HEURISTICS = ['heu1', 'heu2']
 
 def readCommand(argv):
     parser = OptionParser()
-    parser.add_option('-l', '--level', dest='board', help='level of game to play', default='level3.txt')
-    parser.add_option('-m', '--method', dest='method', help='research method', default='bfs')
+    parser.add_option('-l', '--level', dest='board', help='level of game to play', default='level2.txt')
+    parser.add_option('-m', '--method', dest='method', help='research method', default='dfs')
     parser.add_option('-H', '--heuristic', dest='heuristic', help='heuristic', default='heu1')
     args = dict()
     options, _ = parser.parse_args(argv)
@@ -31,10 +31,11 @@ def readCommand(argv):
 
 
 def print_solution(path, boardMatrix):
-    print("\nSolution: ")
+    output = open('./' + "output.txt", 'w+', encoding='utf-8')
+    output.write("\nSolution: ")
     stepCount = 0;
     for step in path:
-        print("Step " + str(stepCount) + ":")
-        print(step.print_game_state(boardMatrix))
-        print("---------------------------------------\n")
+        output.write("Step " + str(stepCount) + ":\n")
+        output.write(step.print_game_state(boardMatrix))
+        output.write("---------------------------------------\n")
         stepCount += 1
