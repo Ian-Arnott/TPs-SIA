@@ -6,9 +6,9 @@ HEURISTICS = ['heu1', 'heu2']
 
 def readCommand(argv):
     parser = OptionParser()
-    parser.add_option('-l', '--level', dest='board', help='level of game to play', default='level2.txt')
-    parser.add_option('-m', '--method', dest='method', help='research method', default='dfs')
-    parser.add_option('-H', '--heuristic', dest='heuristic', help='heuristic', default='heu1')
+    parser.add_option('-l', '--level', dest='board', help='level of game to play', default='level3.txt')
+    parser.add_option('-m', '--method', dest='method', help='research method', default='greedy')
+    parser.add_option('-H', '--heuristic', dest='heuristic', help='heuristic', default='distance')
     args = dict()
     options, _ = parser.parse_args(argv)
 

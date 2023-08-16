@@ -2,15 +2,18 @@ import time
 import sys
 from utils import readCommand, print_solution
 from game import layoutToGameState, clearDynamicElements, getPlayerPosition, getBoxesPosition, getGoalsPosition
-from algorithms import bfs, dfs, greedy, astar
+from algorithms import bfs, dfs, greedy, astar, distanceHue
 from gameState import GameState
 
 if __name__ == '__main__':
-    layout, method, heuristic = readCommand(sys.argv[2:]).values()
+    layout, method, heuristic = readCommand(sys.argv).values()
     boardMatrix = layoutToGameState(layout)
 
     initialGameState = GameState(getPlayerPosition(boardMatrix), getBoxesPosition(boardMatrix), getGoalsPosition(boardMatrix))
     clearDynamicElements(boardMatrix, initialGameState)
+
+    if heuristic == "distance":
+        heuristicFunction = distanceHue
 
     time_start = time.time()
 
@@ -19,9 +22,9 @@ if __name__ == '__main__':
     elif method == 'dfs':
         path, cost, exploredNodes, frontierNodes = dfs(initialGameState, boardMatrix)
     elif method == 'greedy':
-        path, cost, exploredNodes, frontierNodes = greedy(initialGameState, heuristic)
+        path, cost, exploredNodes, frontierNodes = greedy(initialGameState, boardMatrix, heuristicFunction)
     else:
-        path, cost, exploredNodes, frontierNodes = astar(initialGameState, heuristic)
+        path, cost, exploredNodes, frontierNodes = astar(initialGameState, heuristicFunction)
 
     time_end = time.time()
 
