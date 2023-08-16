@@ -67,13 +67,9 @@ def dfs(initialGameState:GameState, boardMatrix):
     exploredStates.add(initialGameState)
     frontierNodes.append(root)
 
-    #count = 0
     while len(frontierNodes) > 0:
         currentNode = frontierNodes.pop()
         currentState = currentNode.gameState
-
-        #print("Iteration: " + str(count) + "\t" + "Depth: " + str(currentNode.depth) + "\t" + str(currentState))
-        #count += 1
 
         # Verifies if the current state is a solution
         if currentState.isSolved():
@@ -95,13 +91,10 @@ def dfs(initialGameState:GameState, boardMatrix):
 
             nextState = GameState(n, boxList, currentState.goalsPos)
 
-            #TODO: Mejorar la comparacion con un Hash de los estados, en vez de compararlos elemento a elemento
             if nextState not in exploredStates:
                 exploredStates.add(nextState)
                 nextNode = currentNode.add_child(nextState)
                 frontierNodes.append(nextNode)
-
-        #exploredStates.append(currentState)
 
     return 1, 0, len(exploredStates), len(frontierNodes)
 
@@ -189,6 +182,7 @@ def astar(initialGameState:GameState, boardMatrix, heuristic):
 
         frontierNodes.sort(key=lambda x: x[1])
     return 1, 0, len(exploredStates), len(frontierNodes)
+
 
 def distanceHue(gameState:GameState, boardMatrix):
     boxList = gameState.boxesPos.copy()
