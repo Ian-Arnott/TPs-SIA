@@ -184,19 +184,12 @@ def astar(initialGameState:GameState, boardMatrix, heuristic):
     return 1, 0, len(exploredStates), len(frontierNodes)
 
 
-def distanceHue(gameState:GameState, boardMatrix):
-    boxList = gameState.boxesPos.copy()
-    goalList = gameState.goalsPos.copy()
+def manhattan(gameState: GameState, boardMatrix):
+    boxList = gameState.boxesPos
+    goalList = gameState.goalsPos
 
-    neighbours = getNeighbours(boardMatrix, gameState.goalsPos, gameState.boxesPos, gameState.playerPos)
-
-    
     distance = 0
     for box in boxList:
-        minDistance = math.inf
-        for goal in goalList:
-            aux = abs(box[0] - goal[0]) + abs(box[1] - goal[1])
-            if aux < minDistance:
-                minDistance = aux
+        minDistance = min(abs(box[0] - goal[0]) + abs(box[1] - goal[1]) for goal in goalList)
         distance += minDistance
     return distance

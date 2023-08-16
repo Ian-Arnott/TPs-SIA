@@ -12,8 +12,8 @@ if __name__ == '__main__':
     initialGameState = GameState(getPlayerPosition(boardMatrix), getBoxesPosition(boardMatrix), getGoalsPosition(boardMatrix))
     clearDynamicElements(boardMatrix, initialGameState)
 
-    if heuristic == "distance":
-        heuristicFunction = distanceHue
+    if heuristic == "manhattan":
+        heuristicFunction = manhattan
 
     time_start = time.time()
 
@@ -30,6 +30,8 @@ if __name__ == '__main__':
 
     print('\nResult: Solution found' if path != 1 else '\nResult: Couldn\'t find solution\n')
     print('Search method: ' + method)
+    if method == 'greedy' or method == 'astar':
+        print('Heuristic: ' + heuristic)
     print('Cost of the solution: ' + str(cost))
     print('Expanded nodes: ' + str(exploredNodes))
     print('Frontier nodes: ' + str(frontierNodes))

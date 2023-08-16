@@ -2,13 +2,13 @@ import os
 from optparse import OptionParser
 
 SEARCH_METHODS = ['bfs', 'dfs', 'greedy', 'astar']
-HEURISTICS = ['distance', 'heu2']
+HEURISTICS = ['manhattan', 'heu2']
 
 def readCommand(argv):
     parser = OptionParser()
     parser.add_option('-l', '--level', dest='board', help='level of game to play', default='level2.txt')
-    parser.add_option('-m', '--method', dest='method', help='research method', default='bfs')
-    parser.add_option('-H', '--heuristic', dest='heuristic', help='heuristic', default='distance')
+    parser.add_option('-m', '--method', dest='method', help='research method', default='astar')
+    parser.add_option('-H', '--heuristic', dest='heuristic', help='heuristic', default='manhattan')
     args = dict()
     options, _ = parser.parse_args(argv)
 
