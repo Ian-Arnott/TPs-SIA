@@ -23,8 +23,8 @@ if __name__ == '__main__':
         path, cost, exploredNodes, frontierNodes = dfs(initialGameState, boardMatrix)
     elif method == 'greedy':
         path, cost, exploredNodes, frontierNodes = greedy(initialGameState, boardMatrix, heuristicFunction)
-    else:
-        path, cost, exploredNodes, frontierNodes = astar(initialGameState, heuristicFunction)
+    elif method == 'astar':
+        path, cost, exploredNodes, frontierNodes = astar(initialGameState, boardMatrix, heuristicFunction)
 
     time_end = time.time()
 
@@ -34,6 +34,6 @@ if __name__ == '__main__':
     print('Amount of expanded nodes: ' + str(exploredNodes))
     print('Amount of frontier nodes: ' + str(frontierNodes))
     # TODO: imprimir path (la solution)
-    print('Runtime of %s: %.2f second.' %(method, time_end-time_start))
+    print('Runtime of %s: %.3f second.' %(method, time_end-time_start))
     print_solution(path, boardMatrix)
     print("DONE")
