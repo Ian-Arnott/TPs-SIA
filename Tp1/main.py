@@ -5,6 +5,34 @@ from game import layoutToGameState, clearDynamicElements, getPlayerPosition, get
 from algorithms import bfs, dfs, greedy, astar, manhattan, combined
 from gameState import GameState
 
+def runGame(args):
+    layout, method, heuristic = readCommand(args).values()
+    boardMatrix = layoutToGameState(layout)
+
+    initialGameState = GameState(getPlayerPosition(boardMatrix), getBoxesPosition(boardMatrix), getGoalsPosition(boardMatrix))
+    clearDynamicElements(boardMatrix, initialGameState)
+
+    if heuristic == "manhattan":
+        heuristicFunction = manhattan
+    elif heuristic == "combined":
+        heuristicFunction = combined
+
+    time_start = time.time()
+
+    if method == 'bfs':
+        path, cost, exploredNodes, frontierNodes = bfs(initialGameState, boardMatrix)
+    elif method == 'dfs':
+        path, cost, exploredNodes, frontierNodes = dfs(initialGameState, boardMatrix)
+    elif method == 'greedy':
+        path, cost, exploredNodes, frontierNodes = greedy(initialGameState, boardMatrix, heuristicFunction)
+    elif method == 'astar':
+        path, cost, exploredNodes, frontierNodes = astar(initialGameState, boardMatrix, heuristicFunction)
+
+    time_end = time.time()
+
+    return {'success': path!=1, 'method': method, 'level': args[2], 'heuristic': heuristic, 'cost': cost,
+            'exloredNodes': exploredNodes, 'frontierNodes': frontierNodes, 'runtime': time_end-time_start}
+
 if __name__ == '__main__':
     layout, method, heuristic = readCommand(sys.argv).values()
     boardMatrix = layoutToGameState(layout)
