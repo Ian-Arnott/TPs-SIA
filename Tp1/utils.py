@@ -2,7 +2,7 @@ import os
 from optparse import OptionParser
 
 SEARCH_METHODS = ['bfs', 'dfs', 'greedy', 'astar']
-HEURISTICS = ['manhattan', 'heu2']
+HEURISTICS = ['manhattan', 'combined']
 
 def readCommand(argv):
     parser = OptionParser()

@@ -106,7 +106,7 @@ def greedy(initialGameState:GameState, boardMatrix, heuristic):
     tree = Tree(initialGameState)
     root = tree.get_root()
     exploredStates.add(initialGameState)
-    frontierNodes.append((root, heuristic(initialGameState, boardMatrix)))
+    frontierNodes.append((root, heuristic(initialGameState)))
 
     while len(frontierNodes) > 0:
         currentNode, _ = frontierNodes.pop(0)
@@ -135,7 +135,7 @@ def greedy(initialGameState:GameState, boardMatrix, heuristic):
             if nextState not in exploredStates:
                 exploredStates.add(nextState)
                 nextNode = currentNode.add_child(nextState)
-                frontierNodes.append((nextNode, heuristic(nextState, boardMatrix)))
+                frontierNodes.append((nextNode, heuristic(nextState)))
 
         frontierNodes.sort(key=lambda x: x[1])
     return 1, 0, len(exploredStates), len(frontierNodes)
@@ -147,7 +147,7 @@ def astar(initialGameState:GameState, boardMatrix, heuristic):
     tree = Tree(initialGameState)
     root = tree.get_root()
     exploredStates.add(initialGameState)
-    frontierNodes.append((root, 0, heuristic(initialGameState, boardMatrix)))
+    frontierNodes.append((root, 0, heuristic(initialGameState)))
 
     while len(frontierNodes) > 0:
         currentNode, initalF, initialH = frontierNodes.pop(0)
@@ -176,15 +176,15 @@ def astar(initialGameState:GameState, boardMatrix, heuristic):
             if nextState not in exploredStates:
                 exploredStates.add(nextState)
                 nextNode = currentNode.add_child(nextState)
-                h = heuristic(nextState, boardMatrix)
-                f = nextNode.depth + h
+                h = heuristic(nextState)
+                f = 1 + nextNode.depth + h
                 frontierNodes.append((nextNode, f, h))
 
         frontierNodes.sort(key=lambda x: x[1])
     return 1, 0, len(exploredStates), len(frontierNodes)
 
 
-def manhattan(gameState: GameState, boardMatrix):
+def manhattan(gameState: GameState):
     boxList = gameState.boxesPos
     goalList = gameState.goalsPos
 
@@ -192,4 +192,21 @@ def manhattan(gameState: GameState, boardMatrix):
     for box in boxList:
         minDistance = min(abs(box[0] - goal[0]) + abs(box[1] - goal[1]) for goal in goalList)
         distance += minDistance
+    return distance
+
+def combined(gameState: GameState):
+    # Similar to Manhattan but account for alignment, a solution is better if the box is already aligned with a goal
+    # An aligned solution only requires to push the box
+    boxList = gameState.boxesPos
+    goalList = gameState.goalsPos
+
+    distance = 0
+    for box in boxList:
+        minDistanceWithTurns = float('inf')
+        for goal in goalList:
+            manhattanDistance = abs(box[0] - goal[0]) + abs(box[1] - goal[1]) # Same manhattan distance
+            turnsNeeded = 0 if (box[0] - goal[0]) * (box[1] - goal[1]) == 0 else 1
+            distanceWithTurns = manhattanDistance + turnsNeeded * 2 # Account for turns needed to align with goal
+            minDistanceWithTurns = min(minDistanceWithTurns, distanceWithTurns)
+        distance += minDistanceWithTurns
     return distance
