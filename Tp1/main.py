@@ -31,7 +31,7 @@ def runGame(args):
     time_end = time.time()
 
     return {'success': path!=1, 'method': method, 'level': args[2], 'heuristic': heuristic, 'cost': cost,
-            'exloredNodes': exploredNodes, 'frontierNodes': frontierNodes, 'runtime': time_end-time_start}
+            'exploredNodes': exploredNodes, 'frontierNodes': frontierNodes, 'runtime': time_end-time_start}
 
 if __name__ == '__main__':
     layout, method, heuristic = readCommand(sys.argv).values()
