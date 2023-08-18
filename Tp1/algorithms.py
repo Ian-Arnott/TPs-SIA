@@ -30,7 +30,7 @@ def bfs(initialGameState:GameState, boardMatrix):
 
         # Verifies if the current state is a solution
         if currentState.isSolved():
-            print("I won the game")
+            # print("I won the game")
             return currentNode.get_root_path(currentNode), currentNode.get_depth(), len(exploredStates), len(frontierNodes) #TODO: Cambiarlo para que no termine la ejecucion
         
         # Get the neighbours of the current state (only the ones that the player can move to)
@@ -73,7 +73,7 @@ def dfs(initialGameState:GameState, boardMatrix):
 
         # Verifies if the current state is a solution
         if currentState.isSolved():
-            print("I won the game")
+            # print("I won the game")
             return currentNode.get_root_path(currentNode), currentNode.get_depth(), len(exploredStates), len(frontierNodes) #TODO: Cambiarlo para que no termine la ejecucion
         
         # Get the neighbours of the current state (only the ones that the player can move to)
@@ -114,7 +114,7 @@ def greedy(initialGameState:GameState, boardMatrix, heuristic):
 
         # Verifies if the current state is a solution
         if currentState.isSolved():
-            print("I won the game")
+            # print("I won the game")
             return currentNode.get_root_path(currentNode), currentNode.get_depth(), len(exploredStates), len(frontierNodes) #TODO: Cambiarlo para que no termine la ejecucion
         
         # Get the neighbours of the current state (only the ones that the player can move to)
@@ -155,7 +155,7 @@ def astar(initialGameState:GameState, boardMatrix, heuristic):
 
         # Verifies if the current state is a solution
         if currentState.isSolved():
-            print("I won the game")
+            # print("I won the game")
             return currentNode.get_root_path(currentNode), currentNode.get_depth(), len(exploredStates), len(frontierNodes) #TODO: Cambiarlo para que no termine la ejecucion
         
         # Get the neighbours of the current state (only the ones that the player can move to)
