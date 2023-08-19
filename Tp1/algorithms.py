@@ -30,8 +30,7 @@ def bfs(initialGameState:GameState, boardMatrix):
 
         # Verifies if the current state is a solution
         if currentState.isSolved():
-            # print("I won the game")
-            return currentNode.get_root_path(currentNode), currentNode.get_depth(), len(exploredStates), len(frontierNodes) #TODO: Cambiarlo para que no termine la ejecucion
+            return currentNode.get_root_path(currentNode), currentNode.get_depth(), len(exploredStates), len(frontierNodes)
         
         # Get the neighbours of the current state (only the ones that the player can move to)
         neighbours = getNeighbours(boardMatrix, currentState.goalsPos, currentState.boxesPos, currentState.playerPos)
@@ -47,14 +46,11 @@ def bfs(initialGameState:GameState, boardMatrix):
                 boxList.append(newBoxPos)
 
             nextState = GameState(n, boxList, currentState.goalsPos)
-
-            #TODO: Mejorar la comparacion con un Hash de los estados, en vez de compararlos elemento a elemento
+            
             if nextState not in exploredStates:
                 exploredStates.add(nextState)
                 nextNode = currentNode.add_child(nextState)
                 frontierNodes.append(nextNode)
-
-        #exploredStates.append(currentState)
 
     return 1, 0, len(exploredStates), len(frontierNodes)
 
