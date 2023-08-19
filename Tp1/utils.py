@@ -33,12 +33,12 @@ def readCommand(argv):
     return args
 
 
-def print_solution(path, boardMatrix):
+def print_solution(path, boardMatrix, goals):
     output = open('./' + "solution.txt", 'w+', encoding='utf-8')
     output.write("\nSolution:\n")
     stepCount = 0;
     for step in path:
         output.write("Step " + str(stepCount) + ":\n")
-        output.write(step.print_game_state(boardMatrix))
+        output.write(step.print_game_state(boardMatrix, goals))
         output.write("---------------------------------------\n")
         stepCount += 1

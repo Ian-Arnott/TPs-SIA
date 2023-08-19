@@ -9,7 +9,8 @@ def runGame(args):
     layout, method, heuristic = readCommand(args).values()
     boardMatrix = layoutToGameState(layout)
 
-    initialGameState = GameState(getPlayerPosition(boardMatrix), getBoxesPosition(boardMatrix), getGoalsPosition(boardMatrix))
+    goals = getGoalsPosition(boardMatrix)
+    initialGameState = GameState(getPlayerPosition(boardMatrix), getBoxesPosition(boardMatrix))
     clearDynamicElements(boardMatrix, initialGameState)
 
     if heuristic == "manhattan":
@@ -20,13 +21,13 @@ def runGame(args):
     time_start = time.time()
 
     if method == 'bfs':
-        path, cost, exploredNodes, frontierNodes = bfs(initialGameState, boardMatrix)
+        path, cost, exploredNodes, frontierNodes = bfs(initialGameState, boardMatrix, goals)
     elif method == 'dfs':
-        path, cost, exploredNodes, frontierNodes = dfs(initialGameState, boardMatrix)
+        path, cost, exploredNodes, frontierNodes = dfs(initialGameState, boardMatrix, goals)
     elif method == 'greedy':
-        path, cost, exploredNodes, frontierNodes = greedy(initialGameState, boardMatrix, heuristicFunction)
+        path, cost, exploredNodes, frontierNodes = greedy(initialGameState, boardMatrix, goals, heuristicFunction)
     elif method == 'astar':
-        path, cost, exploredNodes, frontierNodes = astar(initialGameState, boardMatrix, heuristicFunction)
+        path, cost, exploredNodes, frontierNodes = astar(initialGameState, boardMatrix, goals, heuristicFunction)
 
     time_end = time.time()
 
@@ -37,7 +38,8 @@ if __name__ == '__main__':
     layout, method, heuristic = readCommand(sys.argv).values()
     boardMatrix = layoutToGameState(layout)
 
-    initialGameState = GameState(getPlayerPosition(boardMatrix), getBoxesPosition(boardMatrix), getGoalsPosition(boardMatrix))
+    goals = getGoalsPosition(boardMatrix)
+    initialGameState = GameState(getPlayerPosition(boardMatrix), getBoxesPosition(boardMatrix))
     clearDynamicElements(boardMatrix, initialGameState)
 
     if heuristic == "manhattan":
@@ -48,13 +50,13 @@ if __name__ == '__main__':
     time_start = time.time()
 
     if method == 'bfs':
-        path, cost, exploredNodes, frontierNodes = bfs(initialGameState, boardMatrix)
+        path, cost, exploredNodes, frontierNodes = bfs(initialGameState, boardMatrix, goals,)
     elif method == 'dfs':
-        path, cost, exploredNodes, frontierNodes = dfs(initialGameState, boardMatrix)
+        path, cost, exploredNodes, frontierNodes = dfs(initialGameState, boardMatrix, goals)
     elif method == 'greedy':
-        path, cost, exploredNodes, frontierNodes = greedy(initialGameState, boardMatrix, heuristicFunction)
+        path, cost, exploredNodes, frontierNodes = greedy(initialGameState, boardMatrix, goals, heuristicFunction)
     elif method == 'astar':
-        path, cost, exploredNodes, frontierNodes = astar(initialGameState, boardMatrix, heuristicFunction)
+        path, cost, exploredNodes, frontierNodes = astar(initialGameState, boardMatrix, goals, heuristicFunction)
 
     time_end = time.time()
 
@@ -67,5 +69,5 @@ if __name__ == '__main__':
     print('Frontier nodes: ' + str(frontierNodes))
     print('Runtime of %s: %.3f seconds.' %(method, time_end-time_start))
     if path != 1:
-        print_solution(path, boardMatrix)
+        print_solution(path, boardMatrix, goals)
     print("DONE")

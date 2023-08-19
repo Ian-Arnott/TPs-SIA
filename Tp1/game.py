@@ -26,16 +26,11 @@ def getPlayerPosition(gameState):
 def getBoxesPosition(gameState):
     return list(tuple(x) for x in np.argwhere((gameState == BOX) | (gameState == BOX_ON_GOAL)))
 
-def getWallsPosition(gameState):
-    return tuple(tuple(x) for x in np.argwhere(gameState == WALL))
-
 def getGoalsPosition(gameState):
-    return tuple(tuple(x) for x in np.argwhere((gameState == GOAL) | (gameState == BOX_ON_GOAL)))
+    return list(tuple(x) for x in np.argwhere((gameState == GOAL) | (gameState == BOX_ON_GOAL)))
 
-def isEndState(gameState):
-    return sorted(getBoxesPosition(gameState)) == sorted(getGoalsPosition(gameState))
     
-# TODO: checker deadlocks
+# TODO: check deadlocks
 def getNeighbours(boardMatrix, goalPos:tuple, boxesPos:tuple, playerPos:tuple):
     """ Returns possible moves from a given position"""
     i, j = playerPos
@@ -44,7 +39,6 @@ def getNeighbours(boardMatrix, goalPos:tuple, boxesPos:tuple, playerPos:tuple):
 
     for direction in directions:
         nextPos = (i + direction[0], j + direction[1])
-        #TODO: En el sokoban, una vez que coloco una caja en un goal, queda fija?
         if boardMatrix[nextPos[0], nextPos[1]] != WALL or ((nextPos[0], nextPos[1]) in boxesPos and (nextPos[0], nextPos[1]) not in goalPos): 
             if (nextPos[0], nextPos[1]) in boxesPos:
                 if boardMatrix[nextPos[0] + direction[0], nextPos[1] + direction[1]] == WALL:
