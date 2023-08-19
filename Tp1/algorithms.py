@@ -2,7 +2,6 @@ from tree import Tree
 from collections import deque
 from game import *
 from gameState import GameState
-import math
 
 
 # https://docs.python.org/es/3/library/collections.html#collections.deque
@@ -20,13 +19,9 @@ def bfs(initialGameState:GameState, boardMatrix, goals):
     exploredStates.add(initialGameState)
     frontierNodes.append(root)
 
-    #count = 0
     while len(frontierNodes) > 0:
         currentNode = frontierNodes.popleft()
         currentState = currentNode.gameState
-
-        #print("Iteration: " + str(count) + "\t" + "Depth: " + str(currentNode.depth) + "\t" + str(currentState))
-        #count += 1
 
         # Verifies if the current state is a solution
         if currentState.isSolved(goals):
@@ -69,8 +64,7 @@ def dfs(initialGameState:GameState, boardMatrix, goals):
 
         # Verifies if the current state is a solution
         if currentState.isSolved(goals):
-            # print("I won the game")
-            return currentNode.get_root_path(currentNode), currentNode.get_depth(), len(exploredStates), len(frontierNodes) #TODO: Cambiarlo para que no termine la ejecucion
+            return currentNode.get_root_path(currentNode), currentNode.get_depth(), len(exploredStates), len(frontierNodes)
         
         # Get the neighbours of the current state (only the ones that the player can move to)
         neighbours = getNeighbours(boardMatrix, goals, currentState.boxesPos, currentState.playerPos)
@@ -110,8 +104,7 @@ def greedy(initialGameState:GameState, boardMatrix, goals, heuristic):
 
         # Verifies if the current state is a solution
         if currentState.isSolved(goals):
-            # print("I won the game")
-            return currentNode.get_root_path(currentNode), currentNode.get_depth(), len(exploredStates), len(frontierNodes) #TODO: Cambiarlo para que no termine la ejecucion
+            return currentNode.get_root_path(currentNode), currentNode.get_depth(), len(exploredStates), len(frontierNodes)
         
         # Get the neighbours of the current state (only the ones that the player can move to)
         neighbours = getNeighbours(boardMatrix, goals, currentState.boxesPos, currentState.playerPos)
@@ -151,8 +144,7 @@ def astar(initialGameState:GameState, boardMatrix, goals, heuristic):
 
         # Verifies if the current state is a solution
         if currentState.isSolved(goals):
-            # print("I won the game")
-            return currentNode.get_root_path(currentNode), currentNode.get_depth(), len(exploredStates), len(frontierNodes) #TODO: Cambiarlo para que no termine la ejecucion
+            return currentNode.get_root_path(currentNode), currentNode.get_depth(), len(exploredStates), len(frontierNodes)
         
         # Get the neighbours of the current state (only the ones that the player can move to)
         neighbours = getNeighbours(boardMatrix, goals, currentState.boxesPos, currentState.playerPos)
