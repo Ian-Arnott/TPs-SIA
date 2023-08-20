@@ -7,7 +7,7 @@ class GameState(object):
     def __eq__(self, other):
         result =  self.__class__ == other.__class__ and \
             self.playerPos == other.playerPos and \
-            sorted(self.boxesPos) == sorted(other.boxesPos)
+            self.boxesPos == other.boxesPos
         return result
     
     def __hash__(self):
@@ -17,8 +17,8 @@ class GameState(object):
         return f"Player: {self.playerPos}\tBoxes: {self.boxesPos}"
     
     def isSolved(self, goals) -> bool:
-        """ Checks if all the boxes are on the goals. Goals list must be sorted beforehand """
-        return sorted(self.boxesPos) == goals
+        """ Checks if all the boxes are on the goals. Goals and Boxes lists must be sorted beforehand """
+        return self.boxesPos == goals
     
     def printGameState(self, boardMatrix, goals):
         """ Prints the game state in a readable format """

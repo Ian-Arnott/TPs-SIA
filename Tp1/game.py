@@ -24,10 +24,10 @@ def getPlayerPosition(gameState):
     return tuple(np.argwhere(gameState == PLAYER)[0])
 
 def getBoxesPosition(gameState):
-    return list(tuple(x) for x in np.argwhere((gameState == BOX) | (gameState == BOX_ON_GOAL)))
+    return sorted(list(tuple(x) for x in np.argwhere((gameState == BOX) | (gameState == BOX_ON_GOAL))))
 
 def getGoalsPosition(gameState):
-    return list(tuple(x) for x in np.argwhere((gameState == GOAL) | (gameState == BOX_ON_GOAL)))
+    return sorted(list(tuple(x) for x in np.argwhere((gameState == GOAL) | (gameState == BOX_ON_GOAL))))
 
     
 # TODO: check deadlocks

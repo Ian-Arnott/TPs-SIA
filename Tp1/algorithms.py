@@ -1,3 +1,4 @@
+import bisect
 from tree import Tree
 from collections import deque
 from game import *
@@ -32,13 +33,15 @@ def bfs(initialGameState:GameState, boardMatrix, goals):
 
         # For each neighbour, generate the new state and add it to the frontierNodes if it is not explored
         for n in neighbours:
-            boxList = currentState.boxesPos.copy()
+            boxList:list[tuple] = currentState.boxesPos.copy()
 
             # If the neighbour is a box, move it
             if n in boxList:
                 boxList.remove(n)
                 newBoxPos = (n[0] + (n[0] - currentState.playerPos[0]), n[1] + (n[1] - currentState.playerPos[1]))
-                boxList.append(newBoxPos)
+                # Inserts the element and keeps the list sorted
+                bisect.insort_left(boxList, newBoxPos)
+                
 
             nextState = GameState(n, boxList)
             
@@ -77,7 +80,8 @@ def dfs(initialGameState:GameState, boardMatrix, goals):
             if n in boxList:
                 boxList.remove(n)
                 newBoxPos = (n[0] + (n[0] - currentState.playerPos[0]), n[1] + (n[1] - currentState.playerPos[1]))
-                boxList.append(newBoxPos)
+                # Inserts the element and keeps the list sorted
+                bisect.insort_left(boxList, newBoxPos)
 
             nextState = GameState(n, boxList)
 
@@ -117,7 +121,8 @@ def greedy(initialGameState:GameState, boardMatrix, goals, heuristic):
             if n in boxList:
                 boxList.remove(n)
                 newBoxPos = (n[0] + (n[0] - currentState.playerPos[0]), n[1] + (n[1] - currentState.playerPos[1]))
-                boxList.append(newBoxPos)
+                # Inserts the element and keeps the list sorted
+                bisect.insort_left(boxList, newBoxPos)
 
             nextState = GameState(n, boxList)
 
@@ -157,7 +162,8 @@ def astar(initialGameState:GameState, boardMatrix, goals, heuristic):
             if n in boxList:
                 boxList.remove(n)
                 newBoxPos = (n[0] + (n[0] - currentState.playerPos[0]), n[1] + (n[1] - currentState.playerPos[1]))
-                boxList.append(newBoxPos)
+                # Inserts the element and keeps the list sorted
+                bisect.insort_left(boxList, newBoxPos)
 
             nextState = GameState(n, boxList)
 
