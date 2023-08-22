@@ -203,9 +203,9 @@ def combined(gameState: GameState, goals):
         distance += minDistanceWithTurns
     return distance
 
-def hamming(gameState: GameState):
+def hamming(gameState: GameState, goals):
     distance = 0
     for box in gameState.boxesPos:
-        if box not in gameState.goalsPos:
+        if box not in goals:
             distance += 1
     return distance
