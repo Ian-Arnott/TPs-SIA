@@ -2,7 +2,7 @@ import time
 import sys
 from utils import readCommand, print_solution
 from game import layoutToGameState, clearDynamicElements, getPlayerPosition, getBoxesPosition, getGoalsPosition
-from algorithms import bfs, dfs, greedy, astar, manhattan, combined
+from algorithms import bfs, dfs, greedy, astar, manhattan, combined, hamming
 from gameState import GameState
 
 def runGame(args):
@@ -17,6 +17,8 @@ def runGame(args):
         heuristicFunction = manhattan
     elif heuristic == "combined":
         heuristicFunction = combined
+    elif heuristic == "hamming":
+        heuristicFunction = hamming 
 
     time_start = time.time()
 
@@ -46,6 +48,8 @@ if __name__ == '__main__':
         heuristicFunction = manhattan
     elif heuristic == "combined":
         heuristicFunction = combined
+    elif heuristic == "hamming":
+        heuristicFunction = hamming 
 
     time_start = time.time()
 
