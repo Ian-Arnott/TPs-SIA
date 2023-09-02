@@ -12,17 +12,17 @@ class Character(object):
         self._stats = stats
         self._height = height
 
-    def __init__(self):
-        """ Initializes the character and generates its stats and height"""
-        self._calculate_stats()
-        self._calculate_height()
-
     def __init__(self, items: dict[str, float], height: float):
         """ Initializes the character whith inherited stats and height"""
         Character._normalize_items(items)
         self._items = items
         self._calculate_stats()
         self._height = height
+    
+    def __init__(self):
+        """ Initializes the character and generates its stats and height"""
+        self._calculate_stats()
+        self._calculate_height()
 
     @staticmethod
     def _normalize_items(self, items: dict[str, float]):
