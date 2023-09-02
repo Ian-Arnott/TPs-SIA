@@ -1,7 +1,8 @@
 import json
 from utils import get_config_params
-import genetic
 from character import Character
+from genetic import generate_start_population
+from crossover import anular_crossover
 
 if __name__ == "__main__":
     with open('./config.json', 'r') as f:
@@ -9,7 +10,7 @@ if __name__ == "__main__":
     
     N, K, character_type, crossing_method, selection_method, mutation_method, A, B = get_config_params(config)
 
-    start_population = genetic.generate_start_population(N, character_type)
+    start_population = generate_start_population(N, character_type)
 
     # count = 0
     # for character in start_population:
@@ -22,7 +23,7 @@ if __name__ == "__main__":
     print(start_population[0].get_genotype());
     print(start_population[1].get_genotype());
 
-    gen1, gen2 = genetic.anular_crossover(start_population[0], start_population[1]);
+    gen1, gen2 = anular_crossover(start_population[0], start_population[1]);
 
     print(gen1);
     print(gen2);
