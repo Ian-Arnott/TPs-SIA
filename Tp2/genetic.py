@@ -1,5 +1,6 @@
 from character import Archer, Warrior, Defender, Infiltrator
 
+
 def generate_start_population(N, character_type):
     character_classes = {
         "archer": Archer,

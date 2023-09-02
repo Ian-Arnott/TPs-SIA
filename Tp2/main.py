@@ -3,16 +3,16 @@ from utils import get_config_params
 from character import Character
 from genetic import generate_start_population
 from crossover import anular_crossover
-from selection import elite, deterministic_tournament, probabilistic_tournament
+from selection import elite, deterministic_tournament, probabilistic_tournament, roulette, universal
 
 if __name__ == "__main__":
     with open('./config.json', 'r') as f:
         config = json.load(f)
-    
-    n, k, m, threshold,character_type, crossing_method, selection_method, mutation_method, A, B = get_config_params(config)
+
+    n, k, m, threshold, character_type, crossing_method, selection_method, mutation_method, A, B = get_config_params(
+        config)
 
     start_population = generate_start_population(n, character_type)
-    
 
     # ======================== CROSSOVER ========================
     # print(start_population[0].get_genotype());
@@ -26,7 +26,6 @@ if __name__ == "__main__":
     # print(Character.from_genotype(gen1));
     # print(Character.from_genotype(gen2));
 
-
     # ======================== SELECTION ========================
     print("Start population:")
     for i in range(n):
@@ -38,9 +37,14 @@ if __name__ == "__main__":
     # print("\nTournament Deterministic:")
     # new_population = deterministic_tournament(start_population, k, m)
 
-    print("\nTournament Probabilistic:")
-    new_population = probabilistic_tournament(start_population, k, threshold)
-    
+    # print("\nTournament Probabilistic:")
+    # new_population = probabilistic_tournament(start_population, k, threshold)
+
+    print("\nRoulette:")
+    new_population = roulette(start_population, n, k)
+
+    # print("\nUniversal:")
+    # new_population = universal(start_population, n, k)
+
     for i in range(k):
         print(new_population[i].get_performance())
-
