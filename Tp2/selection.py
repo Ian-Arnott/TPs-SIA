@@ -17,3 +17,13 @@ def elite(population, n, k):
                 new_population.append(population[i])
             
     return new_population
+
+def deterministic_tournament(population, k, m):
+    new_population = []
+
+    for _ in range(k):
+        selected_characters = random.sample(population, m)
+        selected_characters.sort(key=lambda x: x.get_performance(), reverse=True)
+        new_population.append(selected_characters[0])
+
+    return new_population

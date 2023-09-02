@@ -1,6 +1,7 @@
 {
-    "N": 5, 
-    "K": 10,
+    "N": 10, 
+    "K": 5,
+    "M": 3,
     "character_type": "archer",
     "selection_method": "elite", 
     "crossing_method": "one_point",

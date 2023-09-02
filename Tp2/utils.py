@@ -17,6 +17,11 @@ def validate_method(value, methods, str):
     if value not in methods:
         print(f"Invalid {str} method")
         exit(1)
+
+def validate_selection_params(x, k, str):
+    if x > k:
+        print(f"{str} must be greater than k={k}")
+        exit(1)
     
 
 def get_config_params(config):
@@ -25,6 +30,9 @@ def get_config_params(config):
 
     K = config["K"]
     validate_positive_int(K, "K")
+
+    M = config["M"]
+    validate_positive_int(M, "M")
 
     character_type = config["character_type"]
     validate_method(character_type, CHARACTER_TYPES, "character_type")
@@ -39,13 +47,9 @@ def get_config_params(config):
     validate_method(mutation_method, MUTATION_METHODS, "mutation")
 
     A = config["A"]
-
-    if A > K:
-        return -1
+    validate_selection_params(A, K, "A")
 
     B = config["B"]
-    
-    if B > K:
-        return -1
+    validate_selection_params(B, K, "B")
 
-    return N, K, character_type, crossing_method, selection_method, mutation_method, A, B
+    return N, K, M, character_type, crossing_method, selection_method, mutation_method, A, B

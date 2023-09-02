@@ -3,16 +3,18 @@ from utils import get_config_params
 from character import Character
 from genetic import generate_start_population
 from crossover import anular_crossover
-from selection import elite
+from selection import elite, deterministic_tournament
 
 if __name__ == "__main__":
     with open('./config.json', 'r') as f:
         config = json.load(f)
     
-    n, k, character_type, crossing_method, selection_method, mutation_method, A, B = get_config_params(config)
+    n, k, m, character_type, crossing_method, selection_method, mutation_method, A, B = get_config_params(config)
 
     start_population = generate_start_population(n, character_type)
     
+
+    # ======================== CROSSOVER ========================
     # print(start_population[0].get_genotype());
     # print(start_population[1].get_genotype());
 
@@ -23,10 +25,19 @@ if __name__ == "__main__":
 
     # print(Character.from_genotype(gen1));
     # print(Character.from_genotype(gen2));
-    print("Elite:")
-    new_population = elite(start_population, n, k)
+
+
+    # ======================== SELECTION ========================
+    print("Start population:")
+    for i in range(n):
+        print(start_population[i].get_performance())
+
+    # print("Elite:")
+    # new_population = elite(start_population, n, k)
+
+    print("\nTournament Deterministic:")
+    new_population = deterministic_tournament(start_population, k, m)
     
-    # print("New population: ")
     for i in range(k):
         print(new_population[i].get_performance())
 
