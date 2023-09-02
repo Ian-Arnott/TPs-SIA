@@ -22,6 +22,11 @@ def validate_selection_params(x, k, str):
     if x > k:
         print(f"{str} must be greater than k={k}")
         exit(1)
+
+def validate_threshold(thr, str):
+    if thr < 0.5 or thr > 1:
+        print(f"{str} must be between 0.5 and 1")
+        exit(1)
     
 
 def get_config_params(config):
@@ -33,6 +38,9 @@ def get_config_params(config):
 
     M = config["M"]
     validate_positive_int(M, "M")
+
+    threshold = config["threshold"]
+    validate_threshold(threshold, "threshold")
 
     character_type = config["character_type"]
     validate_method(character_type, CHARACTER_TYPES, "character_type")
@@ -52,4 +60,4 @@ def get_config_params(config):
     B = config["B"]
     validate_selection_params(B, K, "B")
 
-    return N, K, M, character_type, crossing_method, selection_method, mutation_method, A, B
+    return N, K, M, threshold,character_type, crossing_method, selection_method, mutation_method, A, B

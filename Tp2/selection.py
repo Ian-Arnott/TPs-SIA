@@ -27,3 +27,17 @@ def deterministic_tournament(population, k, m):
         new_population.append(selected_characters[0])
 
     return new_population
+
+def probabilistic_tournament(population, k, thr):
+    new_population = []
+
+    for _ in range(k):
+        selected_characters = random.sample(population, 2)
+        r = random.uniform(0.5, 1)
+        selected_characters.sort(key=lambda x: x.get_performance(), reverse=True)
+        if r < thr:
+            new_population.append(selected_characters[0])
+        else:
+            new_population.append(selected_characters[1])
+
+    return new_population
