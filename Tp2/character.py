@@ -17,7 +17,15 @@ class Character(object):
             self._height = height
 
     @staticmethod
-    def _normalize_items(self, items: dict[str, float]):
+    def from_genotype(genotype: list[float]):
+        """ Creates a character from a genotype """
+        items = {"strength": genotype[0], "agility": genotype[1], "expertise": genotype[2], "endurance": genotype[3], "health": genotype[4]}
+        height = genotype[5]
+
+        return Character(items, height)
+
+    @staticmethod
+    def _normalize_items(items: dict[str, float]):
         """ Normalizes the items to sum 150 """
         total:float = 0.0
         for item in items:

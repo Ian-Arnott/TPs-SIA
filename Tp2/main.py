@@ -1,6 +1,7 @@
 import json
 from utils import get_config_params
 import genetic
+from character import Character
 
 if __name__ == "__main__":
     with open('./config.json', 'r') as f:
@@ -17,6 +18,7 @@ if __name__ == "__main__":
     #     print(character)
     #     count += 1
     
+    
     print(start_population[0].get_genotype());
     print(start_population[1].get_genotype());
 
@@ -24,3 +26,7 @@ if __name__ == "__main__":
 
     print(gen1);
     print(gen2);
+
+    print(Character.from_genotype(gen1));
+    print(Character.from_genotype(gen2));
+
