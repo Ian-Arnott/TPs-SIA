@@ -1,8 +1,10 @@
 {
-    "N": 5, 
-    "K": 5,
+    "N": 20, 
+    "K": 10,
     "character_type": "archer",
     "selection_method": "elite", 
     "crossing_method": "one_point",
-    "mutation_method": "multigen"
+    "mutation_method": "multigen",
+    "A": 5,
+    "B": 5
 }

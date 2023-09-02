@@ -94,6 +94,14 @@ class Character(object):
 
     def _calculate_health(self):
         return 100 * math.tanh(0.01 * self._items["health"])
+    
+    def get_genotype(self) -> list[float]:
+        genes = []
+        for item in self._items:
+            genes.append(self._items[item])
+        genes.append(self._height)
+
+        return genes 
 
     def __str__(self):
         return f"Character: \nStats: {self._stats} \nItems: {self._items} \nHeight:{self._height}\n"
