@@ -1,19 +1,19 @@
 import math
+import random
 
-def elite(population, k):
-    n = population.size
-    population = sorted(population)
+def elite(population, n, k):
+    population.sort(key=lambda x: x.get_performance(), reverse=True)
 
-    # CHECK: el segundo caso resuelve el primero??
     if k <= n:
         new_population = population[:k]
-    else:     
-        for i in range(n):
+    else:    
+        new_population = []
+        for i in range(k):
             repetitions = math.ceil((k - i) / n)
-            new_population = population
+            # print(f"i {i} | n(i) = {repetitions}")
             for _ in range(repetitions):
                 if len(new_population) == k:
                     return new_population
                 new_population.append(population[i])
-
+            
     return new_population

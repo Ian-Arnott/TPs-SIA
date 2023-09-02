@@ -3,31 +3,30 @@ from utils import get_config_params
 from character import Character
 from genetic import generate_start_population
 from crossover import anular_crossover
+from selection import elite
 
 if __name__ == "__main__":
     with open('./config.json', 'r') as f:
         config = json.load(f)
     
-    N, K, character_type, crossing_method, selection_method, mutation_method, A, B = get_config_params(config)
+    n, k, character_type, crossing_method, selection_method, mutation_method, A, B = get_config_params(config)
 
-    start_population = generate_start_population(N, character_type)
-
-    # count = 0
-    # for character in start_population:
-    #     print(f"{character_type} {count}")
-    #     print(character.get_performance())
-    #     print(character)
-    #     count += 1
+    start_population = generate_start_population(n, character_type)
     
+    # print(start_population[0].get_genotype());
+    # print(start_population[1].get_genotype());
+
+    # gen1, gen2 = anular_crossover(start_population[0], start_population[1]);
+
+    # print(gen1);
+    # print(gen2);
+
+    # print(Character.from_genotype(gen1));
+    # print(Character.from_genotype(gen2));
+    print("Elite:")
+    new_population = elite(start_population, n, k)
     
-    print(start_population[0].get_genotype());
-    print(start_population[1].get_genotype());
-
-    gen1, gen2 = anular_crossover(start_population[0], start_population[1]);
-
-    print(gen1);
-    print(gen2);
-
-    print(Character.from_genotype(gen1));
-    print(Character.from_genotype(gen2));
+    # print("New population: ")
+    for i in range(k):
+        print(new_population[i].get_performance())
 
