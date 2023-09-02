@@ -12,7 +12,7 @@ if __name__ == "__main__":
 
     count = 0
     for character in start_population:
-        print(f"{character_type} - {count}")
+        print(f"{character_type} {count}")
         print(character.get_performance())
         print()
         count += 1
