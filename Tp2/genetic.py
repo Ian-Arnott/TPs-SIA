@@ -12,5 +12,5 @@ def generate_start_population(N, character_type):
         raise ValueError(f"Invalid character_type: {character_type}")
 
     population = [character_classes[character_type]() for _ in range(N)]
-    
+
     return population

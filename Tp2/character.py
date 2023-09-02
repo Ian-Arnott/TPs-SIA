@@ -3,22 +3,18 @@ import math
 
 
 class Character(object):
-    _stats: dict[str, float] = {"strength": 0, "agility": 0, "expertise": 0, "endurance": 0, "health": 0}
-    _items: dict[str, float] = {"strength": 0, "agility": 0, "expertise": 0, "endurance": 0, "health": 0}
-    _height: float
+    def __init__(self, items: dict[str, float] = None, height: float = None):
+        """ Initializes the character. If items and height is not provided, generates them"""
 
-
-    def __init__(self):
-        """ Initializes the character and generates its stats and height"""
-        self._calculate_stats()
-        self._calculate_height()
-
-    def __init__(self, items: dict[str, float], height: float):
-        """ Initializes the character whith inherited items and height"""
-        Character._normalize_items(items)
-        self._items = items
-        self._calculate_stats()
-        self._height = height
+        if items is None and height is None:
+            self._items = Character._pick_items()
+            self._stats = self._calculate_stats()
+            self._height = Character._calculate_height()
+        else:
+            Character._normalize_items(items)
+            self._items = items
+            self._stats = self._calculate_stats()
+            self._height = height
 
     @staticmethod
     def _normalize_items(self, items: dict[str, float]):
@@ -53,44 +49,54 @@ class Character(object):
     def get_height(self):
         return self._height
 
-    def _calculate_height(self):
-        self._height = random.uniform(1.3, 2.0)
+    @staticmethod
+    def _calculate_height():
+        return random.uniform(1.3, 2.0)
 
     def _calculate_stats(self):
         """ Calculates the stats for the character """
-        self._pick_items()
-        self._calculate_strength()
-        self._calculate_agility()
-        self._calculate_expertise()
-        self._calculate_endurance()
-        self._calculate_health()
+        stats:dict[str, float] = {"strength": 0, "agility": 0, "expertise": 0, "endurance": 0, "health": 0}
 
-    def _pick_items(self):
+        stats["strength"] = self._calculate_strength()
+        stats["agility"] = self._calculate_agility()
+        stats["expertise"] = self._calculate_expertise()
+        stats["endurance"] = self._calculate_endurance()
+        stats["health"] = self._calculate_health()
+
+        return stats
+
+    @staticmethod
+    def _pick_items():
         """ Picks the items for the character """
-        remaining: int = 150
-        item_count: int = 0
-        for item in self._items:
-            if item_count == len(self._items) - 1:
-                self._items[item] = remaining
-            else:
-                value: int = random.randint(0, remaining)
-                self._items[item] = value
-                remaining -= value
+        items: dict[str, float] = {"strength": 0, "agility": 0, "expertise": 0, "endurance": 0, "health": 0}
+        values = [0] * len(items)
+
+        for i in range (150):
+            randomIndex = random.randint(0, 4)
+            values[randomIndex] += 1
+        
+        for item in items:
+            items[item] = values.pop()
+
+        return items
 
     def _calculate_strength(self):
-        self._stats["strength"] = 100 * math.tanh(0.01 * self._items["strength"])
+        return 100 * math.tanh(0.01 * self._items["strength"])
 
     def _calculate_agility(self):
-        self._stats["agility"] = math.tanh(0.01 * self._items["agility"])
+        return math.tanh(0.01 * self._items["agility"])
 
     def _calculate_expertise(self):
-        self._stats["expertise"] = 0.6 * math.tanh(0.01 * self._items["expertise"])
+        return 0.6 * math.tanh(0.01 * self._items["expertise"])
 
     def _calculate_endurance(self):
-        self._stats["endurance"] = math.tanh(0.01 * self._items["endurance"])
+        return math.tanh(0.01 * self._items["endurance"])
 
     def _calculate_health(self):
-        self._stats["health"] = 100 * math.tanh(0.01 * self._items["health"])
+        return 100 * math.tanh(0.01 * self._items["health"])
+
+    def __str__(self):
+        return f"Character: \nStats: {self._stats} \nItems: {self._items} \nHeight:{self._height}\n"
 
 
 class Warrior(Character):

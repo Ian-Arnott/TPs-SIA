@@ -14,7 +14,5 @@ if __name__ == "__main__":
     for character in start_population:
         print(f"{character_type} {count}")
         print(character.get_performance())
-        print()
+        print(character)
         count += 1
-
-    print(N, K, crossing_method, selection_method, mutation_method)
