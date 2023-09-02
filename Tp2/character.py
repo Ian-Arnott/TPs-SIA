@@ -25,10 +25,10 @@ class Character(object):
         return 2 + (3 * self._height - 5) ** 4 - (3 * self._height - 5) ** 2 - self._height / 2
 
     def get_attack(self):
-        return (self._stats["agility"] + self._stats["expertise"]) * self._stats["strength"] * self._height
+        return (self._stats["agility"] + self._stats["expertise"]) * self._stats["strength"] * self.get_atm()
 
     def get_defense(self):
-        return (self._stats["endurance"] + self._stats["expertise"]) * self._stats["health"] * self._height
+        return (self._stats["endurance"] + self._stats["expertise"]) * self._stats["health"] * self.get_dem()
 
     def get_performance(self):
         pass
