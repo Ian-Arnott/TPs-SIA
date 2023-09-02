@@ -3,6 +3,7 @@ import random
 class Character(object):
 
     _stats: dict[str, float] = {"strength": 0, "agility": 0, "expertise": 0, "endurance": 0, "health": 0}
+    _items: dict[str, float] = {"strength": 0, "agility": 0, "expertise": 0, "endurance": 0, "health": 0}
     _height = random.uniform(1.3, 2.0)
 
     def get_atm(self):
@@ -10,17 +11,6 @@ class Character(object):
 
     def get_dem(self):
         return 2 + (3 * self._height - 5) ** 4 - (3 * self._height - 5) ** 2 - self._height / 2
-    def pick_stats(self):
-        """ Picks the stats for the character """
-        remaining:int = 150
-        statCount:int = 0
-        for stat in self._stats:
-            if statCount == self._stats.length - 1:
-                self._stats[stat] = remaining
-            else:
-                value:int = random.randint(0, remaining)
-                self._stats[stat] = value;
-                remaining -= value
 
     def get_attack(self):
         return (self._stats["agility"] + self._stats["expertise"]) * self._stats["strength"] * self._height
@@ -30,6 +20,20 @@ class Character(object):
 
     def get_performance(self):
         pass
+
+    def pick_items(self):
+        """ Picks the items for the character """
+        remaining:int = 150
+        itemCount:int = 0
+        for item in self._items:
+            if itemCount == self._items.length - 1:
+                self._items[item] = remaining
+            else:
+                value:int = random.randint(0, remaining)
+                self._items[item] = value;
+                remaining -= value
+
+    
 
 
 class Warrior(Character):
