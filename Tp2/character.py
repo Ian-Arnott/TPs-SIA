@@ -7,15 +7,15 @@ class Character(object):
     _items: dict[str, float] = {"strength": 0, "agility": 0, "expertise": 0, "endurance": 0, "health": 0}
     _height:float
 
-    def __init__(self):
-        """ Initializes the character and generates its stats and height"""
-        self._calculate_stats()
-        self._calculate_height()
-    
     def __init__(self, stats:dict[str, float], height:float):
         """ Initializes the character"""
         self._stats = stats
         self._height = height
+
+    def __init__(self):
+        """ Initializes the character and generates its stats and height"""
+        self._calculate_stats()
+        self._calculate_height()
 
 
     def get_atm(self):
@@ -53,7 +53,7 @@ class Character(object):
         remaining:int = 150
         itemCount:int = 0
         for item in self._items:
-            if itemCount == self._items.length - 1:
+            if itemCount == len(self._items) - 1:
                 self._items[item] = remaining
             else:
                 value:int = random.randint(0, remaining)

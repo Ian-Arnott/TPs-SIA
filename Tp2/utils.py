@@ -2,6 +2,8 @@ CROSSING_METHODS = ["one_point", "double_point", "uniform", "anular"]
 SELECTION_METHODS = ["elite", "roulette", "universal", "boltzmann", "deterministic_tournament", "probabilistic_tournament", "ranking"]
 MUTATION_METHODS = ["one_gen", "multigen"]
 
+CHARACTER_TYPES = ["warrior", "archer", "defender", "infiltrator"]
+
 def validate_positive_int(value, str):
     try:
         value = int(value)
@@ -24,6 +26,9 @@ def get_config_params(config):
     K = config["K"]
     validate_positive_int(K, "K")
 
+    character_type = config["character_type"]
+    validate_method(character_type, CHARACTER_TYPES, "character_type")
+
     crossing_method = config["crossing_method"]
     validate_method(crossing_method, CROSSING_METHODS, "crossing")
 
@@ -33,4 +38,4 @@ def get_config_params(config):
     mutation_method = config["mutation_method"]
     validate_method(mutation_method, MUTATION_METHODS, "mutation")
 
-    return N, K, crossing_method, selection_method, mutation_method
+    return N, K, character_type, crossing_method, selection_method, mutation_method
