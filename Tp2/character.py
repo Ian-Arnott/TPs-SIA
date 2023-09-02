@@ -108,7 +108,6 @@ class Character(object):
 
 
 class Warrior(Character):
-
     def get_performance(self):
         return self.get_attack() * 0.6 + self.get_defense() * 0.4
 
