@@ -12,10 +12,29 @@ class Character(object):
         self._calculate_stats()
         self._calculate_height()
 
-    def __init__(self, stats: dict[str, float], height: float):
-        """ Initializes the character"""
-        self._stats = stats
+    def __init__(self, items: dict[str, float], height: float):
+        """ Initializes the character whith inherited stats and height"""
+        Character._normalize_items(items)
+        self._items = items
+        self._calculate_stats()
         self._height = height
+
+    @staticmethod
+    def _normalize_items(self, items: dict[str, float]):
+        """ Normalizes the items to sum 150 """
+        total:float = 0.0
+        for item in items:
+            total += items[item]
+        
+        if total == 150.0:
+            return
+
+        factor:float = 150.0 / total
+        for item in items:
+            items[item] *= factor
+        
+        
+
 
     def get_atm(self):
         return 0.5 - (3 * self._height - 5) ** 4 + (3 * self._height - 5) ** 2 + self._height / 2
