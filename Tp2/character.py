@@ -77,28 +77,24 @@ class Character(object):
 
 
 class Warrior(Character):
-    _stats: dict[str, float] = {"strength": 0, "agility": 0, "expertise": 0, "endurance": 0, "health": 0}
 
     def get_performance(self):
         return self.get_attack() * 0.6 + self.get_defense() * 0.4
 
 
 class Archer(Character):
-    _stats: dict[str, float] = {"strength": 0, "agility": 0, "expertise": 0, "endurance": 0, "health": 0}
 
     def get_performance(self):
         return self.get_attack() * 0.9 + self.get_defense() * 0.1
 
 
 class Defender(Character):
-    _stats: dict[str, float] = {"strength": 0, "agility": 0, "expertise": 0, "endurance": 0, "health": 0}
 
     def get_performance(self):
         return self.get_attack() * 0.1 + self.get_defense() * 0.9
 
 
 class Infiltrator(Character):
-    _stats: dict[str, float] = {"strength": 0, "agility": 0, "expertise": 0, "endurance": 0, "health": 0}
 
     def get_performance(self):
         return self.get_attack() * 0.8 + self.get_defense() * 0.3
