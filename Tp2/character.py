@@ -7,13 +7,9 @@ class Character(object):
     _items: dict[str, float] = {"strength": 0, "agility": 0, "expertise": 0, "endurance": 0, "health": 0}
     _height: float
 
-    def __init__(self, stats:dict[str, float], height:float):
-        """ Initializes the character"""
-        self._stats = stats
-        self._height = height
 
     def __init__(self, items: dict[str, float], height: float):
-        """ Initializes the character whith inherited stats and height"""
+        """ Initializes the character whith inherited items and height"""
         Character._normalize_items(items)
         self._items = items
         self._calculate_stats()
@@ -39,8 +35,6 @@ class Character(object):
             items[item] *= factor
         
         
-
-
     def get_atm(self):
         return 0.5 - (3 * self._height - 5) ** 4 + (3 * self._height - 5) ** 2 + self._height / 2
 
