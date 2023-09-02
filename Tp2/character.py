@@ -119,11 +119,17 @@ class Warrior(Character):
     def get_performance(self):
         return self.get_attack() * 0.6 + self.get_defense() * 0.4
 
+    def __lt__(self, other):
+        return self.get_performance < other.get_performance
+
 
 class Archer(Character):
 
     def get_performance(self):
         return self.get_attack() * 0.9 + self.get_defense() * 0.1
+
+    def __lt__(self, other):
+        return self.get_performance < other.get_performance
 
 
 class Defender(Character):
@@ -131,8 +137,14 @@ class Defender(Character):
     def get_performance(self):
         return self.get_attack() * 0.1 + self.get_defense() * 0.9
 
+    def __lt__(self, other):
+        return self.get_performance < other.get_performance
+
 
 class Infiltrator(Character):
 
     def get_performance(self):
         return self.get_attack() * 0.8 + self.get_defense() * 0.3
+
+    def __lt__(self, other):
+        return self.get_performance < other.get_performance

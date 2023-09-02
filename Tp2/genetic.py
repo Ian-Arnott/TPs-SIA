@@ -17,6 +17,23 @@ def generate_start_population(N, character_type):
 
     return population
 
+def elite(population, k):
+    n = population.size
+    population = sorted(population)
+    # CHECK: el segundo caso resuleve el primero??
+    if K <= N:
+        new_pop = population[:k]
+    else:     
+        for i in range(n):
+            total = math.ceil((k - i) / n)
+            new_pop = population
+            for _ in range(total):
+                if len(new_pop) == k:
+                    return new_pop
+                new_pop.append(population[i])
+
+    return new_pop
+
 def one_point_crossover(parent1: list[float], parent2:list[float]) -> tuple[list[float], list[float]]:
     genes1 = parent1.get_genotype()
     genes2 = parent2.get_genotype()

@@ -38,9 +38,14 @@ def get_config_params(config):
     mutation_method = config["mutation_method"]
     validate_method(mutation_method, MUTATION_METHODS, "mutation")
 
-    # TODO: Validar que sean menores a K, etc
     A = config["A"]
+
+    if A > K:
+        return -1
+
     B = config["B"]
     
+    if B > K:
+        return -1
 
     return N, K, character_type, crossing_method, selection_method, mutation_method, A, B
