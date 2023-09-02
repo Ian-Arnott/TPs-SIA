@@ -1,0 +1,7 @@
+{
+    "N": 100, 
+    "K": 100,
+    "selection_method": "elite", 
+    "crossing_method": "one_point",
+    "mutation_method": "multigen"
+}
