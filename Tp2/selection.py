@@ -28,7 +28,7 @@ def roulette(population, n, k):
 
     else:
         new_population = []
-        for i in range(k):
+        for _ in range(k):
             rnd = random.uniform(0, sum_fitness)
             sum_aux = 0
 
@@ -79,5 +79,29 @@ def probabilistic_tournament(population, k, thr):
             new_population.append(selected_characters[0])
         else:
             new_population.append(selected_characters[1])
+
+    return new_population
+
+def calculate_temperature(i):
+    #TODO: agregar a config
+    Tc=0.01     # Critical temperature
+    T0=10       # Initial temperature
+    k=2         # Decreasing factor (constant)
+    return Tc + (T0-Tc)*math.exp(-k*i)
+
+def boltzmann(population, n, k, generation):
+    temperature = calculate_temperature(generation)
+    new_population = []
+
+    for _ in range(k):
+        probabilities = [math.exp(individual.fitness / temperature) for individual in population] # e^(fitness(i)/temperature)	
+
+        total_probability = sum(probabilities)
+        expected_value = [p / total_probability for p in probabilities]
+        
+        selected_index = random.choices(range(n), weights=expected_value, k=1)[0]
+        selected_individual = population[selected_index]
+
+        new_population.append(selected_individual)
 
     return new_population
