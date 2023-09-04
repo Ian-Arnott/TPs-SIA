@@ -60,4 +60,6 @@ def get_config_params(config):
     B = config["B"]
     validate_selection_params(B, K, "B")
 
-    return N, K, M, threshold,character_type, crossing_method, selection_method, mutation_method, A, B
+    p_m = config["p_m"]
+
+    return N, K, M, threshold,character_type, crossing_method, selection_method, mutation_method, A, B, p_m

@@ -37,7 +37,10 @@ class Character(object):
         factor:float = 150.0 / total
         for item in items:
             items[item] *= factor
-        
+
+    def normalize_items(self):
+        Character._normalize_items(self._items)
+        self._stats = self._calculate_stats()
         
     def get_atm(self):
         return 0.5 - (3 * self._height - 5) ** 4 + (3 * self._height - 5) ** 2 + self._height / 2
@@ -56,6 +59,12 @@ class Character(object):
 
     def get_height(self):
         return self._height
+    
+    def set_height(self, height):
+        self._height = height
+    
+    def get_items(self):
+        return self._items
 
     @staticmethod
     def _calculate_height():

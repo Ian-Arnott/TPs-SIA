@@ -4,16 +4,19 @@ from character import Character
 from genetic import generate_start_population
 from crossover import anular_crossover
 from selection import elite, deterministic_tournament, probabilistic_tournament, roulette, universal
+from mutation import uniform_multigen, limited_multigen, complete_mutation
 
 if __name__ == "__main__":
     with open('./config.json', 'r') as f:
         config = json.load(f)
 
-    n, k, m, threshold, character_type, crossing_method, selection_method, mutation_method, A, B = get_config_params(
+    n, k, m, threshold, character_type, crossing_method, selection_method, mutation_method, A, B, p_m = get_config_params(
         config)
 
     start_population = generate_start_population(n, character_type)
-
+    print("Start population:")
+    for i in range(n):
+        print(start_population[i].get_performance())
     # ======================== CROSSOVER ========================
     # print(start_population[0].get_genotype());
     # print(start_population[1].get_genotype());
@@ -26,11 +29,12 @@ if __name__ == "__main__":
     # print(Character.from_genotype(gen1));
     # print(Character.from_genotype(gen2));
 
+    # ======================== MUTATION  ========================
+    # uniform_multigen(start_population, p_m)
+    # complete_mutation(start_population, p_m)
+    limited_multigen(start_population,p_m)
+    
     # ======================== SELECTION ========================
-    print("Start population:")
-    for i in range(n):
-        print(start_population[i].get_performance())
-
     # print("\nElite:")
     # new_population = elite(start_population, n, k)
 
