@@ -1,19 +1,22 @@
-import selection
+import crossover
+import mutation
 
-CROSSING_METHODS = ["one_point", "double_point", "uniform", "anular"]
+CROSSOVER_METHODS = ["one_point", "double_point", "uniform", "anular"]
+CROSSOVER_METHODS_MAP = {
+    "one_point": crossover.one_point_crossover,
+    "double_point": crossover.two_point_crossover,
+    "uniform": crossover.uniform_crossover,
+    "anular": crossover.anular_crossover
+}
 SELECTION_METHODS = ["elite", "roulette", "universal", "boltzmann", "deterministic_tournament", "probabilistic_tournament", "ranking"]
-MUTATION_METHODS = ["one_gen", "multigen"]
+MUTATION_METHODS = ["uniform_multigen", "complete_mutation", "limited_multigen"]
+MUTATION_METHODS_MAP = {
+    "uniform_multigen": mutation.uniform_multigen,
+    "complete_mutation": mutation.complete_mutation,
+    "limited_multigen": mutation.limited_multigen
+}
 CHARACTER_TYPES = ["warrior", "archer", "defender", "infiltrator"]
 
-SELECTION_METHODS_MAP = {
-    "elite": selection.elite,
-    "roulette": selection.roulette,
-    "universal": selection.universal,
-    "boltzmann": selection.boltzmann,
-    "deterministic_tournament": selection.deterministic_tournament,
-    "probabilistic_tournament": selection.probabilistic_tournament,
-    # "ranking"
-}
 
 def validate_positive_int(value, str):
     try:
@@ -56,8 +59,8 @@ def get_config_params(config):
     character_type = config["character_type"]
     validate_method(character_type, CHARACTER_TYPES, "character_type")
 
-    crossing_method = config["crossing_method"]
-    validate_method(crossing_method, CROSSING_METHODS, "crossing")
+    crossover_method = config["crossing_method"]
+    validate_method(crossover_method, CROSSOVER_METHODS, "crossing")
 
     # selection_method_1 = config["selection_method_1"]
     # validate_method(selection_method_1, SELECTION_METHODS, "selection")
@@ -79,13 +82,13 @@ def get_config_params(config):
     validate_method(mutation_method, MUTATION_METHODS, "mutation")
 
     A = config["A"]
-    validate_selection_params(A, K, "A")
+    validate_selection_params(A, 1, "A")
 
     B = config["B"]
-    validate_selection_params(B, K, "B")
+    validate_selection_params(B, 1, "B")
 
     p_m = config["p_m"]
 
 
-    return N, K, M, threshold,character_type, crossing_method, selection_methods[0], selection_methods[1], \
-    selection_methods[2], selection_methods[3], mutation_method, A, B, p_m
+    return N, K, M, threshold,character_type, CROSSOVER_METHODS_MAP[crossover_method], selection_methods[0], selection_methods[1], \
+    selection_methods[2], selection_methods[3], MUTATION_METHODS_MAP[mutation_method], A, B, p_m

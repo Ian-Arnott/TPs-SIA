@@ -112,7 +112,7 @@ def ranking(population, n, k):
     population.sort(key=lambda x: x.get_performance(), reverse=True)
 
     rankings = []
-    total = 0;
+    total = 0
 
     for i in range(n):
         pseudo_fitness = (n - (i-1))/n

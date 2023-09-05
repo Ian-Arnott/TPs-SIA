@@ -10,7 +10,7 @@
     "selection_method_4": "elite",  
     "crossing_method": "one_point",
     "mutation_method": "multigen",
-    "A": 5,
-    "B": 5,
+    "A": 0.5,
+    "B": 0.5,
     "p_m": 0.1
 }
