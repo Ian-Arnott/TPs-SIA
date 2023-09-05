@@ -121,7 +121,7 @@ class Character(object):
         return genes 
 
     def __str__(self):
-        return f"Character: \nStats: {self._stats} \nItems: {self._items} \nHeight:{self._height}\n"
+        return f"Character: \nStats: {self._stats} \nItems: {self._items} \nHeight:{self._height}\n" 
 
 
 class Warrior(Character):

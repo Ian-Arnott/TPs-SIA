@@ -1,6 +1,6 @@
 {
     "N": 10, 
-    "K": 5,
+    "K": 6,
     "M": 3,
     "threshold": 0.7,
     "character_type": "archer",
@@ -9,7 +9,7 @@
     "selection_method_3": "elite", 
     "selection_method_4": "elite",  
     "crossing_method": "one_point",
-    "mutation_method": "multigen",
+    "mutation_method": "uniform_multigen",
     "A": 0.5,
     "B": 0.5,
     "p_m": 0.1

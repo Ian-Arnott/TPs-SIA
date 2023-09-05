@@ -76,18 +76,21 @@ if __name__ == "__main__":
 
     i:int = 0
     generation = 0 
+    previous_population = start_population
     while i < 100:  #TODO: Cambiar a parámetros de corte
         # 2. Generate new population
         method1_count = math.ceil(A * k)
         method2_count = k - method1_count
 
-        method1_selection = select(selection_method_1, start_population, n, method1_count, m, threshold, generation)
-        method2_selection = select(selection_method_2, start_population, n, method2_count, m, threshold, generation)
+        method1_selection = select(selection_method_1, previous_population, n, method1_count, m, threshold, generation)
+        method2_selection = select(selection_method_2, previous_population, n, method2_count, m, threshold, generation)
         selected_population = method1_selection + method2_selection
+        print("Selected population size: " + str(len(selected_population)))
 
         # 3. Crossover
         children = []
         for i in range(0, k, 2):
+            #print(str(i) + ", " + str(i+1))
             child_1_genotype, child_2_genotype = anular_crossover(selected_population[i], selected_population[i+1])
             children.append(Character.from_genotype(child_1_genotype))
             children.append(Character.from_genotype(child_2_genotype))
@@ -98,11 +101,20 @@ if __name__ == "__main__":
         # 5. #TODO: Replacement
         method3_count = math.ceil(B * n)
         method4_count = n - method3_count
-        parents_and_children = selected_population + children
+        parents_and_children = previous_population + children
 
-        method3_selection = select(selection_method_3, parents_and_children, n, method3_count, m, threshold, generation)
-        method4_selection = select(selection_method_4, parents_and_children, n, method4_count, m, threshold, generation)
+        print("\n\n\nParents and children size: " + str(len(parents_and_children)))
+        i = 0
+        for c in parents_and_children:
+            print("i: "  + str(i))
+            i += 1
+            print(c)
 
+        method3_selection = select(selection_method_3, parents_and_children, n + k, method3_count, m, threshold, generation)
+        method4_selection = select(selection_method_4, parents_and_children, n + k, method4_count, m, threshold, generation)
+        # El array final deberia tener nuevamente n individuos despues del reemplazo
+
+        previous_population = method3_selection + method4_selection #TODO: Reemplazo
 
         generation += 1
         i += 1

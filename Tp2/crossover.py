@@ -6,7 +6,6 @@ def one_point_crossover(parent1: list[float], parent2:list[float]) -> tuple[list
     genes2 = parent2.get_genotype()
 
     p = random.randint(0, len(genes1) - 1)
-    print("Crossover point: ", str(p))
 
     child1 = genes1[:p] + genes2[p:]
     child2 = genes2[:p] + genes1[p:]
@@ -52,9 +51,6 @@ def anular_crossover(parent1: list[float], parent2: list[float]) -> tuple[list[f
     p = random.randint(0, len(genes1) - 1)
     length = random.randint(0, math.ceil(len(genes1)/2))
     length = min(length, len(genes1) - p)
-
-    print("Crossover point: ", str(p))
-    print("Length: ", str(length))
 
     child1 = genes1[:p] + genes2[p:p+length] + genes1[p+length:]
     child2 = genes2[:p] + genes1[p:p+length] + genes2[p+length:]
