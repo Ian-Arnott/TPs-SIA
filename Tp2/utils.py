@@ -1,8 +1,19 @@
+import selection
+
 CROSSING_METHODS = ["one_point", "double_point", "uniform", "anular"]
 SELECTION_METHODS = ["elite", "roulette", "universal", "boltzmann", "deterministic_tournament", "probabilistic_tournament", "ranking"]
 MUTATION_METHODS = ["one_gen", "multigen"]
-
 CHARACTER_TYPES = ["warrior", "archer", "defender", "infiltrator"]
+
+SELECTION_METHODS_MAP = {
+    "elite": selection.elite,
+    "roulette": selection.roulette,
+    "universal": selection.universal,
+    "boltzmann": selection.boltzmann,
+    "deterministic_tournament": selection.deterministic_tournament,
+    "probabilistic_tournament": selection.probabilistic_tournament,
+    # "ranking"
+}
 
 def validate_positive_int(value, str):
     try:
@@ -48,8 +59,21 @@ def get_config_params(config):
     crossing_method = config["crossing_method"]
     validate_method(crossing_method, CROSSING_METHODS, "crossing")
 
-    selection_method = config["selection_method"]
-    validate_method(selection_method, SELECTION_METHODS, "selection")
+    # selection_method_1 = config["selection_method_1"]
+    # validate_method(selection_method_1, SELECTION_METHODS, "selection")
+
+    # selection_method_2 = config["selection_method_2"]
+    # validate_method(selection_method_2, SELECTION_METHODS, "selection")
+
+    # selection_method_3 = config["selection_method_3"]
+    # validate_method(selection_method_3, SELECTION_METHODS, "selection")
+
+    # selection_method_4 = config["selection_method_4"]
+    # validate_method(selection_method_4, SELECTION_METHODS, "selection")
+    selection_methods = [config["selection_method_1"], config["selection_method_2"], config["selection_method_3"], config["selection_method_4"]]
+    for method in selection_methods:
+        validate_method(method, SELECTION_METHODS, "selection")
+
 
     mutation_method = config["mutation_method"]
     validate_method(mutation_method, MUTATION_METHODS, "mutation")
@@ -62,4 +86,6 @@ def get_config_params(config):
 
     p_m = config["p_m"]
 
-    return N, K, M, threshold,character_type, crossing_method, selection_method, mutation_method, A, B, p_m
+
+    return N, K, M, threshold,character_type, crossing_method, selection_methods[0], selection_methods[1], \
+    selection_methods[2], selection_methods[3], mutation_method, A, B, p_m

@@ -82,7 +82,7 @@ def probabilistic_tournament(population, k, thr):
 
     return new_population
 
-def calculate_temperature(i):
+def _calculate_temperature(i):
     #TODO: agregar a config
     Tc=0.01     # Critical temperature
     T0=10       # Initial temperature
@@ -90,7 +90,7 @@ def calculate_temperature(i):
     return Tc + (T0-Tc)*math.exp(-k*i)
 
 def boltzmann(population, n, k, generation):
-    temperature = calculate_temperature(generation)
+    temperature = _calculate_temperature(generation)
     new_population = []
 
     for _ in range(k):
