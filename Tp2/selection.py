@@ -11,7 +11,6 @@ def elite(population, n, k):
         new_population = []
         for i in range(k):
             repetitions = math.ceil((k - i) / n)
-            # print(f"i {i} | n(i) = {repetitions}")
             for _ in range(repetitions):
                 if len(new_population) == k:
                     return new_population
@@ -89,6 +88,7 @@ def _calculate_temperature(i):
     k=2         # Decreasing factor (constant)
     return Tc + (T0-Tc)*math.exp(-k*i)
 
+
 def boltzmann(population, n, k, generation):
     temperature = _calculate_temperature(generation)
     new_population = []
@@ -103,5 +103,24 @@ def boltzmann(population, n, k, generation):
         selected_individual = population[selected_index]
 
         new_population.append(selected_individual)
+
+    return new_population
+
+
+def ranking(population, n, k):
+    new_population = []
+    population.sort(key=lambda x: x.get_performance(), reverse=True)
+
+    rankings = []
+    total = 0;
+
+    for i in range(n):
+        pseudo_fitness = (n - (i-1))/n
+        rankings.append(pseudo_fitness)
+        total += pseudo_fitness
+
+    rankings = [r / total for r in rankings]
+    
+    new_population = random.choices(population, weights=rankings, k=k)
 
     return new_population
