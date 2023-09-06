@@ -1,10 +1,50 @@
 import random
 import math
+from character_class import Warrior, Archer, Defender, Infiltrator
+
+def limited_multigen(population, p_m):
+    for character in population:
+        if random.uniform(0,1) < 1:
+            M = random.randint(1, 7)
+            genes = random.sample(range(1,8), M)
+            #print(genes)            
+
+            stats = {
+                1: "strength",
+                2: "agility",
+                3: "expertise",
+                4: "endurance",
+                5: "health"
+            }
+
+            for gene in genes:
+                if gene == 6:
+                    character.set_height(random.uniform(1.3,2))
+                elif gene >= 1 and gene <= 5:
+                    character.get_items()[stats[gene]] += random.randint(-1,1)
+                    character.normalize_items()
+                else:
+                    clases = {
+                        1: Warrior,
+                        2: Archer,
+                        3: Defender,
+                        4: Infiltrator,
+                    }
+                    character.set_class(clases[random.randint(1,4)])
 
 def uniform_multigen(population, p_m):
     for character in population:
         if random.uniform(0,1) < p_m:
             character.set_height(random.uniform(1.3,2))
+        
+        if random.uniform(0,1) < p_m:
+            clases = {
+                1: Warrior,
+                2: Archer,
+                3: Defender,
+                4: Infiltrator,
+            }
+            character.set_class(clases[random.randint(1,4)])
         
         for item in character.get_items():
             #print(character.get_items()[item])
@@ -21,27 +61,13 @@ def complete_mutation(population, p_m):
                 character.get_items()[item] += random.randint(-1,1)
             character.normalize_items()
 
-def limited_multigen(population, p_m):
-    for character in population:
-        if random.uniform(0,1) < 1:
-            M = random.randint(1, 6)
-            genes = random.sample(range(1,7), M)
-            #print(genes)
-
-            stats = {
-                1: "strength",
-                2: "agility",
-                3: "expertise",
-                4: "endurance",
-                5: "health"
+            clases = {
+                1: Warrior,
+                2: Archer,
+                3: Defender,
+                4: Infiltrator,
             }
-
-            for gene in genes:
-                if gene == 6:
-                    character.set_height(random.uniform(1.3,2))
-                else:
-                    character.get_items()[stats[gene]] += random.randint(-1,1)
-            character.normalize_items()
+            character.set_class(clases[random.randint(1,4)])
 
 
                     

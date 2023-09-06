@@ -1,4 +1,5 @@
-from character import Archer, Warrior, Defender, Infiltrator
+from character_class import Archer, Warrior, Defender, Infiltrator
+from character import Character
 
 
 def generate_start_population(N, character_type):
@@ -12,6 +13,6 @@ def generate_start_population(N, character_type):
     if character_type not in character_classes:
         raise ValueError(f"Invalid character_type: {character_type}")
 
-    population = [character_classes[character_type]() for _ in range(N)]
+    population = [Character(character_classes[character_type]) for _ in range(N)]
 
     return population
