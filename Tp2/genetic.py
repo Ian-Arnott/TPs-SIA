@@ -34,10 +34,24 @@ def select(method, population, n, k, m, thr, generation):
         return probabilistic_tournament(population, k, thr)
     if method == "boltzmann":
         return boltzmann(population, n, k, generation)
-    
-def check_end_condition(population, previous_population, generation, max_generations, delta):
+
+
+def check_structural_end_condition(population, previous_population, delta):
+    #TODO: ver si esto sirve como corte por estructura o es mas por contenido
+    avg_performance = sum([character.get_performance() for character in population]) / len(population)
+    avg_previous_performance = sum([character.get_performance() for character in previous_population]) / len(previous_population)
+    return abs(avg_performance - avg_previous_performance) < delta
+
+
+def check_end_condition(population, previous_population, generation, generations_without_change, max_generations, max_generations_without_change, delta):
 
     if (generation >= max_generations):
-        return True, "Max generations reached"
+        return True, "Max generations reached", generations_without_change
+    
+    if check_structural_end_condition(population, previous_population, delta):
+        if generations_without_change >= max_generations_without_change:
+            return True, "Structural end condition reached", generations_without_change
+        else:
+            return False, None, generations_without_change + 1
 
-    return False, None
+    return False, None, generations_without_change

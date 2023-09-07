@@ -115,7 +115,11 @@ def get_config_params(config):
     max_generations = config["max_generations"]
     validate_positive_int(max_generations, "max_generations")
 
+    max_generations_without_change = config["max_generations_without_change"]
+    validate_positive_int(max_generations_without_change, "max_generations_without_change")
+
     delta = config["delta"]
 
     return N, K, M, threshold,character_type, CROSSOVER_METHODS_MAP[crossover_method], selection_methods[0], selection_methods[1], \
-    selection_methods[2], selection_methods[3], MUTATION_METHODS_MAP[mutation_method], NEW_GENERATION_METHODS_MAP[new_generation_method], gene, A, B, p_m, max_generations, delta
+    selection_methods[2], selection_methods[3], MUTATION_METHODS_MAP[mutation_method], NEW_GENERATION_METHODS_MAP[new_generation_method], \
+        gene, A, B, p_m, max_generations, max_generations_without_change, delta

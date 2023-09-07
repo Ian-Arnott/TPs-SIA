@@ -10,14 +10,15 @@ if __name__ == "__main__":
 
     n, k, m, threshold, character_type, crossover_method, selection_method_1, selection_method_2, \
         selection_method_3, selection_method_4, mutation_method, new_generation_method, gene, \
-            A, B, p_m, max_generations, delta = get_config_params(config)
+            A, B, p_m, max_generations, max_generations_without_change, delta = get_config_params(config)
 
     # 1. Generate start population
     start_population = generate_start_population(n, character_type)
 
     end = False
     end_condition = None
-    generation = 0 
+    generation = 0
+    generations_without_change = 0 
     previous_population = start_population
     while not end:
         print("Generation " + str(generation))
@@ -55,16 +56,10 @@ if __name__ == "__main__":
         #TODO: sorting por fitness - no se si es necesario
         new_population = new_generation_method(previous_population, children, k, n)
 
-        end, end_condition = check_end_condition(previous_population, new_population, generation, max_generations, delta)
+        end, end_condition, generations_without_change = check_end_condition(previous_population, new_population, generation, generations_without_change, max_generations, max_generations_without_change,delta)
 
         previous_population = new_population
 
         generation += 1
     
     print("Finished algorithm by end condition: " + end_condition)
-
-    # i = 0
-    # for c in previous_population:
-    #     print("i: "  + str(i))
-    #     i += 1
-    #     print(c)

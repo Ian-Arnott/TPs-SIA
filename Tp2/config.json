@@ -19,5 +19,6 @@
     "T0": 10,
     "k": 2,
     "max_generations": 100,
+    "max_generations_without_change": 5,
     "delta": 0.01
 }
