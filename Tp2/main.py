@@ -78,7 +78,7 @@ if __name__ == "__main__":
         i += 1
     
     i = 0
-    for c in parents_and_children:
+    for c in previous_population:
         print("i: "  + str(i))
         i += 1
         print(c)
