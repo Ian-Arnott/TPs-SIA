@@ -2,25 +2,7 @@ import json
 import math
 from utils import get_config_params
 from character import Character
-from genetic import generate_start_population
-from crossover import anular_crossover
-from selection import elite, deterministic_tournament, probabilistic_tournament, roulette, universal, ranking, boltzmann
-
-def select(method, population, n, k, m, thr, generation):
-    if method == "elite":
-        return elite(population, n, k)
-    if method == "roulette":
-        return roulette(population, n, k)
-    if method == "universal":
-        return universal(population, n, k)
-    if method == "ranking":
-       return ranking(population, n, k)
-    if method == "deterministic_tournament":
-        return deterministic_tournament(population, k, m)
-    if method == "probabilistic_tournament":
-        return probabilistic_tournament(population, k, thr)
-    if method == boltzmann:
-        return boltzmann(population, n, k, generation)
+from genetic import generate_start_population, select
 
 if __name__ == "__main__":
     with open('./config.json', 'r') as f:
