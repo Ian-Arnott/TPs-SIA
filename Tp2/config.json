@@ -9,7 +9,7 @@
     "selection_method_3": "elite", 
     "selection_method_4": "elite",  
     "crossing_method": "one_point",
-    "mutation_method": "gene_mutation",
+    "mutation_method": "uniform_multigen",
     "gene": "class",
     "A": 0.5,
     "B": 0.5,

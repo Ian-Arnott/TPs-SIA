@@ -3,9 +3,9 @@ import random
 
 
 def elite(population, n, k):        
-    print("\n\n\n\nelite:\n")
-    for character in population:
-        print(character)
+    # print("\n\n\n\nelite:\n")
+    # for character in population:
+    #     print(character)
 
     population.sort(key=lambda x: x.get_performance(), reverse=True)
 
