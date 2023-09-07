@@ -43,12 +43,10 @@ if __name__ == "__main__":
         method1_selection = select(selection_method_1, previous_population, n, method1_count, m, threshold, generation)
         method2_selection = select(selection_method_2, previous_population, n, method2_count, m, threshold, generation)
         selected_population = method1_selection + method2_selection
-        print("Gen "+str(i)+", selected population size: "+str(len(selected_population)))
 
         # 3. Crossover
         children = []
         for j in range(0, k, 2):
-            #print(str(i) + ", " + str(i+1))
             child_1_genotype, child_2_genotype = crossover_method(selected_population[j], selected_population[j+1])
             children.append(Character.from_genotype(child_1_genotype))
             children.append(Character.from_genotype(child_2_genotype))
@@ -61,12 +59,6 @@ if __name__ == "__main__":
         method4_count = n - method3_count
         parents_and_children = previous_population + children
 
-        # print("\n\n\nParents and children size: " + str(len(parents_and_children)))
-        # i = 0
-        # for c in parents_and_children:
-        #     print("i: "  + str(i))
-        #     i += 1
-        #     print(c)
 
         method3_selection = select(selection_method_3, parents_and_children, n + k, method3_count, m, threshold, generation)
         method4_selection = select(selection_method_4, parents_and_children, n + k, method4_count, m, threshold, generation)
@@ -77,8 +69,8 @@ if __name__ == "__main__":
         generation += 1
         i += 1
     
-    i = 0
-    for c in previous_population:
-        print("i: "  + str(i))
-        i += 1
-        print(c)
+    # i = 0
+    # for c in previous_population:
+    #     print("i: "  + str(i))
+    #     i += 1
+    #     print(c)

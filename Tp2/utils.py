@@ -45,9 +45,9 @@ def validate_method(value, methods, str):
         print(f"Invalid {str} method")
         exit(1)
 
-def validate_selection_params(x, k, str):
-    if x > k:
-        print(f"{str} must be greater than k={k}")
+def validate_selection_params(x, str):
+    if x < 0 or x > 1:
+        print(f"{str} must be between 0 and 1")
         exit(1)
 
 def validate_threshold(thr, str):
@@ -87,10 +87,10 @@ def get_config_params(config):
     validate_method(gene, GENES, "gene")
 
     A = config["A"]
-    validate_selection_params(A, 1, "A")
+    validate_selection_params(A, "A")
 
     B = config["B"]
-    validate_selection_params(B, 1, "B")
+    validate_selection_params(B, "B")
 
     p_m = config["p_m"]
 
