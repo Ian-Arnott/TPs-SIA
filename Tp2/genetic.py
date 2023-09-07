@@ -32,5 +32,5 @@ def select(method, population, n, k, m, thr, generation):
         return deterministic_tournament(population, k, m)
     if method == "probabilistic_tournament":
         return probabilistic_tournament(population, k, thr)
-    if method == boltzmann:
+    if method == "boltzmann":
         return boltzmann(population, n, k, generation)

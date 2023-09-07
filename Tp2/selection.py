@@ -1,12 +1,9 @@
 import math
 import random
+from utils import get_boltzmann_params
 
 
 def elite(population, n, k):        
-    # print("\n\n\n\nelite:\n")
-    # for character in population:
-    #     print(character)
-
     population.sort(key=lambda x: x.get_performance(), reverse=True)
 
     if k <= n:
@@ -86,10 +83,7 @@ def probabilistic_tournament(population, k, thr):
     return new_population
 
 def _calculate_temperature(i):
-    #TODO: agregar a config
-    Tc=0.01     # Critical temperature
-    T0=10       # Initial temperature
-    k=2         # Decreasing factor (constant)
+    Tc, T0, k = get_boltzmann_params()
     return Tc + (T0-Tc)*math.exp(-k*i)
 
 
@@ -98,7 +92,7 @@ def boltzmann(population, n, k, generation):
     new_population = []
 
     for _ in range(k):
-        probabilities = [math.exp(individual.fitness / temperature) for individual in population] # e^(fitness(i)/temperature)	
+        probabilities = [math.exp(individual.get_performance() / temperature) for individual in population] # e^(fitness(i)/temperature)	
 
         total_probability = sum(probabilities)
         expected_value = [p / total_probability for p in probabilities]

@@ -4,8 +4,8 @@
     "M": 3,
     "threshold": 0.7,
     "character_type": "archer",
-    "selection_method_1": "elite",
-    "selection_method_2": "elite", 
+    "selection_method_1": "boltzmann",
+    "selection_method_2": "boltzmann", 
     "selection_method_3": "elite", 
     "selection_method_4": "elite",  
     "crossing_method": "one_point",
@@ -13,5 +13,8 @@
     "gene": "class",
     "A": 0.5,
     "B": 0.5,
-    "p_m": 0.1
+    "p_m": 0.1,
+    "Tc": 0.1,
+    "T0": 10,
+    "k": 2
 }

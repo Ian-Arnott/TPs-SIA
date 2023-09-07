@@ -1,6 +1,7 @@
 import crossover
 import mutation
 import new_generation
+import json
 
 CROSSOVER_METHODS = ["one_point", "double_point", "uniform", "anular"]
 CROSSOVER_METHODS_MAP = {
@@ -54,6 +55,20 @@ def validate_threshold(thr, str):
     if thr < 0.5 or thr > 1:
         print(f"{str} must be between 0.5 and 1")
         exit(1)
+
+def get_boltzmann_params():
+    with open('./config.json', 'r') as f:
+        config = json.load(f)
+
+    Tc = config["Tc"] # Critical Temperature
+
+    T0 = config["T0"] # Initial Temperature
+    validate_positive_int(T0, "T0")
+
+    k = config["k"] # Decay constant
+    validate_positive_int(k, "k")
+
+    return Tc, T0, k
     
 
 def get_config_params(config):
