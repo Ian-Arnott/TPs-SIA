@@ -1,5 +1,4 @@
 import random
-import math
 from character_class import Warrior, Archer, Defender, Infiltrator
 
 def gene_mutation(population, p_m, gene):
@@ -25,7 +24,6 @@ def limited_multigen(population, p_m, _):
         if random.uniform(0,1) < p_m:
             M = random.randint(1, 7)
             genes = random.sample(range(1,8), M)
-            #print(genes)            
 
             stats = {
                 1: "strength",
@@ -65,7 +63,6 @@ def uniform_multigen(population, p_m, _):
             character.set_class(clases[random.randint(1,4)])
         
         for item in character.get_items():
-            #print(character.get_items()[item])
             if random.uniform(0,1) < p_m:
                 character.get_items()[item] += random.randint(-1,1)
         character.normalize_items()

@@ -72,6 +72,9 @@ class Character(object):
     def get_items(self):
         return self._items
     
+    def get_stats(self):
+        return self._stats
+    
     def set_class(self, character_class):
         self._class = character_class
 

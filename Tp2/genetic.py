@@ -37,7 +37,12 @@ def select(method, population, n, k, m, thr, generation):
 
 
 def check_structural_end_condition(population, previous_population, delta):
-    #TODO: ver si esto sirve como corte por estructura o es mas por contenido
+    avg_stats = sum([sum(character.get_stats().values()) for character in population]) / len(population)
+    avg_previous_stats = sum([sum(character.get_stats().values()) for character in previous_population]) / len(previous_population)
+    return abs(avg_stats - avg_previous_stats) < delta
+
+
+def check_content_end_condition(population, previous_population, delta):
     avg_performance = sum([character.get_performance() for character in population]) / len(population)
     avg_previous_performance = sum([character.get_performance() for character in previous_population]) / len(previous_population)
     return abs(avg_performance - avg_previous_performance) < delta
@@ -51,6 +56,12 @@ def check_end_condition(population, previous_population, generation, generations
     if check_structural_end_condition(population, previous_population, delta):
         if generations_without_change >= max_generations_without_change:
             return True, "Structural end condition reached", generations_without_change
+        else:
+            return False, None, generations_without_change + 1
+        
+    if check_content_end_condition(population, previous_population, delta):
+        if generations_without_change >= max_generations_without_change:
+            return True, "Content end condition reached", generations_without_change
         else:
             return False, None, generations_without_change + 1
 
