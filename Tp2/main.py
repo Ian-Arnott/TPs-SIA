@@ -26,7 +26,7 @@ if __name__ == "__main__":
     with open('./config.json', 'r') as f:
         config = json.load(f)
 
-    n, k, m, threshold, character_type, crossover_method, selection_method_1, selection_method_2, selection_method_3, gene, selection_method_4, mutation_method, A, B, p_m = get_config_params(
+    n, k, m, threshold, character_type, crossover_method, selection_method_1, selection_method_2, selection_method_3, selection_method_4, mutation_method, gene, A, B, p_m = get_config_params(
         config)
 
     # 1. Generate start population

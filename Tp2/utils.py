@@ -83,8 +83,8 @@ def get_config_params(config):
     validate_method(mutation_method, MUTATION_METHODS, "mutation")
 
     # elegir el gen que se muta en la funcion gene_mutation
-    gene = config["gen"]
-    validate_method(gene, GENES, "gen")
+    gene = config["gene"]
+    validate_method(gene, GENES, "gene")
 
     A = config["A"]
     validate_selection_params(A, 1, "A")
