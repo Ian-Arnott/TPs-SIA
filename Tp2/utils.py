@@ -97,6 +97,9 @@ def get_config_params(config):
     mutation_method = config["mutation_method"]
     validate_method(mutation_method, MUTATION_METHODS, "mutation")
 
+    new_generation_method = config["new_generation_method"]
+    validate_method(new_generation_method, NEW_GENERATION_METHODS, "new_generation")
+
     # elegir el gen que se muta en la funcion gene_mutation
     gene = config["gene"]
     validate_method(gene, GENES, "gene")
@@ -109,5 +112,10 @@ def get_config_params(config):
 
     p_m = config["p_m"]
 
+    max_generations = config["max_generations"]
+    validate_positive_int(max_generations, "max_generations")
+
+    delta = config["delta"]
+
     return N, K, M, threshold,character_type, CROSSOVER_METHODS_MAP[crossover_method], selection_methods[0], selection_methods[1], \
-    selection_methods[2], selection_methods[3], MUTATION_METHODS_MAP[mutation_method], gene, A, B, p_m
+    selection_methods[2], selection_methods[3], MUTATION_METHODS_MAP[mutation_method], NEW_GENERATION_METHODS_MAP[new_generation_method], gene, A, B, p_m, max_generations, delta

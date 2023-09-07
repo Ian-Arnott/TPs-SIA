@@ -34,3 +34,10 @@ def select(method, population, n, k, m, thr, generation):
         return probabilistic_tournament(population, k, thr)
     if method == "boltzmann":
         return boltzmann(population, n, k, generation)
+    
+def check_end_condition(population, previous_population, generation, max_generations, delta):
+
+    if (generation >= max_generations):
+        return True, "Max generations reached"
+
+    return False, None
