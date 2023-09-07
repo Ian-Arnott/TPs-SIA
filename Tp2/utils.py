@@ -11,12 +11,15 @@ CROSSOVER_METHODS_MAP = {
 }
 SELECTION_METHODS = ["elite", "roulette", "universal", "boltzmann", "deterministic_tournament", "probabilistic_tournament", "ranking"]
 
-MUTATION_METHODS = ["uniform_multigen", "complete_mutation", "limited_multigen"]
+MUTATION_METHODS = ["gene_mutation","uniform_multigen", "complete_mutation", "limited_multigen"]
 MUTATION_METHODS_MAP = {
+    "gene_mutation": mutation.gene_mutation,
     "uniform_multigen": mutation.uniform_multigen,
     "complete_mutation": mutation.complete_mutation,
     "limited_multigen": mutation.limited_multigen
 }
+
+GENES = ["items", "class", "height"]
 
 NEW_GENERATION_METHODS = ["use_all", "new_over_actual"]
 NEW_GENERATION_METHODS_MAP = {
@@ -79,6 +82,10 @@ def get_config_params(config):
     mutation_method = config["mutation_method"]
     validate_method(mutation_method, MUTATION_METHODS, "mutation")
 
+    # elegir el gen que se muta en la funcion gene_mutation
+    gene = config["gen"]
+    validate_method(gene, GENES, "gen")
+
     A = config["A"]
     validate_selection_params(A, 1, "A")
 
@@ -88,4 +95,4 @@ def get_config_params(config):
     p_m = config["p_m"]
 
     return N, K, M, threshold,character_type, CROSSOVER_METHODS_MAP[crossover_method], selection_methods[0], selection_methods[1], \
-    selection_methods[2], selection_methods[3], MUTATION_METHODS_MAP[mutation_method], A, B, p_m
+    selection_methods[2], selection_methods[3], MUTATION_METHODS_MAP[mutation_method], gene, A, B, p_m

@@ -26,7 +26,7 @@ if __name__ == "__main__":
     with open('./config.json', 'r') as f:
         config = json.load(f)
 
-    n, k, m, threshold, character_type, crossover_method, selection_method_1, selection_method_2, selection_method_3, selection_method_4, mutation_method, A, B, p_m = get_config_params(
+    n, k, m, threshold, character_type, crossover_method, selection_method_1, selection_method_2, selection_method_3, gene, selection_method_4, mutation_method, A, B, p_m = get_config_params(
         config)
 
     # 1. Generate start population
@@ -54,7 +54,7 @@ if __name__ == "__main__":
             children.append(Character.from_genotype(child_2_genotype))
 
         # 4. Mutation
-        mutation_method(children, p_m)
+        mutation_method(children, p_m, gene)
 
         # 5. #TODO: Replacement
         method3_count = math.ceil(B * n)
