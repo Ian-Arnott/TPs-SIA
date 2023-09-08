@@ -8,7 +8,11 @@ def gene_mutation(population, p_m, gene):
                 character.set_height(random.uniform(1.3,2))
             elif gene == "items":     
                 for item in character.get_items():
-                    character.get_items()[item] += random.randint(-1,1)
+                    while True:
+                        change = random.uniform(-1,1)
+                        if character.get_items()[item] + change > 0:
+                            character.get_items()[item] += change
+                            break
                 character.normalize_items()
             else:
                 clases = {
@@ -37,7 +41,11 @@ def limited_multigen(population, p_m, _):
                 if gene == 6:
                     character.set_height(random.uniform(1.3,2))
                 elif gene >= 1 and gene <= 5:
-                    character.get_items()[stats[gene]] += random.randint(-1,1)
+                    while True:
+                        change = random.uniform(-1,1)
+                        if character.get_items()[stats[gene]] + change > 0:
+                            character.get_items()[stats[gene]] += change
+                            break
                     character.normalize_items()
                 else:
                     clases = {
@@ -64,16 +72,24 @@ def uniform_multigen(population, p_m, _):
         
         for item in character.get_items():
             if random.uniform(0,1) < p_m:
-                character.get_items()[item] += random.randint(-1,1)
+                while True:
+                    change = random.uniform(-1,1)
+                    if character.get_items()[item] + change > 0:
+                        character.get_items()[item] += change
+                        break
         character.normalize_items()
 
-def complete_mutation(population, p_m):
+def complete_mutation(population, p_m, _):
     for character in population:
         if random.uniform(0,1) < p_m:
             character.set_height(random.uniform(1.3,2))
         
             for item in character.get_items():
-                character.get_items()[item] += random.randint(-1,1)
+                while True:
+                    change = random.uniform(-1,1)
+                    if character.get_items()[item] + change > 0:
+                        character.get_items()[item] += change
+                        break
             character.normalize_items()
 
             clases = {

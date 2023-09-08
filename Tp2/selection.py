@@ -6,7 +6,7 @@ from utils import get_boltzmann_params
 def elite(population, n, k):        
     population.sort(key=lambda x: x.get_performance(), reverse=True)
 
-    if k <= n:
+    if k >= n: #TODO: no seria k >= n ? 
         new_population = population[:k]
     else:
         new_population = []
@@ -23,7 +23,7 @@ def elite(population, n, k):
 def roulette(population, n, k):
     sum_fitness = sum([character.get_performance() for character in population])
 
-    if k <= n:
+    if k >= n: #TODO: no seria k >= n ? 
         new_population = population[:k]
 
     else:
@@ -42,7 +42,7 @@ def roulette(population, n, k):
 
 
 def universal(population, n, k):
-    if k <= n:
+    if k >= n: #TODO: no seria k >= n ? 
         new_population = population[:k]
 
     else:
@@ -92,7 +92,11 @@ def boltzmann(population, n, k, generation):
     new_population = []
 
     for _ in range(k):
-        probabilities = [math.exp(individual.get_performance() / temperature) for individual in population] # e^(fitness(i)/temperature)	
+        
+        maxPerformance = max([individual.get_performance() for individual in population])
+        scaledPerformances = [(individual.get_performance() - maxPerformance) for individual in population]
+        probabilities = [math.exp(performance / temperature) for performance in scaledPerformances]
+        # probabilities = [math.exp(individual.get_performance() / temperature) for individual in population] # e^(fitness(i)/temperature)	
 
         total_probability = sum(probabilities)
         expected_value = [p / total_probability for p in probabilities]
