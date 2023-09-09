@@ -61,20 +61,16 @@ if __name__ == "__main__":
 
         generation += 1
 
-        max = {"p":0, "class":""}
-        for p in previous_population:
-            if p.get_performance() > max["p"]:
-                max["p"] = p.get_performance()
-                max["class"] = p._class
-        print(max)
+        # max = {"p":0, "class":""}
+        # for p in previous_population:
+        #     if p.get_performance() > max["p"]:
+        #         max["p"] = p.get_performance()
+        #         max["class"] = p._class
+        # print(max)
     
     print("Finished algorithm by end condition: " + end_condition)
     max = {"p":0, "class":"","items":None}
     for p in previous_population:
-        suma = 0
-        for item in p.get_items():
-            suma += p.get_items()[item]
-        print(suma)
         if p.get_performance() > max["p"]:
             max["p"] = p.get_performance()
             max["class"] = p._class
