@@ -20,7 +20,7 @@ MUTATION_METHODS_MAP = {
     "limited_multigen": mutation.limited_multigen
 }
 
-GENES = ["items", "class", "height"]
+GENES = ["items", "height"]
 
 NEW_GENERATION_METHODS = ["use_all", "new_over_actual"]
 NEW_GENERATION_METHODS_MAP = {
