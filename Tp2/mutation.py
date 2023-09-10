@@ -14,20 +14,20 @@ def gene_mutation(population, p_m, gene):
                             character.get_items()[item] += change
                             break
                 character.normalize_items()
-            else:
-                clases = {
-                    1: Warrior,
-                    2: Archer,
-                    3: Defender,
-                    4: Infiltrator,
-                }
-                character.set_class(clases[random.randint(1,4)])
+            # else:
+            #     clases = {
+            #         1: Warrior,
+            #         2: Archer,
+            #         3: Defender,
+            #         4: Infiltrator,
+            #     }
+            #     character.set_class(clases[random.randint(1,4)])
 
 def limited_multigen(population, p_m, _):
     for character in population:
         if random.uniform(0,1) < p_m:
-            M = random.randint(1, 7)
-            genes = random.sample(range(1,8), M)
+            M = random.randint(1, 6)
+            genes = random.sample(range(1,7), M)
 
             stats = {
                 1: "strength",
@@ -47,28 +47,28 @@ def limited_multigen(population, p_m, _):
                             character.get_items()[stats[gene]] += change
                             break
                     character.normalize_items()
-                else:
-                    clases = {
-                        1: Warrior,
-                        2: Archer,
-                        3: Defender,
-                        4: Infiltrator,
-                    }
-                    character.set_class(clases[random.randint(1,4)])
+                # else:
+                #     clases = {
+                #         1: Warrior,
+                #         2: Archer,
+                #         3: Defender,
+                #         4: Infiltrator,
+                #     }
+                #     character.set_class(clases[random.randint(1,4)])
 
 def uniform_multigen(population, p_m, _):
     for character in population:
         if random.uniform(0,1) < p_m:
             character.set_height(random.uniform(1.3,2))
         
-        if random.uniform(0,1) < p_m:
-            clases = {
-                1: Warrior,
-                2: Archer,
-                3: Defender,
-                4: Infiltrator,
-            }
-            character.set_class(clases[random.randint(1,4)])
+        # if random.uniform(0,1) < p_m:
+        #     clases = {
+        #         1: Warrior,
+        #         2: Archer,
+        #         3: Defender,
+        #         4: Infiltrator,
+        #     }
+        #     character.set_class(clases[random.randint(1,4)])
         
         for item in character.get_items():
             if random.uniform(0,1) < p_m:
@@ -92,13 +92,13 @@ def complete_mutation(population, p_m, _):
                         break
             character.normalize_items()
 
-            clases = {
-                1: Warrior,
-                2: Archer,
-                3: Defender,
-                4: Infiltrator,
-            }
-            character.set_class(clases[random.randint(1,4)])
+            # clases = {
+            #     1: Warrior,
+            #     2: Archer,
+            #     3: Defender,
+            #     4: Infiltrator,
+            # }
+            # character.set_class(clases[random.randint(1,4)])
 
 
                     
