@@ -9,6 +9,10 @@ Trabajo práctico orientativo con el objetivo de evaluar la función de captura 
 
 Implementación de un programa en Python para encontrar soluciones con diferentes métodos de búsqueda del juego [Sokoban](http://www.game-sokoban.com/index.php?mode=level&lid=200).
 
+## TP2 - [Algoritmos Genéticos](https://github.com/Ian-Arnott/TPs-SIA/tree/master/Tp2)
+
+Implementación de un programa en Python con un motor de algoritmos genéticos para encontrar la mejor configuración de personajes para un juego de rol.
+
 ## Autores
 Nombre | Legajo
 -------|--------
