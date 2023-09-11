@@ -1,5 +1,4 @@
 import random
-from character_class import Warrior, Archer, Defender, Infiltrator
 
 def gene_mutation(population, p_m, gene):
     for character in population:
@@ -14,14 +13,7 @@ def gene_mutation(population, p_m, gene):
                             character.get_items()[item] += change
                             break
                 character.normalize_items()
-            # else:
-            #     clases = {
-            #         1: Warrior,
-            #         2: Archer,
-            #         3: Defender,
-            #         4: Infiltrator,
-            #     }
-            #     character.set_class(clases[random.randint(1,4)])
+
 
 def limited_multigen(population, p_m, _):
     for character in population:
@@ -47,28 +39,12 @@ def limited_multigen(population, p_m, _):
                             character.get_items()[stats[gene]] += change
                             break
                     character.normalize_items()
-                # else:
-                #     clases = {
-                #         1: Warrior,
-                #         2: Archer,
-                #         3: Defender,
-                #         4: Infiltrator,
-                #     }
-                #     character.set_class(clases[random.randint(1,4)])
+
 
 def uniform_multigen(population, p_m, _):
     for character in population:
         if random.uniform(0,1) < p_m:
             character.set_height(random.uniform(1.3,2))
-        
-        # if random.uniform(0,1) < p_m:
-        #     clases = {
-        #         1: Warrior,
-        #         2: Archer,
-        #         3: Defender,
-        #         4: Infiltrator,
-        #     }
-        #     character.set_class(clases[random.randint(1,4)])
         
         for item in character.get_items():
             if random.uniform(0,1) < p_m:
@@ -78,6 +54,7 @@ def uniform_multigen(population, p_m, _):
                         character.get_items()[item] += change
                         break
         character.normalize_items()
+
 
 def complete_mutation(population, p_m, _):
     for character in population:
@@ -91,14 +68,6 @@ def complete_mutation(population, p_m, _):
                         character.get_items()[item] += change
                         break
             character.normalize_items()
-
-            # clases = {
-            #     1: Warrior,
-            #     2: Archer,
-            #     3: Defender,
-            #     4: Infiltrator,
-            # }
-            # character.set_class(clases[random.randint(1,4)])
 
 
                     

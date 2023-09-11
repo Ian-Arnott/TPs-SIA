@@ -6,7 +6,7 @@ from utils import get_boltzmann_params
 def elite(population, n, k):        
     population.sort(key=lambda x: x.get_performance(), reverse=True)
 
-    if k >= n: #TODO: no seria k >= n ? 
+    if k >= n:
         new_population = population[:k]
     else:
         new_population = []
@@ -21,22 +21,6 @@ def elite(population, n, k):
 
 
 def roulette(population, n, k):
-    # sum_fitness = sum([character.get_performance() for character in population])
-
-    # if k >= n:
-    #     new_population = population[:k]
-
-    # else:
-    #     new_population = []
-    #     for _ in range(k):
-    #         rnd = random.uniform(0, sum_fitness)
-    #         sum_aux = 0
-
-    #         for j in population:
-    #             sum_aux += j.get_performance()
-    #             if sum_aux >= rnd:
-    #                 new_population.append(j)
-    #                 break
     # Calculate relative fitness p_j
     total_fitness = sum(character.get_performance() for character in population)
     relative_fitness = [character.get_performance() / total_fitness for character in population]
@@ -60,17 +44,6 @@ def roulette(population, n, k):
 
 
 def universal(population, n, k):
-    # if k >= n:
-    #     new_population = population[:k]
-
-    # else:
-    #     new_population = []
-
-    #     for i in range(k):
-    #         rnd = random.uniform(0, 1)
-    #         r = (rnd + i) / k
-    #         p = roulette(population, n, r)
-    #         new_population.extend(p)
     new_population = []
     for j in range(k):
         r_j = (random.uniform(0, 1) + j) / k
@@ -133,7 +106,6 @@ def boltzmann(population, n, k, generation):
         maxPerformance = max([individual.get_performance() for individual in population])
         scaledPerformances = [(individual.get_performance() - maxPerformance) for individual in population]
         probabilities = [math.exp(performance / temperature) for performance in scaledPerformances]
-        # probabilities = [math.exp(individual.get_performance() / temperature) for individual in population] # e^(fitness(i)/temperature)	
 
         total_probability = sum(probabilities)
         expected_value = [p / total_probability for p in probabilities]
