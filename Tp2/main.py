@@ -10,7 +10,7 @@ if __name__ == "__main__":
 
     n, k, m, threshold, character_type, crossover_method, selection_method_1, selection_method_2, \
         selection_method_3, selection_method_4, mutation_method, new_generation_method, gene, \
-            A, B, p_m, max_generations, max_generations_without_change, delta = get_config_params(config)
+            A, B, p_m, max_generations, max_generations_without_change, delta, optimal_fitness, optimal_fitness_error = get_config_params(config)
 
     # 1. Generate start population
     start_population = generate_start_population(n, character_type)
@@ -52,21 +52,14 @@ if __name__ == "__main__":
 
         previous_population = method3_selection + method4_selection
 
-        #TODO: sorting por fitness - no se si es necesario
         new_population = new_generation_method(previous_population, children, k, n)
 
-        end, end_condition, generations_without_change = check_end_condition(previous_population, new_population, generation, generations_without_change, max_generations, max_generations_without_change,delta)
+        end, end_condition, generations_without_change = check_end_condition(previous_population, new_population, generation, generations_without_change, max_generations, max_generations_without_change, delta, optimal_fitness, optimal_fitness_error)
 
         previous_population = new_population
 
         generation += 1
 
-        # max = {"p":0, "class":""}
-        # for p in previous_population:
-        #     if p.get_performance() > max["p"]:
-        #         max["p"] = p.get_performance()
-        #         max["class"] = p._class
-        # print(max)
     
     print("Finished algorithm by end condition: " + end_condition)
     max = {"p":0, "class":"","items":None}
@@ -83,7 +76,7 @@ def run_main(config):
 
     n, k, m, threshold, character_type, crossover_method, selection_method_1, selection_method_2, \
         selection_method_3, selection_method_4, mutation_method, new_generation_method, gene, \
-            A, B, p_m, max_generations, max_generations_without_change, delta = get_config_params(config)
+            A, B, p_m, max_generations, max_generations_without_change, delta, optimal_fitness, optimal_fitness_error = get_config_params(config)
 
     # 1. Generate start population
     start_population = generate_start_population(n, character_type)
@@ -124,10 +117,9 @@ def run_main(config):
 
         previous_population = method3_selection + method4_selection
 
-        #TODO: sorting por fitness - no se si es necesario
         new_population = new_generation_method(previous_population, children, k, n)
 
-        end, end_condition, generations_without_change = check_end_condition(previous_population, new_population, generation, generations_without_change, max_generations, max_generations_without_change,delta)
+        end, end_condition, generations_without_change = check_end_condition(previous_population, new_population, generation, generations_without_change, max_generations, max_generations_without_change,delta, optimal_fitness, optimal_fitness_error)
 
         previous_population = new_population
 

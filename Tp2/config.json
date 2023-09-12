@@ -20,5 +20,7 @@
     "k": 2,
     "max_generations": 100,
     "max_generations_without_change": 5,
-    "delta": 0.01
+    "delta": 0.01,
+    "optimal_fitness": 100,
+    "optimal_fitness_error": 2
 }

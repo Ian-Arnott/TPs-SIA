@@ -120,6 +120,12 @@ def get_config_params(config):
 
     delta = config["delta"]
 
+    optimal_fitness = config["optimal_fitness"]
+    validate_positive_int(optimal_fitness, "optimal_fitness")
+
+    optimal_fitness_error = config["optimal_fitness_error"]
+    validate_positive_int(optimal_fitness_error, "optimal_fitness_error")
+
     return N, K, M, threshold,character_type, CROSSOVER_METHODS_MAP[crossover_method], selection_methods[0], selection_methods[1], \
     selection_methods[2], selection_methods[3], MUTATION_METHODS_MAP[mutation_method], NEW_GENERATION_METHODS_MAP[new_generation_method], \
-        gene, A, B, p_m, max_generations, max_generations_without_change, delta
+        gene, A, B, p_m, max_generations, max_generations_without_change, delta, optimal_fitness, optimal_fitness_error

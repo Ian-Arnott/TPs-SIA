@@ -1,5 +1,6 @@
 from character_class import Archer, Warrior, Defender, Infiltrator
 from character import Character
+import math
 from selection import elite, deterministic_tournament, probabilistic_tournament, roulette, universal, ranking, boltzmann
 
 
@@ -47,8 +48,13 @@ def check_content_end_condition(population, previous_population, delta):
     avg_previous_performance = sum([character.get_performance() for character in previous_population]) / len(previous_population)
     return abs(avg_performance - avg_previous_performance) < delta
 
+def check_optimal_fitness_end_condition(population, optimal_fitness, optimal_fitness_error):
+    best_character = max(population, key=lambda character: character.get_performance())
+    best_character_performance =  best_character.get_performance()
+    return (optimal_fitness - optimal_fitness_error) <= best_character_performance <= (optimal_fitness + optimal_fitness_error)
 
-def check_end_condition(population, previous_population, generation, generations_without_change, max_generations, max_generations_without_change, delta):
+
+def check_end_condition(population, previous_population, generation, generations_without_change, max_generations, max_generations_without_change, delta, optimal_fitness, optimal_fitness_error):
 
     if (generation >= max_generations):
         return True, "Max generations reached", generations_without_change
@@ -64,5 +70,8 @@ def check_end_condition(population, previous_population, generation, generations
             return True, "Content end condition reached", generations_without_change
         else:
             return False, None, generations_without_change + 1
-
+    
+    if check_optimal_fitness_end_condition(population, optimal_fitness, optimal_fitness_error):
+        return True, "Optimal fitness reached", generations_without_change    
+    
     return False, None, generations_without_change
