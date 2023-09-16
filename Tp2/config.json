@@ -1,7 +1,7 @@
 {
-    "N": 10, 
-    "K": 6,
-    "M": 3,
+    "N": 100, 
+    "K": 20,
+    "M": 10,
     "threshold": 0.7,
     "character_type": "archer",
     "selection_method_1": "universal",
