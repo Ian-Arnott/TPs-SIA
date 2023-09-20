@@ -12,14 +12,16 @@ class SimpleStepPerceptron(Perceptron):
 
     def __init__(self, learning_rate:float):
         # Inicializo wi con 3 valores aleatorios
-        weights = random.rand(3, 1)
+        weights = random.rand(1, 3)
         super().__init__(learning_rate, weights)
 
     def activation_function(self, x:float) -> int:
         return 1 if x >= 0 else -1
 
+        # run(1,1) --> -1
+
     #TODO: Como se calcula el error?
-    def compute_error():
+    def compute_error(self):
         return 1
         pass
 
@@ -36,8 +38,8 @@ class SimpleStepPerceptron(Perceptron):
             #TODO: Como evito repetir?
             mu = random.randint(0, len(input)-1)
 
-            # Tomo el valor de entrada correspondiente, agregando el bias (1)
-            x_mu = array([1] + input[mu])
+            # Tomo el valor de entrada correspondiente, agregando el bias (1)        
+            x_mu = array([-1] + input[mu])
 
             # Calculamos la excitacion (producto escalar)
             excitement = self._weights @ x_mu
@@ -46,7 +48,7 @@ class SimpleStepPerceptron(Perceptron):
             activation = self.activation_function(excitement)
 
             # Actualizamos los pesos
-            delta_w = self.learning_rate * (expected[mu] - activation) * x_mu
+            delta_w = self.learning_rate * (expected[mu] - activation) * x_mu   # 0.5 0.7 0.2 |  expected:1 activation:-1 | rate:0.1  --> 0.1 0.35 0.05 --> W
             self._weights += delta_w
 
             # Actualizamos el error
@@ -57,5 +59,8 @@ class SimpleStepPerceptron(Perceptron):
             
             i += 1
 
-
+    def run(self, input:list[int]):
+        # TODO: hay bias? Sin bias las dimensiones de las matrices no coinciden
+        x_mu =  array([1] + input)
+        return self.activation_function(self._weights @ x_mu)
 
