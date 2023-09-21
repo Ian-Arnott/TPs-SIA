@@ -62,13 +62,15 @@ class SimplePerceptron(ABC):
 
             current_steps += 1
 
-
-    def run(self, input:list[int]):
+    def predict_one(self, input:list[int]):
         x_mu =  np.array([1] + input)
         excitement = np.dot(x_mu, self.weights) + self.bias
         return self.activation_function(excitement)
 
-    
+    def predict(self, input_data:list[list[float]]) -> list[float]:
+        return [self.predict_one(x) for x in input_data]
+
+
     # def plot(self, operation, input_data, expected):
     #     # Puntos
     #     x_values = [point[0] for point in input_data]
