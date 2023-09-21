@@ -10,13 +10,13 @@ def validate_operation(value, operations, str):
         exit(1)
 
 
-def validate_positive_float(value, str):
+def validate_learning_rate(value):
     try:
         value = float(value)
-        if value < 0 or value > 1:
+        if value <= 0 or value > 1:
             raise ValueError
     except ValueError:
-        print(f"{str} must be a positive float between 0 and 1")
+        print("Learning rate must be a positive float between 0 and 1")
         exit(1)
 
 
@@ -27,6 +27,14 @@ def validate_positive_int(value, str):
             raise ValueError
     except ValueError:
         print(f"{str} must be a positive integer")
+        exit(1)
+
+
+def validate_bias(value):
+    try:
+        value = float(value)
+    except ValueError:
+        print("Bias must be a float")
         exit(1)
 
 
@@ -46,12 +54,12 @@ def get_config_params(config):
     validate_operation(operation, OPERATIONS, "operation")
 
     learning_rate = config["learning_rate"]
-    validate_positive_float(learning_rate, "learning_rate")
+    validate_learning_rate(learning_rate)
 
     max_epochs = config["max_epochs"]
     validate_positive_int(max_epochs, "max_epochs")
 
     bias = config["bias"]
-    validate_positive_float(bias, "bias")
+    validate_bias(bias)
 
     return operation, learning_rate, max_epochs, bias
