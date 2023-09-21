@@ -36,7 +36,7 @@ class SimpleStepPerceptron(Perceptron):
 
             self._weights += self.learning_rate * (expected[index] - activation) * x_mu
 
-            new_error = self.compute_error(expected, [self.run(x) for x in input])
+            new_error = self.compute_error(expected, [self.activation_function(np.dot([1] + x, self._weights)) for x in input])
             if new_error < error_min:
                 error_min = new_error
             current_steps += 1
@@ -46,5 +46,3 @@ class SimpleStepPerceptron(Perceptron):
     def run(self, input:list[int]):
         x_mu =  np.array([1] + input)
         return self.activation_function(np.dot(x_mu, self._weights))
-
-

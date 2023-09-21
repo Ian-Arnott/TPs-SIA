@@ -1,4 +1,4 @@
-from perceptron_test import SimpleStepPerceptron
+from perceptron import SimpleStepPerceptron
 
 input_data =  [[-1, 1], [1, -1], [-1, -1], [1, 1]]
 expected_outputs = [-1, -1, -1, 1]
