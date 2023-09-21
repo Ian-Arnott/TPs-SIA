@@ -8,14 +8,14 @@ class Perceptron:
         self._weights = weights
         self.learning_rate = learning_rate
 
-class SimpleLinearPerceptron(Perceptron):
+class SimpleStepPerceptron(Perceptron):
 
     def __init__(self, learning_rate:float):
-        weights = [0, 0, 0, 0]
+        weights = np.random.rand(3)
         super().__init__(learning_rate, weights)
 
-    def activation_function(self, x:float) -> float:
-        return x
+    def activation_function(self, x:float) -> int:
+        return 1 if x >= 0 else -1
 
     def compute_error(self, expected:list[float], outputs:list[float]):
         total_error = 0
@@ -46,3 +46,5 @@ class SimpleLinearPerceptron(Perceptron):
     def run(self, input:list[int]):
         x_mu =  np.array([1] + input)
         return self.activation_function(np.dot(x_mu, self._weights))
+
+
