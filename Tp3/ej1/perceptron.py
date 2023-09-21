@@ -47,9 +47,6 @@ class SimpleStepPerceptron(Perceptron):
                 error_min = new_error
 
             current_steps += 1
-            # print(f'Weights: {self.weights}')
-            # print(f'Current step: {current_steps}, with new_error: {new_error}')
-            # self.plot(operation, input_data, expected)
 
 
     def run(self, input:list[int]):
@@ -59,7 +56,6 @@ class SimpleStepPerceptron(Perceptron):
 
     
     def plot(self, operation, input_data, expected):
-
         # Puntos
         x_values = [point[0] for point in input_data]
         y_values = [point[1] for point in input_data]
@@ -69,7 +65,7 @@ class SimpleStepPerceptron(Perceptron):
         # Recta
         m = -self.weights[1]/self.weights[2]
         b = -self.weights[0]/self.weights[2]
-        x = np.linspace(-1.5, 1.5, 100)
+        x = np.linspace(-20, 20, 100)
         plt.plot(x, m*x + b, color='blue')
 
         plt.xlim(-1.5, 1.5)
@@ -78,7 +74,7 @@ class SimpleStepPerceptron(Perceptron):
         plt.ylim(-1.5, 1.5)
         plt.ylabel('y')
 
-        title = f'Perceptron Decision for {operation} operation'
+        title = f'Perceptron Simple Step for {operation} operation'
         plt.title(title)
 
         plt.grid(True, linestyle='--', alpha=0.7, zorder=1)

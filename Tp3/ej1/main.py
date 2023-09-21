@@ -16,15 +16,20 @@ if __name__ == "__main__":
 
     perceptron.train(operation, input_data, expected_outputs, max_epochs)
 
+    print("    Input     | Expected  | Output")
     for i in range(len(input_data)):
         result = perceptron.run(input_data[i])
-        print(f'Input: {input_data[i]}, Expected:{expected_outputs[i]}, Output: {result}')
+        input_str = f'{input_data[i]}'.center(13)
+        expected_str = f'{expected_outputs[i]}'.center(9)
+        result_str = f'{result}'.rjust(3)
+        print(f'{input_str} | {expected_str} | {result_str}')
         if result == expected_outputs[i]:
             correct_predictions += 1
+
 
     perceptron.plot(operation, input_data, expected_outputs)
 
     accuracy = (correct_predictions / len(input_data)) * 100
-    print(f'Accuracy: {accuracy}%')
+    print(f'\nAccuracy: {accuracy}%')
 
 
