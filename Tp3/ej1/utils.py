@@ -10,13 +10,13 @@ def validate_operation(value, operations, str):
         exit(1)
 
 
-def validate_learning_rate(value):
+def validate_positive_float(value, str):
     try:
         value = float(value)
-        if value <= 0 or value > 1:
+        if value < 0 or value > 1:
             raise ValueError
     except ValueError:
-        print("Learning rate must be a positive float between 0 and 1")
+        print(f"{str} must be a positive float between 0 and 1")
         exit(1)
 
 
@@ -29,8 +29,10 @@ def validate_positive_int(value, str):
         print(f"{str} must be a positive integer")
         exit(1)
 
+
 def get_input_data():
     return INPUT_DATA
+
 
 def get_expected_outputs(operation):
     if operation == "AND":
@@ -44,9 +46,12 @@ def get_config_params(config):
     validate_operation(operation, OPERATIONS, "operation")
 
     learning_rate = config["learning_rate"]
-    validate_learning_rate(learning_rate)
+    validate_positive_float(learning_rate, "learning_rate")
 
     max_epochs = config["max_epochs"]
     validate_positive_int(max_epochs, "max_epochs")
 
-    return operation, learning_rate, max_epochs
+    bias = config["bias"]
+    validate_positive_float(bias, "bias")
+
+    return operation, learning_rate, max_epochs, bias
