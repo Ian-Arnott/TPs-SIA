@@ -1,6 +1,7 @@
 {
     "type": "LINEAR",
     "learning_rate": 0.1,
+    "training_amount": 5,
     "max_epochs": 500,
     "bias": 1
 }
