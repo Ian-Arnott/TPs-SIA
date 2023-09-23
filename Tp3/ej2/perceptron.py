@@ -71,32 +71,6 @@ class SimplePerceptron(ABC):
         return [self.predict_one(x) for x in input_data]
 
 
-    # def plot(self, operation, input_data, expected):
-    #     # Puntos
-    #     x_values = [point[0] for point in input_data]
-    #     y_values = [point[1] for point in input_data]
-    #     colors = ['red' if point == -1 else 'green' for point in expected]
-    #     plt.scatter(x_values, y_values, marker='o', c=colors, zorder=2)
-
-    #     # Recta
-    #     m = -self.weights[1]/self.weights[2]
-    #     b = -self.weights[0]/self.weights[2]
-    #     x = np.linspace(-20, 20, 100)
-    #     plt.plot(x, m*x + b, color='blue')
-
-    #     plt.xlim(-1.5, 1.5)
-    #     plt.xlabel('x')
-
-    #     plt.ylim(-1.5, 1.5)
-    #     plt.ylabel('y')
-
-    #     title = f'Perceptron Simple Step for {operation} operation'
-    #     plt.title(title)
-
-    #     plt.grid(True, linestyle='--', alpha=0.7, zorder=1)
-
-    #     plt.show()
-
 
 class SimpleLinealPerceptron(SimplePerceptron):
 
@@ -109,6 +83,10 @@ class SimpleLinealPerceptron(SimplePerceptron):
 
 class SimpleHiperbolicPerceptron(SimplePerceptron):
 
+    def __init__(self,  beta:float, learning_rate:float, weights, bias:float, input_data_dim:int,):
+        self.beta = beta
+        super().__init__(learning_rate, weights, bias, input_data_dim)
+
     # Imagen: (-1, 1)
     def activation_function(self, x:float) -> float:
         return math.tanh(self.beta * x)
@@ -116,7 +94,12 @@ class SimpleHiperbolicPerceptron(SimplePerceptron):
     def activation_derivative(self, x:float) -> float:
         return self.beta * (1 - self.activation_function(x)**2)
 
+
 class SimpleLogisticPerceptrion(SimplePerceptron):
+
+    def __init__(self,  beta:float, learning_rate:float, weights, bias:float, input_data_dim:int,):
+        self.beta = beta
+        super().__init__(learning_rate, weights, bias, input_data_dim)
     
     def activation_function(self, x:float) -> float:
         return 1 / (1 + math.exp(-self.beta * x))

@@ -73,5 +73,8 @@ def get_config_params(config):
     bias = config["bias"]
     validate_bias(bias)
 
-    return perceptron_type, learning_rate, training_amount, max_epochs, bias
+    beta = config["beta"]
+    #TODO: agregar validacion
+
+    return perceptron_type, learning_rate, training_amount, max_epochs, bias, beta
 
