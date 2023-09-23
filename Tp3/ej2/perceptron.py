@@ -42,7 +42,7 @@ class SimplePerceptron(ABC):
     def delta_weights(self, excitement:float, activation:float, expected:float, x_mu:float):
         return self.learning_rate * (expected - activation) * self.activation_derivative(excitement) * x_mu
 
-    def train(self, operation, input_data:list[list[float]], expected:list[float], limit:int):
+    def train(self, input_data:list[list[float]], expected:list[float], limit:int):
         current_steps = 0
         error_min = math.inf
         input_len = len(input_data)

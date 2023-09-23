@@ -1,6 +1,11 @@
-TYPES = ["LINEAR", "HIPERBOLIC", "LOGISTIC"]
+import csv
+import numpy as np
+import pandas as pd
 
-def validate_type(value, types, str):
+
+PERCEPTRON_TYPES = ["LINEAR", "HIPERBOLIC", "LOGISTIC"]
+
+def validate_perceptron_type(value, types, str):
     if value not in types:
         print(f"Invalid {str} operation")
         exit(1)
@@ -19,7 +24,7 @@ def validate_learning_rate(value):
 def validate_training_amount(value):
     try:
         value = float(value)
-        if value <= 0 or value > 29:
+        if value < 0 or value > 29:
             raise ValueError
     except ValueError:
         print("Training Amount must be a positive float")
@@ -44,17 +49,17 @@ def validate_bias(value):
         exit(1)
 
 
-def get_input_data():
-    pass
+def get_data():
+    data = pd.read_csv('../data/ej2-conjunto.csv')
+    input_data = np.array(data[['x1', 'x2', 'x3']])
+    expected_data = np.array(data['y'])
 
-
-def get_expected_outputs():
-    pass
+    return input_data, expected_data
 
 
 def get_config_params(config):
-    type = config["type"]
-    validate_type(type, TYPES, "type")
+    perceptron_type = config["perceptron_type"]
+    validate_perceptron_type(perceptron_type, PERCEPTRON_TYPES, "perceptron_type")
 
     learning_rate = config["learning_rate"]
     validate_learning_rate(learning_rate)
@@ -68,5 +73,5 @@ def get_config_params(config):
     bias = config["bias"]
     validate_bias(bias)
 
-    return type, learning_rate, training_amount, max_epochs, bias
+    return perceptron_type, learning_rate, training_amount, max_epochs, bias
 

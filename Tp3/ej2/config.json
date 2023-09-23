@@ -1,7 +1,7 @@
 {
-    "type": "LINEAR",
+    "perceptron_type": "LINEAR",
     "learning_rate": 0.1,
-    "training_amount": 5,
+    "training_amount": 18,
     "max_epochs": 500,
     "bias": 1
 }
