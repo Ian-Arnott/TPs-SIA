@@ -76,5 +76,8 @@ def get_config_params(config):
     beta = config["beta"]
     #TODO: agregar validacion
 
-    return perceptron_type, learning_rate, training_amount, max_epochs, bias, beta
+    epsilon = config["epsilon"]
+    #TODO: agregar validacion
+
+    return perceptron_type, learning_rate, training_amount, max_epochs, bias, beta, epsilon
 

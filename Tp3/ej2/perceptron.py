@@ -6,7 +6,7 @@ from abc import ABC, abstractmethod
 
 
 class SimplePerceptron(ABC):
-    def __init__(self, learning_rate:float, weights, bias:float, input_data_dim:int):
+    def __init__(self, learning_rate:float, weights, bias:float, input_data_dim:int, epsilon:float):
         if(weights is None or len(weights) == 0):
             if(input_data_dim is None):
                 raise Exception("No input_data_dim provided")
@@ -16,6 +16,7 @@ class SimplePerceptron(ABC):
         
         self.learning_rate = learning_rate
         self.bias = bias
+        self.epsilon = epsilon
 
  
     @abstractmethod
@@ -63,7 +64,7 @@ class SimplePerceptron(ABC):
 
         print("Initial Weights: ", self.weights)
 
-        while error_min > 0 and current_steps < limit:
+        while error_min > self.epsilon and current_steps < limit:
             print(f"======= Step: {current_steps} ==========")
             mu = random.randrange(0, input_len)
             print("Mu: ", mu, " -> ", input_data[mu])
@@ -131,11 +132,11 @@ class SimpleLinealPerceptron(SimplePerceptron):
 
 class SimpleHiperbolicPerceptron(SimplePerceptron):
 
-    def __init__(self,  beta:float, learning_rate:float, weights, bias:float, input_data_dim:int,):
+    def __init__(self,  beta:float, learning_rate:float, weights, bias:float, input_data_dim:int, epsilon:float):
         self.beta = beta
         self.activation_min = -1.0
         self.activation_max = 1.0
-        super().__init__(learning_rate, weights, bias, input_data_dim)
+        super().__init__(learning_rate, weights, bias, input_data_dim, epsilon)
 
     # Imagen: (-1, 1)
     def activation_function(self, x:float) -> float:
@@ -147,11 +148,11 @@ class SimpleHiperbolicPerceptron(SimplePerceptron):
 
 class SimpleLogisticPerceptrion(SimplePerceptron):
 
-    def __init__(self,  beta:float, learning_rate:float, weights, bias:float, input_data_dim:int,):
+    def __init__(self,  beta:float, learning_rate:float, weights, bias:float, input_data_dim:int, epsilon:float):
         self.beta = beta
         self.activation_min = 0.0
         self.activation_max = 1.0
-        super().__init__(learning_rate, weights, bias, input_data_dim)
+        super().__init__(learning_rate, weights, bias, input_data_dim, epsilon)
     
     # Imagen: (0, 1)
     def activation_function(self, x:float) -> float:
