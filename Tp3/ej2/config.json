@@ -1,8 +1,8 @@
 {
-    "perceptron_type": "HIPERBOLIC",
-    "learning_rate": 0.1,
-    "training_amount": 23,
-    "max_epochs": 10000,
-    "bias": 1,
-    "beta": 0.01
+    "perceptron_type": "LINEAR",
+    "learning_rate": 0.01,
+    "training_amount": 20,
+    "max_epochs": 100,
+    "bias": 0,
+    "beta": 1
 }
