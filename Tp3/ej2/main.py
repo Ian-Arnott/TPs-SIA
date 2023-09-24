@@ -40,10 +40,10 @@ if __name__ == "__main__":
     else:
         # Escalo los resultados para que se ajusten al intervalo de entrenamiento
         # TODO: Habria que hacerlo para [entrenamiento + testeo]?
-        result = perceptron.predict(testing_set, should_scale=True, scale_interval=min_max_interval(expected_data[:training_amount]))
+        result = perceptron.predict(testing_set, should_scale=True, scale_interval=min_max_interval(expected_data))
 
     for i in range(len(result)):
-        print(f'Result: {result[i]} - Expected: {expected_data[i+training_amount]}')
+        print(f'Result: {result[i]} - Expected: {expected_data[i+training_amount]} - Delta: {abs(result[i] - expected_data[i+training_amount])}')
 
     # accuracy = (correct_predictions / len(input_data)) * 100
     # print(f'\nAccuracy: {accuracy}%')

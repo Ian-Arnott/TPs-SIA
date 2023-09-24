@@ -63,7 +63,7 @@ class SimplePerceptron(ABC):
 
         print("Initial Weights: ", self.weights)
 
-        while abs(error_min) > 0 and current_steps < limit:
+        while error_min > 0 and current_steps < limit:
             print(f"======= Step: {current_steps} ==========")
             mu = random.randrange(0, input_len)
             print("Mu: ", mu, " -> ", input_data[mu])
