@@ -1,5 +1,4 @@
 import numpy as np
-import matplotlib.pyplot as plt
 import random
 import math
 from abc import ABC, abstractmethod
@@ -49,12 +48,12 @@ class SimplePerceptron(ABC):
     def delta_weights(self, excitement:float, activation:float, expected:float, x_mu:list[float]):
         extended_x_mu = np.array([1] + x_mu)
         scaled_expected = self.activation_function(expected)
-        print("\tMissed by: ", (scaled_expected - activation))
-        print("\t\t", self.learning_rate)
-        print("\t\t", (scaled_expected - activation))
-        print("\t\t", self.activation_derivative(excitement))
-        print("\t\t", extended_x_mu)
-        print("\tDelta Weights: ", self.learning_rate * (scaled_expected - activation) * self.activation_derivative(excitement) * extended_x_mu)
+        # print("\tMissed by: ", (scaled_expected - activation))
+        # print("\t\t", self.learning_rate)
+        # print("\t\t", (scaled_expected - activation))
+        # print("\t\t", self.activation_derivative(excitement))
+        # print("\t\t", extended_x_mu)
+        # print("\tDelta Weights: ", self.learning_rate * (scaled_expected - activation) * self.activation_derivative(excitement) * extended_x_mu)
         return self.learning_rate * (scaled_expected - activation) * self.activation_derivative(excitement) * extended_x_mu
 
     def train(self, input_data:list[list[float]], expected:list[float], limit:int):
@@ -62,12 +61,12 @@ class SimplePerceptron(ABC):
         error_min = math.inf
         input_len = len(input_data)
 
-        print("Initial Weights: ", self.weights)
+        # print("Initial Weights: ", self.weights)
 
         while error_min > self.epsilon and current_steps < limit:
-            print(f"======= Step: {current_steps} ==========")
+            # print(f"======= Step: {current_steps} ==========")
             mu = random.randrange(0, input_len)
-            print("Mu: ", mu, " -> ", input_data[mu])
+            # print("Mu: ", mu, " -> ", input_data[mu])
             x_mu = input_data[mu]
             excitement = self.theta(x_mu)
             activation = self.activation_function(excitement)
@@ -89,20 +88,20 @@ class SimplePerceptron(ABC):
 
             current_steps += 1
         
-        print(f"Steps: {current_steps} (limit: {limit})")
-        print(f"Min Error: {error_min}")
-        print("Final Weights: ", self.weights)
+        # print(f"Steps: {current_steps} (limit: {limit})")
+        # print(f"Min Error: {error_min}")
+        # print("Final Weights: ", self.weights)
 
 
     def scale_result(self, value,  new_min, new_max):
         scaled = ((value - self.activation_min) / (self.activation_max - self.activation_min)) * (new_max - new_min) + new_min
-        print("Scale: ", value , " -> ",scaled)
+        # print("Scale: ", value , " -> ",scaled)
         return scaled
 
     def _predict_one(self, x:list[int], should_scale:bool, scale_interval:tuple[float]) -> float:
         excitement = self.theta(x)
         activation = self.activation_function(excitement)
-        print("Activation: ", activation)
+        # print("Activation: ", activation)
 
         if should_scale:
             return self.scale_result(activation, scale_interval[0], scale_interval[1])
