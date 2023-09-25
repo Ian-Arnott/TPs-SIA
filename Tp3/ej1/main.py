@@ -14,7 +14,7 @@ if __name__ == "__main__":
     input_data = get_input_data()
     expected_outputs = get_expected_outputs(operation)
 
-    perceptron.train(operation, input_data, expected_outputs, max_epochs)
+    perceptron.train(input_data, expected_outputs, max_epochs)
 
     print("    Input     | Expected  | Output")
     for i in range(len(input_data)):
@@ -26,8 +26,10 @@ if __name__ == "__main__":
         if result == expected_outputs[i]:
             correct_predictions += 1
 
+    perceptron.plot_final(operation, input_data, expected_outputs)
 
-    perceptron.plot(operation, input_data, expected_outputs)
+    perceptron.plot_evolution(operation, input_data, expected_outputs)
+
 
     accuracy = (correct_predictions / len(input_data)) * 100
     print(f'\nAccuracy: {accuracy}%')
