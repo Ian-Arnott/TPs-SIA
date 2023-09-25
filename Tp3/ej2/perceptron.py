@@ -88,6 +88,8 @@ class SimplePerceptron(ABC):
 
             current_steps += 1
         
+        return current_steps
+        
         # print(f"Steps: {current_steps} (limit: {limit})")
         # print(f"Min Error: {error_min}")
         # print("Final Weights: ", self.weights)
