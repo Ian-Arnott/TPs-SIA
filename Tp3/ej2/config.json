@@ -1,9 +1,9 @@
 {
-    "perceptron_type": "LINEAR",
-    "learning_rate": 0.001,
+    "perceptron_type": "LOGISTIC",
+    "learning_rate": 0.01,
     "training_percentage": 0.8,
-    "max_epochs": 1000,
+    "max_epochs": 5000,
     "bias": 1,
     "beta": 1,
-    "epsilon": 2
+    "epsilon": 0.7
 }

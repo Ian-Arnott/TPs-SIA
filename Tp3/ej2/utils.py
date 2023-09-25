@@ -60,7 +60,6 @@ def get_config_params(config):
     validate_positive_int(beta, "beta")
 
     epsilon = config["epsilon"]
-    validate_positive_int(epsilon, "epsilon")
 
     return perceptron_type, learning_rate, training_percentage, max_epochs, bias, beta, epsilon
 

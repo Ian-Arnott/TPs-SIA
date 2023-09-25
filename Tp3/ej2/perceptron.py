@@ -56,15 +56,16 @@ class SimplePerceptron(ABC):
         # print("\tDelta Weights: ", self.learning_rate * (scaled_expected - activation) * self.activation_derivative(excitement) * extended_x_mu)
         return self.learning_rate * (scaled_expected - activation) * self.activation_derivative(excitement) * extended_x_mu
 
-    def train(self, input_data:list[list[float]], expected:list[float], limit:int):
+    def train(self, input_data:list[list[float]], expected:list[float], limit:int, should_scale:bool = False):
         current_steps = 0
         error_min = math.inf
         input_len = len(input_data)
-
+        if (should_scale):
+            expected = [self.scale_result(value, min(expected), max(expected)) for value in expected]
         # print("Initial Weights: ", self.weights)
 
         while error_min > self.epsilon and current_steps < limit:
-            # print(f"======= Step: {current_steps} ==========")
+            print(f"======= Step: {current_steps} ==========")
             mu = random.randrange(0, input_len)
             # print("Mu: ", mu, " -> ", input_data[mu])
             x_mu = input_data[mu]
@@ -85,7 +86,7 @@ class SimplePerceptron(ABC):
             
             if new_error < error_min:
                 error_min = new_error
-
+            print(new_error)
             current_steps += 1
         
         return current_steps
@@ -96,7 +97,7 @@ class SimplePerceptron(ABC):
 
 
     def scale_result(self, value,  new_min, new_max):
-        scaled = ((value - self.activation_min) / (self.activation_max - self.activation_min)) * (new_max - new_min) + new_min
+        scaled = ((value - new_min) / (new_max - new_min)) * (self.activation_max - self.activation_min) + self.activation_min
         # print("Scale: ", value , " -> ",scaled)
         return scaled
 
@@ -105,10 +106,7 @@ class SimplePerceptron(ABC):
         activation = self.activation_function(excitement)
         # print("Activation: ", activation)
 
-        if should_scale:
-            return self.scale_result(activation, scale_interval[0], scale_interval[1])
-        else:
-            return activation
+        return activation
 
     def predict(self, input_data:list[list[float]], should_scale:bool = False, scale_interval:tuple[float] = ()) -> list[float]:
         if should_scale:

@@ -18,19 +18,19 @@ if __name__ == "__main__":
 
     perceptron = initialize_perceptron(perceptron_type, beta, learning_rate, bias, len(training_set[0]),epsilon)
 
-    perceptron.train(training_set, expected_data[:training_amount], max_epochs)
-
     correct_predictions = 0 
 
     if(perceptron_type == PERCEPTRON_TYPES[0]): # LINEAR
+        epochs = perceptron.train(training_set, expected_data[:training_amount], max_epochs)
         result = perceptron.predict(testing_set)
     else:
-        # Escalo los resultados para que se ajusten al intervalo de entrenamiento
-        # TODO: Habria que hacerlo para [entrenamiento + testeo]?
+        epochs = perceptron.train(training_set, expected_data[:training_amount], max_epochs, should_scale=True)
         result = perceptron.predict(testing_set, should_scale=True, scale_interval=min_max_interval(expected_data))
 
+    error = 0
     for i in range(len(result)):
-        print(f'Result: {result[i]} - Expected: {expected_data[i+training_amount]} - Delta: {abs(result[i] - expected_data[i+training_amount])}')
+        print(f'Result: {result[i]} - Expected: {perceptron.scale_result(expected_data[i+training_amount],min(expected_data),max(expected_data))} - Delta: {abs(result[i] - perceptron.scale_result(expected_data[i+training_amount],min(expected_data),max(expected_data)))}')
+        error += ((result[i]) - (perceptron.scale_result(expected_data[i+training_amount],min(expected_data),max(expected_data))))**2
 
     #     plt.scatter(i, result[i], color='blue', label='Result')
     #     plt.scatter(i, expected_data[i+training_amount], color='red', label='Expected')
@@ -38,7 +38,10 @@ if __name__ == "__main__":
     # plt.xlabel('Sample')
     # plt.ylabel('Value')
     # plt.show()
-
+    if(perceptron_type != PERCEPTRON_TYPES[0]): # LINEAR
+        for i in range(len(expected_data[training_amount:])):
+            expected_data[i] = perceptron.scale_result(expected_data[i],min(expected_data),max(expected_data))
+            
     accuracy = calculate_accuracy(result, expected_data[training_amount:], epsilon)
     print(f'Accuracy: {accuracy}%')
 
@@ -55,19 +58,20 @@ def run_main(config):
 
     perceptron = initialize_perceptron(perceptron_type, beta, learning_rate, bias, len(training_set[0]),epsilon)
 
-    epochs = perceptron.train(training_set, expected_data[:training_amount], max_epochs)
 
     if(perceptron_type == PERCEPTRON_TYPES[0]): # LINEAR
+        epochs = perceptron.train(training_set, expected_data[:training_amount], max_epochs)
         result = perceptron.predict(testing_set)
     else:
+        epochs = perceptron.train(training_set, expected_data[:training_amount], max_epochs, should_scale=True)
         result = perceptron.predict(testing_set, should_scale=True, scale_interval=min_max_interval(expected_data))
 
 
     error = 0 # Mean Squared Error
 
     for i in range(len(result)):
-        print(f'Result: {result[i]} - Expected: {expected_data[i+training_amount]} - Delta: {abs(result[i] - expected_data[i+training_amount])}')
-        error += (perceptron.scale_result(result[i]) - perceptron.scale_result(expected_data[i+training_amount]))**2
+        # print(f'Result: {result[i]} - Expected: {expected_data[i+training_amount]} - Delta: {abs(result[i] - expected_data[i+training_amount])}')
+        error += ((result[i]) - (expected_data[i+training_amount]))**2
 
     error = error / len(result) 
 
