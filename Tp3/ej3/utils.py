@@ -30,9 +30,22 @@ def validate_positive_int(value, str):
 
 
 def get_data():
-    data = pd.read_csv('../data/ej3-digitos.csv')
-    input_data = np.array(data[['x1', 'x2', 'x3']])
-    expected_data = np.array(data['y'])
+    with open('../data/ej3-digitos.txt', 'r') as file:
+        lines = file.readlines()
+
+    input_data = []
+    expected_data = []
+
+    for line in lines:
+        # Remove leading/trailing whitespaces and split the line into a list of 0s and 1s
+        binary_digits = list(map(int, line.strip().split()))
+
+        # Convert the list of binary digits to a string and then to an integer
+        number = int(''.join(map(str, binary_digits)), 2)
+
+        input_data.append(binary_digits)
+        expected_data.append(number % 2)
+
     return input_data, expected_data
 
 
