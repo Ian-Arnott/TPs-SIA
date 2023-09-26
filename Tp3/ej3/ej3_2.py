@@ -36,9 +36,8 @@ if __name__ == "__main__":
     train(network, mse, mse_derivative, X, Y, epochs=10000, learning_rate=0.1)
 
     points = []
-    for x in testing_set:
-        for y in testing_expected:
-            z = predict(network, [x])
-            points.append([x, y, z[0,0]])
+    for i in range(len(testing_set)):
+        z = predict(network, testing_set[i])
+        points.append([testing_set[i], testing_expected[i], z[0,0]])
     for point in points:
-        print(f"Input: {point[0]} Expected:{point[1]} Result:{point[2]}")
+        print(f"Input: {point[0]} Expected:{point[1]} Result:{round(point[2])}")
