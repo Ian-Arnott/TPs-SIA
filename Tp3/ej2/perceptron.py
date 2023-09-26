@@ -33,7 +33,6 @@ class SimplePerceptron(ABC):
         for mu in range(len(expected)):
             scaled_expected = self.activation_function(expected[mu])
             total_error += (scaled_expected - outputs[mu])**2
-        #print(f"Current Error: {total_error/2}")
         return total_error/2
     
     def theta(self, x:list[float]) -> float:
@@ -48,64 +47,46 @@ class SimplePerceptron(ABC):
     def delta_weights(self, excitement:float, activation:float, expected:float, x_mu:list[float]):
         extended_x_mu = np.array([1] + x_mu)
         scaled_expected = self.activation_function(expected)
-        # print("\tMissed by: ", (scaled_expected - activation))
-        # print("\t\t", self.learning_rate)
-        # print("\t\t", (scaled_expected - activation))
-        # print("\t\t", self.activation_derivative(excitement))
-        # print("\t\t", extended_x_mu)
-        # print("\tDelta Weights: ", self.learning_rate * (scaled_expected - activation) * self.activation_derivative(excitement) * extended_x_mu)
         return self.learning_rate * (scaled_expected - activation) * self.activation_derivative(excitement) * extended_x_mu
 
     def train(self, input_data:list[list[float]], expected:list[float], limit:int, should_scale:bool = False):
-        current_steps = 0
+        epoch = 0
         error_min = math.inf
         input_len = len(input_data)
+        
         if (should_scale):
             expected = [self.scale_result(value, min(expected), max(expected)) for value in expected]
-        # print("Initial Weights: ", self.weights)
 
-        while error_min > self.epsilon and current_steps < limit:
-            print(f"======= Step: {current_steps} ==========")
+        mse = []
+        
+        while error_min > self.epsilon and epoch < limit:
             mu = random.randrange(0, input_len)
-            # print("Mu: ", mu, " -> ", input_data[mu])
             x_mu = input_data[mu]
             excitement = self.theta(x_mu)
             activation = self.activation_function(excitement)
 
-            # print("\n\n\nAdding weights: ")
-            # print(self.weights)
-            # print(" + ")
-            # print(self.delta_weights(excitement, activation, expected[mu], x_mu))
-            
-        
             self.weights += self.delta_weights(excitement, activation, expected[mu], x_mu)
-            # print(" = ")
-            # print(self.weights)
 
             new_error = self.compute_error(input_data, expected)
+
+            mse.append(new_error)
             
             if new_error < error_min:
                 error_min = new_error
-            print(new_error)
-            current_steps += 1
+
+            epoch += 1
         
-        return current_steps
-        
-        # print(f"Steps: {current_steps} (limit: {limit})")
-        # print(f"Min Error: {error_min}")
-        # print("Final Weights: ", self.weights)
+        return epoch, mse
+    
 
 
     def scale_result(self, value,  new_min, new_max):
         scaled = ((value - new_min) / (new_max - new_min)) * (self.activation_max - self.activation_min) + self.activation_min
-        # print("Scale: ", value , " -> ",scaled)
         return scaled
 
     def _predict_one(self, x:list[int], should_scale:bool, scale_interval:tuple[float]) -> float:
         excitement = self.theta(x)
         activation = self.activation_function(excitement)
-        # print("Activation: ", activation)
-
         return activation
 
     def predict(self, input_data:list[list[float]], should_scale:bool = False, scale_interval:tuple[float] = ()) -> list[float]:
