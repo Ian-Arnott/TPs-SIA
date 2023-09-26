@@ -65,7 +65,7 @@ if __name__ == "__main__":
         else:
             expected_scaled = expected_data[i+training_amount]
 
-        expected_scaled_str = f'{expected_scaled}'.ljust(18)
+        expected_scaled_str = f'{expected_scaled:.3f}'.ljust(18)
         result_str = f'{result[i]:.3f}'.ljust(17)
         delta_str = f'{abs(result[i] - expected_scaled):.3f}'.ljust(15)
         print(f'{expected_str} | {expected_scaled_str} | {result_str} | {delta_str}')
