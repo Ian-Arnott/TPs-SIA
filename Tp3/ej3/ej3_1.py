@@ -1,5 +1,4 @@
-from mlp import train, predict
-from mlp_utils import Dense
+from mlp import Dense, train, predict
 from activation_functions import Tanh
 from mse import mse, mse_derivative
 import numpy as np
@@ -11,9 +10,6 @@ if __name__ == "__main__":
 
     X = np.reshape([[0, 0], [0, 1], [1, 0], [1, 1]], (4, 2, 1))
     Y = np.reshape([[0], [1], [1], [0]], (4, 1, 1))
-
-    print(X)
-    print(Y)
 
     network = [
         Dense(2, 3),
