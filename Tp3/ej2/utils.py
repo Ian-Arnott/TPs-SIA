@@ -57,7 +57,6 @@ def get_config_params(config):
     validate_positive_int(bias, "bias")
 
     beta = config["beta"]
-    validate_positive_int(beta, "beta")
 
     epsilon = config["epsilon"]
 
