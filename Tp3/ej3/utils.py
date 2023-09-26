@@ -1,13 +1,6 @@
 import numpy as np
 import pandas as pd
 
-PERCEPTRON_TYPES = ["LINEAR", "HIPERBOLIC", "LOGISTIC"]
-
-def validate_perceptron_type(value, types, str):
-    if value not in types:
-        print(f"Invalid {str} perceptron type")
-        exit(1)
-
 
 def validate_percentage(value, str):
     try:
@@ -29,23 +22,30 @@ def validate_positive_int(value, str):
         exit(1)
 
 
-def get_data():
+def get_data(ej):
     with open('../data/ej3-digitos.txt', 'r') as file:
         lines = file.readlines()
 
     input_data = []
     expected_data = []
+    if (ej == 2):
+        for line in lines:
+            # Remove leading/trailing whitespaces and split the line into a list of 0s and 1s
+            binary_digits = list(map(int, line.strip().split()))
 
-    for line in lines:
-        # Remove leading/trailing whitespaces and split the line into a list of 0s and 1s
-        binary_digits = list(map(int, line.strip().split()))
+            # Convert the list of binary digits to a string and then to an integer
+            number = int(''.join(map(str, binary_digits)), 2)
 
-        # Convert the list of binary digits to a string and then to an integer
-        number = int(''.join(map(str, binary_digits)), 2)
-
-        input_data.append(binary_digits)
-        expected_data.append(number % 2)
-
+            input_data.append(binary_digits)
+            expected_data.append(number % 2)
+    if (ej == 3):
+        for i in range(10):
+            aux = []
+            for j in range(7):
+                binary_digits = list(map(int, lines[7*i+j].strip().split()))
+                aux.append(binary_digits)
+            input_data.append(aux)
+            expected_data.append(i)
     return input_data, expected_data
 
 
@@ -54,8 +54,7 @@ def get_training_amount(total, percentage):
 
 
 def get_config_params(config):
-    perceptron_type = config["perceptron_type"]
-    validate_perceptron_type(perceptron_type, PERCEPTRON_TYPES, "perceptron_type")
+    ej = config["ej"]
 
     learning_rate = config["learning_rate"]
     validate_percentage(learning_rate, "learning_rate")
@@ -74,5 +73,5 @@ def get_config_params(config):
 
     epsilon = config["epsilon"]
 
-    return perceptron_type, learning_rate, training_percentage, max_epochs, bias, beta, epsilon
+    return ej, learning_rate, training_percentage, max_epochs, bias, beta, epsilon
 
