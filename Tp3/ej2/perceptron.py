@@ -33,7 +33,7 @@ class SimplePerceptron(ABC):
         for mu in range(len(expected)):
             scaled_expected = self.activation_function(expected[mu])
             total_error += (scaled_expected - outputs[mu])**2
-        return total_error/2
+        return total_error/len(expected)
     
     def theta(self, x:list[float]) -> float:
         # Agrega un 1 al principio de x_mu para tener en cuenta el w_0
