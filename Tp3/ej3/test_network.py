@@ -1,4 +1,4 @@
-from multi_layer_perceptron import Dense
+from mlp_utils import Dense
 from activation_functions import Tanh
 from mse import mse, mse_derivative
 import numpy as np

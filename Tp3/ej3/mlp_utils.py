@@ -1,6 +1,4 @@
 import numpy as np
-import random
-import math
 
 class Layer:
     def __init__(self):
