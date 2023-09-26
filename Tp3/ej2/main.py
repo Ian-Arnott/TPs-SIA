@@ -59,8 +59,14 @@ if __name__ == "__main__":
     print("Expected         | Expected_Scaled    | Result            | Delta")
     for i in range(len(result)):
         expected_str = f'{expected_data[i+training_amount]}'.ljust(16)
-        expected_scaled = perceptron.scale_result(expected_data[i+training_amount],min(expected_data),max(expected_data))
-        expected_scaled_str = f'{expected_scaled:.3f}'.ljust(18)
+
+        if(perceptron_type != PERCEPTRON_TYPES[0]): # LINEAR
+            expected_scaled = perceptron.scale_result(expected_data[i+training_amount],min(expected_data),max(expected_data))
+            expected_scaled_str = f'{expected_scaled:.3f}'.ljust(18)
+        else:
+            expected_scaled = expected_data[i+training_amount]
+            expected_scaled_str = f'{expected_scaled}'.ljust(18)
+
         result_str = f'{result[i]:.3f}'.ljust(17)
         delta_str = f'{abs(result[i] - expected_scaled):.3f}'.ljust(15)
         print(f'{expected_str} | {expected_scaled_str} | {result_str} | {delta_str}')

@@ -1,5 +1,5 @@
 {
-    "perceptron_type": "LOGISTIC",
+    "perceptron_type": "LINEAR",
     "learning_rate": 0.001,
     "training_percentage": 0.8,
     "max_epochs": 5000,
