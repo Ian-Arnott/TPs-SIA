@@ -117,7 +117,7 @@ class SimpleStepPerceptron(Perceptron):
             plt.xlabel('x')
             plt.ylim(-2, 2)
             plt.ylabel('y')
-            title = f'Perceptron Simple Step {i+1} for {operation} operation'
+            title = f'Perceptron Simple Step for {operation} operation - Epoch {i+1}'
             plt.title(title)
             plt.grid(True, linestyle='--', alpha=0.7, zorder=1)
             legend_elements = [Line2D([0], [0], marker='o', color='w', label='-1', markerfacecolor='red', markersize=10),
@@ -132,7 +132,8 @@ class SimpleStepPerceptron(Perceptron):
             plt.close()
 
         images = [Image.open(file) for file in image_files]
-        images[0].save('evolution.gif', save_all=True, append_images=images[1:], duration=500, loop=0)
+        image_name = f'evolution_{operation}.gif'
+        images[0].save(image_name, save_all=True, append_images=images[1:], duration=500, loop=0)
 
         for file in image_files:
             os.remove(file)
