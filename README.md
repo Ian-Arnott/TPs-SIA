@@ -13,9 +13,9 @@ Implementación de un programa en Python para encontrar soluciones con diferente
 
 Implementación de un programa en Python con un motor de algoritmos genéticos para encontrar la mejor configuración de personajes para un juego de rol.
 
-## TP3 - [Algoritmos Genéticos](https://github.com/Ian-Arnott/TPs-SIA/tree/master/Tp3)
+## TP3 - [Redes Neuronales](https://github.com/Ian-Arnott/TPs-SIA/tree/master/Tp3)
 
-Implementación de un programa en Python sobre los algoritmos de perceptrón simple y multicapa simulando redes neuronales.
+Implementación de diferentes programas en Python en donde podemos ver en funcionamiento perceptrones simples (lineales y no lineales) y multicapa. En el caso de los perceptrones simples, se intenta aprender los problemas lógicos AND y XOR, y en el caso de los perceptrones multicapa, se intenta aprender los problemas lógicos XOR y paridad, y clasificar dígitos.
 
 ## Autores
 Nombre | Legajo
