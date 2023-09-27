@@ -19,7 +19,7 @@ if __name__ == "__main__":
     ]
 
     # train
-    train(network, mse, mse_derivative, X, Y, epochs=10000, learning_rate=0.1)
+    train(network, mse, mse_derivative, X, Y, epochs=10000)
 
     # decision boundary plot
     points = []

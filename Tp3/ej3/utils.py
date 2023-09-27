@@ -36,15 +36,13 @@ def get_data(ej):
     input_data = []
     expected_data = []
     if (ej == 2):
-        for line in lines:
-            # Remove leading/trailing whitespaces and split the line into a list of 0s and 1s
-            binary_digits = list(map(int, line.strip().split()))
-
-            # Convert the list of binary digits to a string and then to an integer
-            number = int(''.join(map(str, binary_digits)), 2)
-
-            input_data.append(binary_digits)
-            expected_data.append(number % 2)
+        for i in range(10):
+            aux = []
+            for j in range(7):
+                binary_digits = list(map(int, lines[7*i+j].strip().split()))
+                aux.append(binary_digits)
+            input_data.append(aux)
+            expected_data.append(i % 2)
     if (ej == 3):
         for i in range(10):
             aux = []
