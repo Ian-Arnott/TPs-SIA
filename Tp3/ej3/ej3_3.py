@@ -26,6 +26,8 @@ if __name__ == "__main__":
 
     learning_rate=0.01
 
+    # optimizer = None
+
     network = [
         Dense(35, 36, optimizer_type=optimizer, learning_rate=learning_rate),
         Tanh(),
@@ -33,12 +35,7 @@ if __name__ == "__main__":
         Tanh()
     ]
 
-        # train
-    # version comentada incluye el uso de un optimizer. NO PUDE solucionar que como cambia la dimension de la gradiente el optimizer haga los calculos bien
-    # el optimizer mantiene una version de la gradiente que va actualizando
-    # cuando cambia la gradiente entonces no sabe que hacer porque se encuentra con una dimension nueva que compara contra la vieja
-
-    # train(network, mse, mse_derivative, X, Y, epochs=1000, learning_rate=0.01, optimizer_type=optimizer)
+    # train
     train(network, mse, mse_derivative, X, Y, epochs=1000)
 
     points = []
