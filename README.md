@@ -13,6 +13,10 @@ Implementación de un programa en Python para encontrar soluciones con diferente
 
 Implementación de un programa en Python con un motor de algoritmos genéticos para encontrar la mejor configuración de personajes para un juego de rol.
 
+## TP3 - [Algoritmos Genéticos](https://github.com/Ian-Arnott/TPs-SIA/tree/master/Tp3)
+
+Implementación de un programa en Python sobre los algoritmos de perceptrón simple y multicapa simulando redes neuronales.
+
 ## Autores
 Nombre | Legajo
 -------|--------
