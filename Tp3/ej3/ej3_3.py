@@ -1,6 +1,6 @@
 import json
 import numpy as np
-from activation_functions import Tanh, Linear, Sigmoid
+from activation_functions import Tanh
 from mse import mse, mse_derivative
 from mlp import Dense, train, predict
 from utils import get_config_params, get_data, get_training_amount
@@ -55,8 +55,8 @@ if __name__ == "__main__":
     for i in range(len(X)):
         z = predict(network, X[i])
         scaled_z = [ [(x + 1) * 4.5 for x in row] for row in z ]
-        points.append([X[i], expected_data[i], scaled_z[0]])
+        points.append([X[i], expected_data[i], scaled_z[i]])
     for point in points:
         print(f"Input:"+
             #    {point[0]} +
-               f"Expected:{point[1]} Result:{(point[2])}")
+               f"Expected:{point[1]} Result:{round(point[2][0])}")
