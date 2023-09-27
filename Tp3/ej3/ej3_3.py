@@ -42,7 +42,7 @@ if __name__ == "__main__":
     ]
 
     # train
-    train(network, mse, mse_derivative, X, Y, epochs=1000)
+    train(network, mse, mse_derivative, X, Y, epochs=max_epochs)
 
 
 

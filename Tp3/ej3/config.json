@@ -1,8 +1,8 @@
 {
     "ej": 1,
-    "learning_rate": 0.001,
+    "learning_rate": 0.01,
     "training_percentage": 0.5,
-    "max_epochs": 5000,
+    "max_epochs": 1000,
     "bias": 1,
     "beta": 1,
     "epsilon": 0.5,

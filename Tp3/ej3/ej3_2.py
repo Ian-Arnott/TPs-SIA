@@ -3,7 +3,7 @@ import numpy as np
 from activation_functions import Tanh
 from mse import mse, mse_derivative
 from mlp import Dense, train, predict
-from utils import get_config_params, get_data, get_training_amount, PERCEPTRON_TYPES
+from utils import get_config_params, get_data, get_training_amount
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
@@ -11,7 +11,7 @@ if __name__ == "__main__":
     with open('./config.json', 'r') as f:
         config = json.load(f)
 
-    ej, learning_rate, training_percentage, max_epochs, bias, beta, epsilon = get_config_params(config)
+    ej, learning_rate, training_percentage, max_epochs, bias, beta, epsilon, optimizer = get_config_params(config)
 
     input_data, expected_data = get_data(ej)
     training_amount = get_training_amount(len(input_data), training_percentage)

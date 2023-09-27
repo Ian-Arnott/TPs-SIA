@@ -6,7 +6,7 @@ def predict(network, input):
         output = layer.forward(output)
     return output
 
-def train(network, error_function, error_derivative, x_train, y_train, epochs = 1000, verbose = True):
+def train(network, error_function, error_derivative, x_train, y_train, epochs, verbose = True):
 
     for e in range(epochs):
         error = 0
