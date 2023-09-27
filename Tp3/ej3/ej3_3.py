@@ -60,3 +60,42 @@ if __name__ == "__main__":
         print(f"Input:"+
             #    {point[0]} +
                f"Expected:{point[1]} Result:{round(point[2][0])}")
+
+
+def main_ej3(config, training_amount):
+    ej, learning_rate, training_percentage, max_epochs, bias, beta, epsilon, optimizer = get_config_params(config)
+
+    input_data, expected_data = get_data(ej)
+    flattened_input = []
+    for i in range(len(input_data)):
+        flattened_input.append([item for sublist in input_data[i] for item in sublist])
+    max_expected = max(expected_data)
+    scaled_expected = [(2 * x / max_expected) - 1 for x in expected_data]
+    X = np.reshape(input_data, (10, 35, 1))
+    Y = np.reshape(scaled_expected, (10, 1, 1))
+    #print(X)
+    #print(Y)
+
+    learning_rate=0.001
+
+    # optimizer = None
+
+    network = [
+        Dense(35, 36, optimizer_type=optimizer, learning_rate=learning_rate),
+        Tanh(),
+        Dense(36, 10, optimizer_type=optimizer, learning_rate=learning_rate),
+        Tanh()
+    ]
+
+    # train
+    train(network, mse, mse_derivative, X, Y, epochs=1000, verbose=False)
+
+    points = []
+    for i in range(len(X)):
+        z = predict(network, X[i])
+        scaled_z = [ [(x + 1) * 4.5 for x in row] for row in z ]
+        points.append([X[i], expected_data[i], scaled_z[i]])
+    for point in points:
+        print(f"Input:"+
+            #    {point[0]} +
+               f"Expected:{point[1]} Result:{round(point[2][0])}")

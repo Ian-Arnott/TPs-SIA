@@ -1,5 +1,5 @@
 {
-    "ej": 1,
+    "ej": 3,
     "learning_rate": 0.001,
     "training_percentage": 0.5,
     "max_epochs": 5000,
