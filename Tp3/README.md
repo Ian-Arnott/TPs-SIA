@@ -80,7 +80,7 @@ Cada ejercicio tiene su propio archivo de configuración en su respectiva carpet
     - Valor de beta para el perceptron no lineal.
 - **epsilon** _[Número real]_:
     - Valor que representa el error mínimo aceptable.
-- **optimizer** _[ADAM]_:
+- **optimizer** _[ADAM | GRADIENT\_DESCENT]_:
     - Optimizador a utilizar.
 
  
