@@ -7,6 +7,12 @@ from utils import get_config_params, get_data, get_training_amount
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
+def addNoise(X, noise):
+    for matrix in X:
+        for i in range(len(matrix)):
+            if np.random.rand() < noise:
+                matrix[i] = 1 - matrix[i]
+
 if __name__ == "__main__":
     with open('./config.json', 'r') as f:
         config = json.load(f)
@@ -24,7 +30,7 @@ if __name__ == "__main__":
     print(X)
     print(Y)
 
-    learning_rate=0.01
+    learning_rate=0.001
 
     # optimizer = None
 
@@ -38,9 +44,18 @@ if __name__ == "__main__":
     # train
     train(network, mse, mse_derivative, X, Y, epochs=1000)
 
+
+
+# Funcion para agregar ruido
+# Es muy caotica pero tiene sentido, las imagenes son de muy baja resolucion
+# por lo tanto pequenos cambios las acercan a otros numero en gran medida
+    # addNoise(X,0.01)
+
     points = []
     for i in range(len(X)):
         z = predict(network, X[i])
         points.append([X[i], Y[i], z[0,0]])
     for point in points:
-        print(f"Input: {point[0]} Expected:{point[1]} Result:{(point[2])}")
+        print(f"Input:"+
+            #    {point[0]} +
+               f"Expected:{point[1]} Result:{(point[2])}")
