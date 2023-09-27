@@ -1,6 +1,6 @@
 import json
 import numpy as np
-from activation_functions import Tanh
+from activation_functions import Tanh, Linear, Sigmoid
 from mse import mse, mse_derivative
 from mlp import Dense, train, predict
 from utils import get_config_params, get_data, get_training_amount
@@ -14,30 +14,29 @@ if __name__ == "__main__":
     ej, learning_rate, training_percentage, max_epochs, bias, beta, epsilon = get_config_params(config)
 
     input_data, expected_data = get_data(ej)
-    training_amount = get_training_amount(len(input_data), training_percentage)
-    training_set = input_data[:training_amount]
-    training_expected = expected_data[:training_amount]
-    testing_set =  np.reshape(input_data[training_amount:], (len(input_data)-training_amount, 7, 5))
-    print(testing_set)
-    testing_expected = expected_data[training_amount:]
-    X = np.reshape(input_data, (10, 7, 5))
-    Y = np.reshape(expected_data, (10, 1, 1))
+    flattened_input = []
+    for i in range(len(input_data)):
+        flattened_input.append([item for sublist in input_data[i] for item in sublist])
+    max_expected = max(expected_data)
+    scaled_expected = [(2 * x / max_expected) - 1 for x in expected_data]
+    X = np.reshape(input_data, (10, 35, 1))
+    Y = np.reshape(scaled_expected, (10, 1, 1))
     print(X)
     print(Y)
 
     network = [
-        Dense(7, 10),
+        Dense(35, 36),
         Tanh(),
-        Dense(10, 10),
+        Dense(36, 10),
         Tanh()
     ]
 
         # train
-    train(network, mse, mse_derivative, X, Y, epochs=10000, learning_rate=0.1)
+    train(network, mse, mse_derivative, X, Y, epochs=1000, learning_rate=0.01)
 
     points = []
-    for i in range(len(testing_set)):
-        z = predict(network, testing_set[i])
-        points.append([testing_set[i], testing_expected[i], z[0,0]])
+    for i in range(len(X)):
+        z = predict(network, X[i])
+        points.append([X[i], Y[i], z[0,0]])
     for point in points:
-        print(f"Input: {point[0]} Expected:{point[1]} Result:{round(point[2])}")
+        print(f"Input: {point[0]} Expected:{point[1]} Result:{(point[2])}")
