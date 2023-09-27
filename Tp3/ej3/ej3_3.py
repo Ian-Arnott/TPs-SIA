@@ -27,12 +27,9 @@ if __name__ == "__main__":
     scaled_expected = [(2 * x / max_expected) - 1 for x in expected_data]
     X = np.reshape(input_data, (10, 35, 1))
     Y = np.reshape(scaled_expected, (10, 1, 1))
-    print(X)
-    print(Y)
 
-    learning_rate=0.001
-
-    # optimizer = None
+    # print(X)
+    # print(Y)
 
     network = [
         Dense(35, 36, optimizer_type=optimizer, learning_rate=learning_rate),
@@ -42,7 +39,7 @@ if __name__ == "__main__":
     ]
 
     # train
-    train(network, mse, mse_derivative, X, Y, epochs=max_epochs)
+    train(network, mse, mse_derivative, X, Y, epochs=max_epochs, verbose=False)
 
 
 
@@ -57,6 +54,4 @@ if __name__ == "__main__":
         scaled_z = [ [(x + 1) * 4.5 for x in row] for row in z ]
         points.append([X[i], expected_data[i], scaled_z[i]])
     for point in points:
-        print(f"Input:"+
-            #    {point[0]} +
-               f"Expected:{point[1]} Result:{round(point[2][0])}")
+        print(f"Expected:{point[1]} - Result:{round(point[2][0])}")
