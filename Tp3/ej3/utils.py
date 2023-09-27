@@ -2,6 +2,13 @@ import numpy as np
 import pandas as pd
 
 
+OPTIMIZER_TYPES = ["ADAM"]
+
+def validate_optimizer_type(value, types, str):
+    if value not in types:
+        print(f"Invalid {str} optimizer type")
+        exit(1)
+
 def validate_percentage(value, str):
     try:
         value = float(value)
@@ -73,5 +80,8 @@ def get_config_params(config):
 
     epsilon = config["epsilon"]
 
-    return ej, learning_rate, training_percentage, max_epochs, bias, beta, epsilon
+    optimizer = config["optimizer"]
+    validate_optimizer_type(optimizer, OPTIMIZER_TYPES, "optimizer")
+
+    return ej, learning_rate, training_percentage, max_epochs, bias, beta, epsilon, optimizer
 

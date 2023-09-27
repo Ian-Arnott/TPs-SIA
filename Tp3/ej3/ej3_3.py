@@ -11,7 +11,7 @@ if __name__ == "__main__":
     with open('./config.json', 'r') as f:
         config = json.load(f)
 
-    ej, learning_rate, training_percentage, max_epochs, bias, beta, epsilon = get_config_params(config)
+    ej, learning_rate, training_percentage, max_epochs, bias, beta, epsilon, optimizer = get_config_params(config)
 
     input_data, expected_data = get_data(ej)
     flattened_input = []
@@ -32,6 +32,11 @@ if __name__ == "__main__":
     ]
 
         # train
+    # version comentada incluye el uso de un optimizer. NO PUDE solucionar que como cambia la dimension de la gradiente el optimizer haga los calculos bien
+    # el optimizer mantiene una version de la gradiente que va actualizando
+    # cuando cambia la gradiente entonces no sabe que hacer porque se encuentra con una dimension nueva que compara contra la vieja
+    
+    # train(network, mse, mse_derivative, X, Y, epochs=1000, learning_rate=0.01, optimizer_type=optimizer)
     train(network, mse, mse_derivative, X, Y, epochs=1000, learning_rate=0.01)
 
     points = []
