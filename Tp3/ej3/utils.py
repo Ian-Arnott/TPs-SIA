@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 
 
-OPTIMIZER_TYPES = ["ADAM"]
+OPTIMIZER_TYPES = ["ADAM" | "GRADIENT_DESCENT"]
 
 def validate_optimizer_type(value, types, str):
     if value not in types:
