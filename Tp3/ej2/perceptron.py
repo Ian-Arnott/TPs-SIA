@@ -44,10 +44,12 @@ class SimplePerceptron(ABC):
     def current_outputs(self, input_data:list[list[float]]) -> list[float]:
         return [self.activation_function(self.theta(x_mu)) for x_mu in input_data]
 
+
     def delta_weights(self, excitement:float, activation:float, expected:float, x_mu:list[float]):
         extended_x_mu = np.array([1] + x_mu)
         scaled_expected = self.activation_function(expected)
         return self.learning_rate * (scaled_expected - activation) * self.activation_derivative(excitement) * extended_x_mu
+
 
     def train(self, input_data:list[list[float]], expected:list[float], limit:int, should_scale:bool = False):
         epoch = 0
@@ -79,15 +81,16 @@ class SimplePerceptron(ABC):
         return epoch, mse
     
 
-
     def scale_result(self, value,  new_min, new_max):
         scaled = ((value - new_min) / (new_max - new_min)) * (self.activation_max - self.activation_min) + self.activation_min
         return scaled
+
 
     def _predict_one(self, x:list[int], should_scale:bool, scale_interval:tuple[float]) -> float:
         excitement = self.theta(x)
         activation = self.activation_function(excitement)
         return activation
+
 
     def predict(self, input_data:list[list[float]], should_scale:bool = False, scale_interval:tuple[float] = ()) -> list[float]:
         if should_scale:
@@ -95,8 +98,14 @@ class SimplePerceptron(ABC):
                 raise Exception("Wrong scale_interval: size must be 2")
             if scale_interval[0] > scale_interval[1]:
                 raise Exception("Wrong scale_interval: min > max")
+            
+        result = []
+        for x in input_data:
+            result.append(self._predict_one(x, should_scale=should_scale, scale_interval=scale_interval))
 
-        return [self._predict_one(x, should_scale=should_scale, scale_interval=scale_interval) for x in input_data]
+        test_mse = self.compute_error(input_data, result)
+
+        return result, test_mse
 
 
 

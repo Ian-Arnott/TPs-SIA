@@ -21,12 +21,12 @@ def run_main(config):
 
     if(perceptron_type == PERCEPTRON_TYPES[0]): # LINEAR
         epoch, mse = perceptron.train(training_set, expected_data[:training_amount], max_epochs)
-        result = perceptron.predict(testing_set)
+        result, test_mse = perceptron.predict(testing_set)
     else:
         epoch, mse = perceptron.train(training_set, expected_data[:training_amount], max_epochs, should_scale=True)
-        result = perceptron.predict(testing_set, should_scale=True, scale_interval=min_max_interval(expected_data))
+        result, test_mse = perceptron.predict(testing_set, should_scale=True, scale_interval=min_max_interval(expected_data))
 
-    return epoch, mse
+    return epoch, mse, test_mse
 
 
 
@@ -49,14 +49,15 @@ if __name__ == "__main__":
 
     if(perceptron_type == PERCEPTRON_TYPES[0]): # LINEAR
         epochs, mse = perceptron.train(training_set, expected_data[:training_amount], max_epochs)
-        result = perceptron.predict(testing_set)
+        result, test_mse = perceptron.predict(testing_set)
     else:
         epochs, mse = perceptron.train(training_set, expected_data[:training_amount], max_epochs, should_scale=True)
-        result = perceptron.predict(testing_set, should_scale=True, scale_interval=min_max_interval(expected_data))
+        result, test_mse = perceptron.predict(testing_set, should_scale=True, scale_interval=min_max_interval(expected_data))
 
     correct_predictions = 0
 
     print("Expected         | Expected_Scaled    | Result            | Delta")
+    print("------------------------------------------------------------------")
     for i in range(len(result)):
         expected_str = f'{expected_data[i+training_amount]}'.ljust(16)
 
@@ -72,15 +73,10 @@ if __name__ == "__main__":
         
         if(abs(result[i] - expected_scaled) <= epsilon):
             correct_predictions += 1
-        
-    accuracy = (correct_predictions / len(result)) * 100
-    print(f'Accuracy: {accuracy}%')
     
-    # if(perceptron_type != PERCEPTRON_TYPES[0]): # LINEAR
-    #     for i in range(len(expected_data[training_amount:])):
-    #         expected_data[i] = perceptron.scale_result(expected_data[i],min(expected_data),max(expected_data))
-            
-    # accuracy = calculate_accuracy(result, expected_data[training_amount:], epsilon)
-    # print(f'Accuracy: {accuracy}%')
+    print(f'Correct predictions: {correct_predictions} out of {len(result)}')
+    print(f'Training Error: {mse[len(mse)-1]}')
+    print(f'Testing Error: {test_mse}')
+
 
 
