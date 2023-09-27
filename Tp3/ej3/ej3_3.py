@@ -54,7 +54,8 @@ if __name__ == "__main__":
     points = []
     for i in range(len(X)):
         z = predict(network, X[i])
-        points.append([X[i], Y[i], z[0,0]])
+        scaled_z = [ [(x + 1) * 4.5 for x in row] for row in z ]
+        points.append([X[i], expected_data[i], scaled_z[0]])
     for point in points:
         print(f"Input:"+
             #    {point[0]} +
