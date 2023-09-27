@@ -14,22 +14,27 @@ if __name__ == "__main__":
     input_data, expected_data = get_data(ej)
     training_amount = get_training_amount(len(input_data), training_percentage)
 
-    training_set = input_data[:training_amount]
+    flattened_input = []
+
+    for i in range(len(input_data)):
+        flattened_input.append([item for sublist in input_data[i] for item in sublist])
+
+    training_set = flattened_input[:training_amount]
     training_expected = expected_data[:training_amount]
 
-    testing_set =  np.reshape(input_data[training_amount:], (len(input_data)-training_amount, 5, 1))
+    testing_set =  np.reshape(flattened_input[training_amount:], (len(input_data)-training_amount, 35, 1))
     testing_expected = expected_data[training_amount:]
 
-    X = np.reshape(training_set, (training_amount, 5, 1))
+    X = np.reshape(training_set, (training_amount, 35, 1))
     Y = np.reshape(training_expected, (training_amount, 1, 1))
 
     # print(X)
     # print(Y)
 
     network = [
-        Dense(5, 3, learning_rate, optimizer),
+        Dense(35, 32, learning_rate, optimizer),
         Tanh(),
-        Dense(3, 1, learning_rate, optimizer),
+        Dense(32, 2, learning_rate, optimizer),
         Tanh()
     ]
 
@@ -41,4 +46,4 @@ if __name__ == "__main__":
         z = predict(network, testing_set[i])
         points.append([testing_set[i], testing_expected[i], z[0,0]])
     for point in points:
-        print(f"Input: {point[0]} Expected:{point[1]} Result:{round(point[2])}")
+        print(f"Expected:{point[1]} Result:{round(point[2])}")
