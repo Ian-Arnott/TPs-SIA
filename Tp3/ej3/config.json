@@ -1,12 +1,10 @@
 {
-    "ej": 3,
+    "ej": 1,
     "learning_rate": 0.001,
     "training_percentage": 0.5,
     "max_epochs": 5000,
     "bias": 1,
     "beta": 1,
     "epsilon": 0.5,
-
     "optimizer": "ADAM"
-
 }

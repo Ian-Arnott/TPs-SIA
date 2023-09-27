@@ -27,6 +27,7 @@ def train(network, error_function, error_derivative, x_train, y_train, epochs = 
         if verbose:
             print(f"{e + 1}/{epochs}, error={error}")
 
+
 class Layer:
     def __init__(self):
         self.input = None
@@ -38,16 +39,17 @@ class Layer:
     def backwards(self, output_derivative):
         pass
 
+
 class Dense(Layer):
     def __init__(self, input_size, output_size, learning_rate = 0.001, optimizer_type = None):
         self.weights = np.random.randn(output_size, input_size)
         self.bias =  np.random.randn(output_size, 1)
         self.learning_rate = learning_rate
         self.time_step = 0
-        if optimizer_type is None:
-            self.optimizer = Optimizer(self.learning_rate)
-        else:
+        if optimizer_type =="ADAM":
             self.optimizer = AdamOptimizer(self.learning_rate)
+        else:
+            self.optimizer = GradientDescentOptimizer(self.learning_rate)
 
     def forward(self, input):
         self.input = input
@@ -84,7 +86,7 @@ class Optimizer:
         self.learningRate = learning_rate
 
     def update(self, gradient, time_step):
-        return -self.learningRate * gradient
+        pass
 
 class AdamOptimizer(Optimizer):
     def __init__(self, learning_rate, beta1=0.9, beta2=0.999, epsilon=1e-8, shape=None):
@@ -111,3 +113,11 @@ class AdamOptimizer(Optimizer):
         vHat = self.v / (1 - self.beta2**time_step)
         
         return (-self.learningRate * mHat) / (np.sqrt(vHat) + self.epsilon)
+    
+
+class GradientDescentOptimizer(Optimizer):
+    def __init__(self, learning_rate):
+        super().__init__(learning_rate)
+
+    def update(self, gradient, time_step):
+        return -self.learningRate * gradient
