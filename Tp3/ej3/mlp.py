@@ -6,12 +6,8 @@ def predict(network, input):
         output = layer.forward(output)
     return output
 
-def train(network, error_function, error_derivative, x_train, y_train, epochs = 1000, learning_rate = 0.01, verbose = True, optimizer_type = None):
-    if optimizer_type == "ADAM":
-        optimizer = AdamOptimizer(learning_rate)
-    else:
-        optimizer = None
-        
+def train(network, error_function, error_derivative, x_train, y_train, epochs = 1000, verbose = True):
+
     for e in range(epochs):
         error = 0
         for x, y in zip(x_train, y_train):
@@ -24,16 +20,8 @@ def train(network, error_function, error_derivative, x_train, y_train, epochs = 
             # backward
             grad = error_derivative(y, output)
 
-            time_step = 0
-
             for layer in reversed(network):
-                time_step += 1
-                if isinstance(layer, Dense):
-                    if optimizer is not None:
-                        weights_gradient = np.dot(grad, layer.input.T)
-                        layer.weights += optimizer.update(weights_gradient, time_step)
-
-                grad = layer.backward(grad, learning_rate)
+                grad = layer.backward(grad)
 
         error /= len(x_train)
         if verbose:
@@ -47,23 +35,34 @@ class Layer:
     def fowards(self, input):
         pass
 
-    def backwards(self, output_derivative, learing_rate):
+    def backwards(self, output_derivative):
         pass
 
 class Dense(Layer):
-    def __init__(self, input_size, output_size):
+    def __init__(self, input_size, output_size, learning_rate = 0.001, optimizer_type = None):
         self.weights = np.random.randn(output_size, input_size)
         self.bias =  np.random.randn(output_size, 1)
+        self.learning_rate = learning_rate
+        self.time_step = 0
+        if optimizer_type is None:
+            self.optimizer = Optimizer(self.learning_rate)
+        else:
+            self.optimizer = AdamOptimizer(self.learning_rate)
 
     def forward(self, input):
         self.input = input
         return np.dot(self.weights, self.input) + self.bias
 
-    def backward(self, output_derivative, learning_rate):
+    def backward(self, output_derivative):
+        self.time_step += 1
+
         weights_gradient = np.dot(output_derivative, self.input.T)
         input_gradient = np.dot(self.weights.T, output_derivative)
-        self.weights -= learning_rate * weights_gradient
-        self.bias -= learning_rate * output_derivative
+
+        self.weights += self.optimizer.update(weights_gradient,self.time_step)
+
+        # self.weights -= learning_rate * weights_gradient
+        self.bias -= self.learning_rate * output_derivative
         return input_gradient
 
 class Activation(Layer):
@@ -75,7 +74,7 @@ class Activation(Layer):
         self.input = input
         return self.activation(self.input)
 
-    def backward(self, output_gradient, learning_rate):
+    def backward(self, output_gradient):
         return np.multiply(output_gradient, self.activation_derivative (self.input))
 
 # Implementacion de optimizer
@@ -84,8 +83,8 @@ class Optimizer:
     def __init__(self, learning_rate):
         self.learningRate = learning_rate
 
-    def update(self, gradient):
-        return
+    def update(self, gradient, time_step):
+        return -self.learningRate * gradient
 
 class AdamOptimizer(Optimizer):
     def __init__(self, learning_rate, beta1=0.9, beta2=0.999, epsilon=1e-8, shape=None):
