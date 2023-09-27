@@ -15,18 +15,14 @@ def run_main(config):
 
     perceptron = initialize_perceptron(perceptron_type, beta, learning_rate, bias, len(training_set[0]),epsilon)
 
-    epoch = 0
-    mse = []
-    result = []
-
     if(perceptron_type == PERCEPTRON_TYPES[0]): # LINEAR
-        epoch, mse = perceptron.train(training_set, expected_data[:training_amount], max_epochs)
+        epoch, train_errors, test_errors = perceptron.train(training_set, testing_set, expected_data[:training_amount], expected_data[training_amount:], max_epochs)
         result, test_mse = perceptron.predict(testing_set)
     else:
-        epoch, mse = perceptron.train(training_set, expected_data[:training_amount], max_epochs, should_scale=True)
+        epoch, train_errors, test_errors = perceptron.train(training_set, testing_set, expected_data[:training_amount], expected_data[training_amount:], max_epochs, should_scale=True)
         result, test_mse = perceptron.predict(testing_set, should_scale=True, scale_interval=min_max_interval(expected_data))
 
-    return epoch, mse, test_mse
+    return epoch, train_errors, test_errors
 
 
 
@@ -48,10 +44,10 @@ if __name__ == "__main__":
     correct_predictions = 0 
 
     if(perceptron_type == PERCEPTRON_TYPES[0]): # LINEAR
-        epochs, mse = perceptron.train(training_set, expected_data[:training_amount], max_epochs)
+        epochs, train_errors, test_errors = perceptron.train(training_set, testing_set, expected_data[:training_amount], expected_data[training_amount:], max_epochs)
         result, test_mse = perceptron.predict(testing_set)
     else:
-        epochs, mse = perceptron.train(training_set, expected_data[:training_amount], max_epochs, should_scale=True)
+        epochs, train_errors, test_errors = perceptron.train(training_set, testing_set, expected_data[:training_amount], expected_data[training_amount:], max_epochs, should_scale=True)
         result, test_mse = perceptron.predict(testing_set, should_scale=True, scale_interval=min_max_interval(expected_data))
 
     correct_predictions = 0
@@ -75,7 +71,7 @@ if __name__ == "__main__":
             correct_predictions += 1
     
     print(f'Correct predictions: {correct_predictions} out of {len(result)}')
-    print(f'Training Error: {mse[len(mse)-1]}')
+    print(f'Training Error: {train_errors[len(train_errors)-1]}')
     print(f'Testing Error: {test_mse}')
 
 

@@ -51,15 +51,17 @@ class SimplePerceptron(ABC):
         return self.learning_rate * (scaled_expected - activation) * self.activation_derivative(excitement) * extended_x_mu
 
 
-    def train(self, input_data:list[list[float]], expected:list[float], limit:int, should_scale:bool = False):
+    def train(self, input_data:list[list[float]], testing_data:list[list[float]], expected:list[float], expected_test:list[float], limit:int, should_scale:bool = False):
         epoch = 0
         error_min = math.inf
         input_len = len(input_data)
         
         if (should_scale):
             expected = [self.scale_result(value, min(expected), max(expected)) for value in expected]
+            expected_test = [self.scale_result(value, min(expected_test), max(expected_test)) for value in expected_test]
 
-        mse = []
+        train_errors = []
+        test_errors = []
         
         while error_min > self.epsilon and epoch < limit:
             mu = random.randrange(0, input_len)
@@ -71,14 +73,15 @@ class SimplePerceptron(ABC):
 
             new_error = self.compute_error(input_data, expected)
 
-            mse.append(new_error)
+            train_errors.append(new_error)
+            test_errors.append(self.compute_error(testing_data, expected_test))
             
             if new_error < error_min:
                 error_min = new_error
 
             epoch += 1
         
-        return epoch, mse
+        return epoch, train_errors, test_errors
     
 
     def scale_result(self, value,  new_min, new_max):
