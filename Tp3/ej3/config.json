@@ -1,6 +1,6 @@
 {
-    "ej": 3,
-    "learning_rate": 0.001,
+    "ej": 2,
+    "learning_rate": 0.01,
     "training_percentage": 0.5,
     "max_epochs": 1000,
     "bias": 1,
