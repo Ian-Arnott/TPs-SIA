@@ -45,5 +45,14 @@ if __name__ == "__main__":
     for i in range(len(testing_set)):
         z = predict(network, testing_set[i])
         points.append([testing_set[i], testing_expected[i], z[0,0]])
+    
+    correct_predictions = 0
+
     for point in points:
         print(f"Expected:{point[1]} Result:{round(point[2])}")
+        if abs(point[1] - round(point[2])) < epsilon:
+            correct_predictions += 1
+    
+    accuracy = (correct_predictions / len(testing_set)) * 100
+    print(f"Accuracy: {accuracy}%")
+
