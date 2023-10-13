@@ -31,11 +31,22 @@ def validate_positive_int(value, str):
 
 def get_data():
     data = pd.read_csv('data/europe.csv')
-    return data
+    countries = data["Country"].tolist()
+    labels = data.columns[1:].tolist()
+    country_data = data.iloc[:, 1:].values
+    return countries, labels, country_data
+
+# Unit Length Scaling => X / ||X||
+def standarize_data(data):
+    norms = np.linalg.norm(data, axis=1) # Calcula la norma Euclidiana de cada fila (la longitud)
+    return data / norms[:, np.newaxis]
 
 
 def get_config_params(config):
-    radio = config["radio"]
-    validate_positive_int(radio, "Radio")
+    radius = config["radius"]
+    validate_positive_int(radius, "Radius")
 
-    return radio
+    max_epochs = config["max_epochs"]
+    validate_positive_int(max_epochs, "Max epochs")
+
+    return radius, max_epochs

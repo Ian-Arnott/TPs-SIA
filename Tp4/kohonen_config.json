@@ -1,3 +1,4 @@
 {
-    "radio": 1
+    "radius": 1,
+    "max_epochs": 100
 }
