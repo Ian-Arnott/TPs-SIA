@@ -75,3 +75,42 @@ class KohonenNetwork:
             for j in range(self.k):
                 if self.m_distance((i, j), winner_neuron_index) <= current_radius:
                     self.neuron_matrix[i][j].update_weight(input_data)
+
+    
+    # Se asume radio = 1
+    def _get_neighbourhood_mean(self, neuron_pos):
+        sum = 0
+        count = 0
+        x, y = neuron_pos
+        neuron = self.neuron_matrix[x][y]
+
+
+        # Up neighbour
+        if(y - 1 >= 0):
+            count += 1
+            sum += neuron.euclidean(self.neuron_matrix[x][y - 1].weights)
+        
+        # Down neighbour
+        if(y + 1 < self.k):
+            count += 1
+            sum += neuron.euclidean(self.neuron_matrix[x][y + 1].weights)
+
+        # Left neighbour
+        if(x - 1 >= 0):
+            count += 1
+            sum += neuron.euclidean(self.neuron_matrix[x - 1][y].weights)
+
+        # Right neighbour
+        if(x + 1 < self.k):
+            count += 1
+            sum += neuron.euclidean(self.neuron_matrix[x + 1][y].weights)
+
+        return sum / count
+
+
+    def get_unified_distance_matrix(self):
+        unified_distance_matrix = np.zeros((self.k, self.k))
+        for i in range(self.k):
+            for j in range(self.k):
+                unified_distance_matrix[i][j] = self._get_neighbourhood_mean((i, j))
+        return unified_distance_matrix
