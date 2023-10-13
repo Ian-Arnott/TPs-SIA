@@ -1,4 +1,5 @@
 import numpy as np
+import math
 from scipy.spatial import distance
 
 class Neuron:
@@ -7,7 +8,6 @@ class Neuron:
         #TODO: Los pesos se deberian inicializar con muestras del conjunto
         self.weights = weights
         self.activation = 0.0
-        self.groupCount = 0
         self.learning_rate = learning_rate
 
     def calculate_similitude(self, input) -> float:
@@ -28,35 +28,50 @@ class Neuron:
 
 class KohonenNetwork:
 
-    def __init__(self, input_data:list[list[float]], input_size: int, k:int, learning_rate: float = 0.1):
+    def __init__(self, input_data:list[list[float]], input_size: int, k:int, learning_rate: float = 0.1, radius: int = 1):
         self.input_size = input_size
         self.k = k
         self.learning_rate = learning_rate
+        self.input_data = input_data
+        self.initial_radius = radius
         
         # Inicializa la red con k neuronas
-        self.neuron_matrix = [[Neuron(self.get_sample(input_data), learning_rate) for _ in range(k)] for _ in range(k)]
+        self.neuron_matrix = [[Neuron(self.get_random_sample(), learning_rate) for _ in range(k)] for _ in range(k)]
 
 
-    @staticmethod
-    def get_sample(input_data: list[list[float]]):
-        return np.array(input_data[np.random.randint(len(input_data))])
+    def get_random_sample(self):
+        return np.array(self.input_data[np.random.randint(len(self.input_data))])
     
 
-    def process_input(self, input_data, current_radius):
+    def train(self, epochs):
+        current_radius = self.initial_radius
+        for epoch in range(epochs):
+            current_input = self.get_random_sample()
+            # Calcula la similitud de cada neurona con la entrada
+            for i in range(self.k):
+                for j in range(self.k):
+                    self.neuron_matrix[i][j].calculate_similitude(current_input)
+            
+            # Obtiene la neurona con menor similitud
+            winner_neuron_index = self.get_winner_neuron()
+
+            # Actualiza los pesos a partir de la neurona ganadora
+            if(current_radius > 1):
+                current_radius = max(1, self.initial_radius / (epoch + 1))
+
+            self.update_weights(winner_neuron_index, current_radius)
+
+    def predict(self, input):
         # Calcula la similitud de cada neurona con la entrada
         for i in range(self.k):
             for j in range(self.k):
-                self.neuron_matrix[i][j].calculate_similitude(input_data)
-        
+                self.neuron_matrix[i][j].calculate_similitude(input)
+
         # Obtiene la neurona con menor similitud
-        winner_neuron, winner_neuron_index = self._get_winner_neuron()
-        winner_neuron.groupCount += 1
+        winner_neuron_index = self.get_winner_neuron()
+        return winner_neuron_index
 
-        # Actualiza los pesos a partir de la neurona ganadora
-        self.update_weights(winner_neuron_index, input_data, current_radius)
-
-
-    def _get_winner_neuron(self) -> (Neuron, (int, int)):
+    def get_winner_neuron(self) -> (int, int):
         winner_neuron = self.neuron_matrix[0][0]
         winner_neuron_index = (0, 0)
         for i in range(self.k):
@@ -64,18 +79,24 @@ class KohonenNetwork:
                 if self.neuron_matrix[i][j].activation < winner_neuron.activation:
                     winner_neuron = self.neuron_matrix[i][j]
                     winner_neuron_index = (i, j)
-        return winner_neuron, winner_neuron_index
+        return winner_neuron_index
 
-    @staticmethod
-    def m_distance(x, y):
-        return distance.cityblock(x, y)
 
-    def update_weights(self, winner_neuron_index:(int, int), input_data, current_radius):
+    def update_weights(self, winner_neuron_index:(int, int), radius: int = 1):
+        neighbours = self.get_neighbours(winner_neuron_index, radius)
+        for (i,j) in neighbours:
+            self.neuron_matrix[i][j].update_weight(self.input_data)
+
+    
+    def get_neighbours(self, neuron_pos:(int, int), radius: int = 1):
+        neighbours = []
+        neuron_pos_array = np.array(neuron_pos)
+
         for i in range(self.k):
             for j in range(self.k):
-                if self.m_distance((i, j), winner_neuron_index) <= current_radius:
-                    self.neuron_matrix[i][j].update_weight(input_data)
-
+                if np.linalg.norm(np.array([i, j]) - neuron_pos_array) <= radius:
+                    neighbours.append((i, j))
+        return neighbours
     
     # Se asume radio = 1
     def _get_neighbourhood_mean(self, neuron_pos):
