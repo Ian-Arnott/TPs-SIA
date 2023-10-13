@@ -1,4 +1,7 @@
 {
+    "k": 4,
+    "learning_rate": 0.1,
     "radius": 1,
-    "max_epochs": 100
+    "max_epochs": 100,
+    "likeness_type": "EUCLIDEAN"
 }

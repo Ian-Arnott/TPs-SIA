@@ -1,9 +1,9 @@
 import numpy as np
 import pandas as pd
 
-PERCEPTRON_TYPES = ["LINEAR", "HIPERBOLIC", "LOGISTIC"]
+LIKENESS_TYPES = ["EUCLIDEAN", "EXPONENTIAL"]
 
-def validate_perceptron_type(value, types, str):
+def validate_likeness_type(value, types, str):
     if value not in types:
         print(f"Invalid {str}")
         exit(1)
@@ -36,17 +36,29 @@ def get_data():
     country_data = data.iloc[:, 1:].values
     return countries, labels, country_data
 
-# Unit Length Scaling => X / ||X||
-def standarize_data(data):
-    norms = np.linalg.norm(data, axis=1) # Calcula la norma Euclidiana de cada fila (la longitud)
-    return data / norms[:, np.newaxis]
+
+def standarize_data(input_data):
+    data_standarized = np.copy(input_data)  # Copia los datos para no modificar el original
+    means = np.mean(data_standarized, axis=0)
+    stdevs = np.std(data_standarized, axis=0)
+    data_standarized = (data_standarized - means) / stdevs 
+    return data_standarized
 
 
 def get_config_params(config):
+    k = config["k"]
+    validate_positive_int(k, "K")
+    
+    learning_rate = config["learning_rate"]
+    validate_percentage(learning_rate, "Learning rate")
+
     radius = config["radius"]
     validate_positive_int(radius, "Radius")
 
     max_epochs = config["max_epochs"]
     validate_positive_int(max_epochs, "Max epochs")
 
-    return radius, max_epochs
+    likeness_type = config["likeness_type"]
+    validate_likeness_type(likeness_type, LIKENESS_TYPES, "Likeness type")
+
+    return k, learning_rate, radius, max_epochs, likeness_type
