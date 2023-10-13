@@ -30,7 +30,7 @@ def validate_positive_int(value, str):
 
 
 def get_data():
-    data = pd.read_csv('data/europe.csv')
+    data = pd.read_csv('../data/europe.csv')
     countries = data["Country"].tolist()
     labels = data.columns[1:].tolist()
     country_data = data.iloc[:, 1:].values

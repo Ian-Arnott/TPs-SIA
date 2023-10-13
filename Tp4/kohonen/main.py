@@ -41,7 +41,7 @@ def plot_unified_distance_heatmap(ud_matrix):
 
 
 if __name__ == "__main__":
-    with open('./kohonen_config.json', 'r') as f:
+    with open('./config.json', 'r') as f:
         config = json.load(f)
 
     k, learning_rate, radius, max_epochs, likeness_type = get_config_params(config)
