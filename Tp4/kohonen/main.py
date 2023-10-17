@@ -4,17 +4,23 @@ from utils import get_config_params, get_data, standarize_data
 import numpy as np
 import matplotlib.pyplot as plt
 
-def plot_heatmap(network, input_data):
+def plot_heatmap(network, input_data, countries):
 
     activation_matrix = np.zeros((network.k, network.k))
+    countries_matrix = [["" for _ in range(network.k)] for _ in range(network.k)]
 
     for i in range(len(input_data)):
         x, y = network.predict(input_data[i])
         activation_matrix[x][y] += 1
+        countries_matrix[x][y] += f"{countries[i]}\n"
 
+    # countries_array = np.array(countries_matrix)
 
     # Configurar un mapa de colores (puedes cambiar el mapa de colores según tus preferencias)
     cmap = plt.get_cmap('inferno')  # Ejemplo de un mapa de colores
+
+    # Configurar el tamaño de la figura
+    plt.figure(figsize=(8, 8))
 
     plt.imshow(activation_matrix, cmap=cmap)
 
@@ -28,7 +34,8 @@ def plot_heatmap(network, input_data):
     for i in range(k):
         for j in range(k):
             color = 'w' if activation_matrix[i, j] < 6 else 'k'
-            plt.text(j, i, str(int(activation_matrix[i, j])), ha='center', va='center', color=color)
+            annotation = str(int(activation_matrix[i, j])) + "\n" + countries_matrix[i][j]
+            plt.text(j, i, annotation, ha='center', va='center', color=color)
 
 
     # Agregar una barra de colores (leyenda)
@@ -67,12 +74,12 @@ if __name__ == "__main__":
 
     countries, labels, data = get_data()
 
-    standarize_data = standarize_data(data)
+    standarized_data = standarize_data(data)
 
     # Inicializa la red con kxk neuronas
-    network = KohonenNetwork(standarize_data, len(standarize_data), k, learning_rate, initial_radius)
+    network = KohonenNetwork(standarized_data, len(standarized_data), k, learning_rate, initial_radius)
 
-    n = len(standarize_data[0])
+    n = len(standarized_data[0])
 
     # Entrena la red
     network.train(max_epochs)
@@ -81,7 +88,7 @@ if __name__ == "__main__":
     #     for j in range(network.k):
     #         print(network.neuron_matrix[i][j].weights)
 
-    plot_heatmap(network, standarize_data)
+    plot_heatmap(network, standarized_data, countries)
     plot_unified_distance_heatmap(network.get_unified_distance_matrix())
 
     
