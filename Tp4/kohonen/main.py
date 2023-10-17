@@ -14,8 +14,6 @@ def plot_heatmap(network, input_data, countries):
         activation_matrix[x][y] += 1
         countries_matrix[x][y] += f"{countries[i]}\n"
 
-    # countries_array = np.array(countries_matrix)
-
     # Configurar un mapa de colores (puedes cambiar el mapa de colores según tus preferencias)
     cmap = plt.get_cmap('inferno')  # Ejemplo de un mapa de colores
 
@@ -33,7 +31,7 @@ def plot_heatmap(network, input_data, countries):
     # Agregar valores numéricos a cada celda del heatmap
     for i in range(k):
         for j in range(k):
-            color = 'w' if activation_matrix[i, j] < 6 else 'k'
+            color = 'w' if activation_matrix[i, j] < 5 else 'k'
             annotation = str(int(activation_matrix[i, j])) + "\n" + countries_matrix[i][j]
             plt.text(j, i, annotation, ha='center', va='center', color=color)
 
@@ -65,6 +63,29 @@ def plot_unified_distance_heatmap(ud_matrix):
 
     plt.show()
 
+def plot_one_variable_heatmap(network, input_data, labels, variable):
+    activation_matrix = np.zeros((network.k, network.k))
+
+    for i in range(len(input_data)):
+        x, y = network.predict(input_data[i])
+        activation_matrix[x][y] += input_data[i][variable]
+
+    cmap = plt.get_cmap('Purples')
+
+    plt.imshow(activation_matrix, cmap=cmap)
+
+    plt.xticks(range(k), range(k))
+    plt.yticks(range(k), range(k))
+
+    for i in range(k):
+        for j in range(k):
+            color = 'w' if activation_matrix[i, j] > 4 else 'k'
+            annotation = str(int(activation_matrix[i, j]))
+            plt.text(j, i, annotation, ha='center', va='center', color=color)
+
+    plt.title(f"\"{labels[variable]}\" para cada neurona")
+    plt.colorbar()
+    plt.show()
 
 if __name__ == "__main__":
     with open('./config.json', 'r') as f:
@@ -91,7 +112,8 @@ if __name__ == "__main__":
     plot_heatmap(network, standarized_data, countries)
     plot_unified_distance_heatmap(network.get_unified_distance_matrix())
 
-    
+    for i in range(len(standarized_data[0])):
+        plot_one_variable_heatmap(network, standarized_data, labels, i)
 
     
 
