@@ -13,7 +13,7 @@ def plot_heatmap(network, input_data, countries):
         countries_matrix[x][y] += f"{countries[i]}\n"
 
     # Configurar un mapa de colores (puedes cambiar el mapa de colores según tus preferencias)
-    cmap = plt.get_cmap('inferno')  # Ejemplo de un mapa de colores
+    cmap = plt.get_cmap('magma')  # Ejemplo de un mapa de colores
 
     # Configurar el tamaño de la figura
     plt.figure(figsize=(8, 8))
@@ -29,8 +29,8 @@ def plot_heatmap(network, input_data, countries):
     # Agregar valores numéricos a cada celda del heatmap
     for i in range(k):
         for j in range(k):
-            color = 'w' if activation_matrix[i, j] < 5 else 'k'
-            annotation = str(int(activation_matrix[i, j])) + "\n" + countries_matrix[i][j]
+            color = 'w' if activation_matrix[i][j] < 5 else 'k'
+            annotation = str(int(activation_matrix[i][j])) + "\n" + countries_matrix[i][j]
             plt.text(j, i, annotation, ha='center', va='center', color=color)
 
 
@@ -48,11 +48,12 @@ def plot_unified_distance_heatmap(ud_matrix, k):
     plt.imshow(ud_matrix, cmap=cmap)
 
     # Agregar valores numéricos a cada celda del heatmap
-    color_thr = max(max(row) for row in ud_matrix)/2.0
+    color_thr = max(max(row) for row in ud_matrix) * 0.8
+    print(color_thr)
     for i in range(k):
         for j in range(k):
-            color = 'w' if ud_matrix[i, j] < color_thr else 'k'
-            plt.text(j, i, str(f"{ud_matrix[i, j]:.2f}"), ha='center', va='center', color=color)
+            color = 'w' if ud_matrix[i][j] < color_thr else 'k'
+            plt.text(j, i, str(f"{ud_matrix[i][j]:.2f}"), ha='center', va='center', color=color)
 
 
     # Agregar una barra de colores (leyenda)

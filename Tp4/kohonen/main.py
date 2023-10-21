@@ -28,8 +28,8 @@ if __name__ == "__main__":
     plot_heatmap(network, standarized_data, countries)
     plot_unified_distance_heatmap(network.get_unified_distance_matrix(), k)
 
-    for i in range(len(standarized_data[0])):
-        plot_one_variable_heatmap(network, standarized_data, labels, i)
+    # for i in range(len(standarized_data[0])):
+    #     plot_one_variable_heatmap(network, standarized_data, labels, i)
 
     
 
