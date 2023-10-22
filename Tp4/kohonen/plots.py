@@ -106,7 +106,7 @@ def plot_one_variable_heatmap(network, input_data, labels, variable):
             cell_color = cmap(norm(activation_matrix[i][j]))
             brightness = np.linalg.norm(cell_color[:3])  # Calcula la luminancia (brillo)
             text_color = 'k' if brightness >= 0.5 else 'w'  # Determina el color del texto
-            annotation = str(int(activation_matrix[i, j]))
+            annotation = f"{activation_matrix[i, j]:.2f}"
             plt.text(j, i, annotation, ha='center', va='center', color=text_color)
             
 
