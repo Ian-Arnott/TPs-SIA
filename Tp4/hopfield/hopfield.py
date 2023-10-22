@@ -47,13 +47,57 @@ class Hopfield:
         return s.tolist()
 
 
-    def addNoise(self, pattern, noiseLevel=0.2):
+    def addNoise(self, pattern, noiseLevel=0.3):
         length = len(pattern)
         noisy = pattern.copy()
         for i in range(length):
             if np.random.rand() < noiseLevel:
                 noisy[i] = -noisy[i]
         return noisy
+    
+    def plotRecallProgression(self, pattern, maxEpochs=10, tolerance=1e-5, title=""):
+        s = np.array(pattern)
+        previousEnergy = float('inf')
+        initialEnergy = self.calculateEnergy(s)
+        
+        recallProgress = []
+        # recallProgress = [(s.copy(), initialEnergy)]
+
+        for epoch in range(maxEpochs):
+
+            currentEnergy = self.calculateEnergy(s)
+            if abs(currentEnergy - previousEnergy) < tolerance:
+                break
+
+            previousEnergy = currentEnergy
+            recallProgress.append((s.copy(), currentEnergy))
+
+            s = np.sign(np.dot(self.weights, s))
+            for indx in range(len(s)):
+                if s[indx] == 0:
+                    s[indx] = pattern[indx]
+        
+        # Dibujar solo los subplots necesarios
+        dim = int(np.sqrt(len(pattern)))
+        fig, axs = plt.subplots(1, len(recallProgress), figsize=(len(recallProgress) * dim, dim))
+
+        if len(recallProgress) == 1:
+            axs = [axs]  # Para manejar el caso en que axs no sea una lista
+        
+        for idx, (state, energy) in enumerate(recallProgress):
+            axs[idx].imshow(state.reshape((dim, dim)), cmap='gray_r')
+            titleText = 'Initial' if idx == 0 else f'Epoch {idx}'
+            axs[idx].set_title(f'{titleText}\nEnergy: {energy}')
+            axs[idx].axis('off')
+
+        if title:
+            plt.suptitle(title + f". tolerance = {tolerance}")
+
+        plt.tight_layout(rect=[0, 0, 1, 0.96])
+        plt.show()
+
+
+
 
 def exportPatterns(noisyPattern, recalledPattern, title=""):
     dim = int(np.sqrt(len(noisyPattern)))
