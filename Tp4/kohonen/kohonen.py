@@ -24,7 +24,7 @@ class Neuron:
     
     # Actualiza los pesos de esta neurona
     def update_weight(self, input):
-        self.weights = self.weights + self.learning_rate * (input - self.weights)
+        self.weights += self.learning_rate * (input - self.weights)
 
 class KohonenNetwork:
 
@@ -59,7 +59,7 @@ class KohonenNetwork:
             if(current_radius > 1):
                 current_radius = max(1, self.initial_radius / (epoch + 1))
 
-            self.update_weights(winner_neuron_index, current_radius)
+            self.update_weights(current_input, winner_neuron_index, current_radius)
 
     def predict(self, input):
         # Calcula la similitud de cada neurona con la entrada
@@ -82,10 +82,11 @@ class KohonenNetwork:
         return winner_neuron_index
 
 
-    def update_weights(self, winner_neuron_index:(int, int), radius: int = 1):
+    def update_weights(self, current_input, winner_neuron_index:(int, int), radius: int = 1):
         neighbours = self.get_neighbours(winner_neuron_index, radius)
+
         for (i,j) in neighbours:
-            self.neuron_matrix[i][j].update_weight(self.input_data)
+            self.neuron_matrix[i][j].update_weight(current_input)
 
     
     def get_neighbours(self, neuron_pos:(int, int), radius: int = 1):
