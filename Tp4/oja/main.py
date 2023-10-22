@@ -18,4 +18,3 @@ if __name__ == "__main__":
 
     print("Weights Oja:")
     print(weights)
-    #TODO: comparar con el vector de cargas de PCA
