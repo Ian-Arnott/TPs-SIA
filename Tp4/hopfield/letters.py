@@ -31,6 +31,9 @@ character = "A"
 fontSize = 16
 
 C = np.resize(transformMatrixValues(generateCharacterMatrix("C",fontPath,fontSize)),(1,256)).tolist()[0]
+L = np.resize(transformMatrixValues(generateCharacterMatrix("L",fontPath,fontSize)),(1,256)).tolist()[0]
 J = np.resize(transformMatrixValues(generateCharacterMatrix("J",fontPath,fontSize)),(1,256)).tolist()[0]
+R = np.resize(transformMatrixValues(generateCharacterMatrix("R",fontPath,fontSize)),(1,256)).tolist()[0]
+T = np.resize(transformMatrixValues(generateCharacterMatrix("T",fontPath,fontSize)),(1,256)).tolist()[0]
 X = np.resize(transformMatrixValues(generateCharacterMatrix("X",fontPath,fontSize)),(1,256)).tolist()[0]
 Z = np.resize(transformMatrixValues(generateCharacterMatrix("Z",fontPath,fontSize)),(1,256)).tolist()[0]

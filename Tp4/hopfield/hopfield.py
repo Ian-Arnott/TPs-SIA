@@ -18,15 +18,34 @@ class Hopfield:
 
         self.weights /= len(patterns)
 
+    def calculateEnergy(self, pattern):
+        energy = 0
+        for i in range(self.size * self.size):
+            for j in range(self.size * self.size):
+                if i != j:
+                    energy -= self.weights[i, j] * pattern[i] * pattern[j]
+        return energy
 
-    def recall(self, pattern, epochs = 10):
+
+    def recall(self, pattern, maxEpochs=10, tolerance=1e-5):
         s = np.array(pattern)
-        for _ in range(epochs):
+        previousEnergy = float('inf')
+
+        for epoch in range(maxEpochs):
+
+            currentEnergy = self.calculateEnergy(s)
+            if abs(currentEnergy - previousEnergy) < tolerance:
+                break
+
+            previousEnergy = currentEnergy
+
             s = np.sign(np.dot(self.weights, s))
             for indx in range(len(s)):
-                if (s[indx]==0):
-                    s[indx]=pattern[indx]
+                if s[indx] == 0:
+                    s[indx] = pattern[indx]
+
         return s.tolist()
+
 
     def addNoise(self, pattern, noiseLevel=0.2):
         length = len(pattern)
