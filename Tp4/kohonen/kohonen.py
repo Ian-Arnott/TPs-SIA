@@ -4,39 +4,43 @@ from scipy.spatial import distance
 
 class Neuron:
 
-    def __init__(self, weights, learning_rate: float = 0.1):
+    def __init__(self, weights, learning_rate: float = 0.1, likeness_type: str = "EUCLIDEAN"):
         #TODO: Los pesos se deberian inicializar con muestras del conjunto
         self.weights = weights
         self.activation = 0.0
         self.learning_rate = learning_rate
+        self.likeness_type = likeness_type
 
-    def calculate_similitude(self, input) -> float:
-        self.activation = self.euclidean(input)
+    def calculate_similitude(self, current_input) -> float:
+        self.activation = self.LIKENESS_FUNCTION[self.likeness_type](self, current_input=current_input)
         return self.activation
 
     # Distancia Euclidea
-    def euclidean(self, input) -> float:
-        return np.linalg.norm(self.weights - input)
+    def euclidean(self, current_input) -> float:
+        return np.linalg.norm(self.weights - current_input)
     
     # Distancia Exponencial
-    def exponential(self, input) -> float:
-        return np.exp(-(self.euclidean(input)**2))
+    def exponential(self, current_input) -> float:
+        return np.exp(-(self.euclidean(current_input)**2))
     
     # Actualiza los pesos de esta neurona
-    def update_weight(self, input):
-        self.weights += self.learning_rate * (input - self.weights)
+    def update_weight(self, current_input):
+        self.weights += self.learning_rate * (current_input - self.weights)
+    
+    LIKENESS_FUNCTION = {"EUCLIDEAN": euclidean, "EXPONENTIAL": exponential}
 
 class KohonenNetwork:
 
-    def __init__(self, input_data:list[list[float]], input_size: int, k:int, learning_rate: float = 0.1, radius: int = 1):
+    def __init__(self, input_data:list[list[float]], input_size: int, k:int, learning_rate: float = 0.1, radius: int = 1, likeness_type: str = "EUCLIDEAN"):
         self.input_size = input_size
         self.k = k
         self.learning_rate = learning_rate
         self.input_data = input_data
         self.initial_radius = radius
+        self.likeness_type = likeness_type
         
         # Inicializa la red con k neuronas
-        self.neuron_matrix = [[Neuron(self.get_random_sample(), learning_rate) for _ in range(k)] for _ in range(k)]
+        self.neuron_matrix = [[Neuron(self.get_random_sample(), learning_rate, self.likeness_type) for _ in range(k)] for _ in range(k)]
 
 
     def get_random_sample(self):
@@ -104,7 +108,7 @@ class KohonenNetwork:
         sum = 0
         count = 0
         x, y = neuron_pos
-        neuron = self.neuron_matrix[x][y]
+        neuron:Neuron = self.neuron_matrix[x][y]
 
 
         # Up neighbour

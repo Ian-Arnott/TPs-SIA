@@ -14,16 +14,12 @@ if __name__ == "__main__":
     standarized_data = standarize_data(data)
 
     # Inicializa la red con kxk neuronas
-    network = KohonenNetwork(standarized_data, len(standarized_data), k, learning_rate, initial_radius)
+    network = KohonenNetwork(standarized_data, len(standarized_data), k, learning_rate, initial_radius, likeness_type)
 
     n = len(standarized_data[0])
 
     # Entrena la red
     network.train(max_epochs)
-
-    # for i in range(network.k):
-    #     for j in range(network.k):
-    #         print(network.neuron_matrix[i][j].weights)
 
     plot_heatmap(network, standarized_data, countries)
     plot_unified_distance_heatmap(network.get_unified_distance_matrix(), k)
