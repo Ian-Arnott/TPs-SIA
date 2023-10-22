@@ -7,9 +7,11 @@ class Hopfield:
     def __init__(self, size=5):
         self.weights = np.zeros((size * size, size * size))
         self.size = size
+        self.patterns = []
 
 
     def train(self, patterns, epochs=1):
+        self.patterns = patterns
         for _ in range(epochs):
             for i in range(self.size * self.size):
                 for j in range(i + 1, self.size * self.size):  # i+1 para evitar autopesos
@@ -95,6 +97,81 @@ class Hopfield:
 
         plt.tight_layout(rect=[0, 0, 1, 0.96])
         plt.show()
+
+    def plotEnergyVsEpoch(self, pattern, maxEpochs=10, tolerance=1e-5, noiseLevel=0.2, title=""):
+        noisyPattern = self.addNoise(pattern, noiseLevel)
+        s = np.array(noisyPattern)
+        previousEnergy = float('inf')
+        
+        energyList = []
+        epochList = []
+
+        for epoch in range(maxEpochs):
+
+            currentEnergy = self.calculateEnergy(s)
+            if abs(currentEnergy - previousEnergy) < tolerance:
+                break
+
+            previousEnergy = currentEnergy
+            energyList.append(currentEnergy)
+            epochList.append(epoch)
+
+            s = np.sign(np.dot(self.weights, s))
+            for indx in range(len(s)):
+                if s[indx] == 0:
+                    s[indx] = pattern[indx]
+
+        plt.figure(figsize=(10, 5))
+        plt.plot(epochList, energyList, marker='o')
+        plt.xlabel("Epoch")
+        plt.ylabel("Energy")
+        plt.title(f"{title}")
+        plt.grid(True)
+        plt.show()
+
+    def noiseEffectOnClassification(self, pattern, noiseLevels=np.linspace(0, 1, 11), maxEpochs=10, tolerance=1e-5, runsPerNoise=100):
+        positives = []
+        fakePositives = []
+        negatives = []
+
+        width = 0.25  # ancho de las barras
+        spacing = 0.05  # espacio entre barras
+
+        for noise in noiseLevels:
+            positiveCount, fakePositiveCount, negativeCount = 0, 0, 0
+            for _ in range(runsPerNoise):
+                noisyPattern = self.addNoise(pattern, noise)
+                recalledPattern = self.recall(noisyPattern, maxEpochs, tolerance)
+
+                if np.array_equal(recalledPattern, pattern):
+                    positiveCount += 1
+                elif recalledPattern in self.patterns:
+                    fakePositiveCount += 1
+                else:
+                    negativeCount += 1
+
+            positives.append(positiveCount)
+            fakePositives.append(fakePositiveCount)
+            negatives.append(negativeCount)
+
+        x = np.arange(len(noiseLevels))  # posiciones de las barras
+        plt.figure(figsize=(12, 6))
+        
+        plt.bar(x - width, positives, width, label="Positive", color='g')
+        plt.bar(x, fakePositives, width, label="Fake Positive", color='orange')
+        plt.bar(x + width, negatives, width, label="Negative", color='r')
+        
+        plt.xlabel("Noise level")
+        plt.ylabel("Cantidad de casos")
+        plt.title("El efecto del nivel de ruido en los resultados")
+        plt.xticks(x, labels=[str(round(noise, 2)) for noise in noiseLevels])
+        plt.legend()
+        plt.grid(True, axis='y')
+        plt.tight_layout()
+        plt.show()
+
+
+
 
 
 
