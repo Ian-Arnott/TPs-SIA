@@ -1,8 +1,8 @@
 
 #TODO: Conviene convertir la lista a np.array?
-def fonts_to_bitmap(fonts):
+def fonts_to_bitmap(fonts:dict):
     bitmaps = {}
-    for (character, hexaList) in fonts:
+    for (character, hexaList) in fonts.items():
         bitmap = []
         for byte in hexaList:
             binary = format(byte, '08b')  
