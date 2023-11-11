@@ -6,6 +6,16 @@ def predict(network, input):
         output = layer.forward(output)
     return output
 
+def predict_with_layer_value(network, input, layer_index):
+    output = input
+    values_at_layer = [output]
+
+    for layer in network:
+        output = layer.forward(output)
+        values_at_layer.append(output)
+
+    return output, values_at_layer[layer_index]
+
 def train(network, error_function, error_derivative, x_train, y_train, epochs, verbose = True):
 
     for e in range(epochs):
