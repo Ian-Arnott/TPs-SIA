@@ -7,22 +7,18 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 def visualize_results(original_data, reconstructed_data, num_samples=5):
-    fig, axes = plt.subplots(num_samples, 2, figsize=(8, 3 * num_samples))
+    fig, axes = plt.subplots(num_samples, 2, figsize=(6, 3 * num_samples))
 
     for i in range(num_samples):
-        original_image = original_data[i].reshape((7, 5))
-        reconstructed_image = reconstructed_data[i][0].reshape((7, 5))
-
-        axes[i, 0].imshow(original_image, cmap='gray', aspect='auto')
-        axes[i, 0].set_title(f'Original - Sample {i + 1}')
+        axes[i, 0].imshow(original_data[i].reshape((35, 1)), cmap='gray', aspect='auto')
+        axes[i, 0].set_title('Original')
         axes[i, 0].axis('off')
 
-        axes[i, 1].imshow(reconstructed_image, cmap='gray', aspect='auto')
-        axes[i, 1].set_title(f'Reconstructed - Sample {i + 1}')
+        axes[i, 1].imshow(reconstructed_data[i][0].reshape((35, 1)), cmap='gray', aspect='auto')
+        axes[i, 1].set_title('Reconstructed')
         axes[i, 1].axis('off')
 
-    plt.suptitle('Autoencoder Results', fontsize=16)
-    plt.tight_layout(rect=[0, 0.03, 1, 0.95])
+    plt.tight_layout()
     plt.show()
 
 def plot_latent_space(latent_space, labels):
