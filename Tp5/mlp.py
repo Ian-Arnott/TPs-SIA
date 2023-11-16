@@ -18,6 +18,8 @@ def predict_with_layer_value(network, input, layer_index):
 
 def train(network, error_function, error_derivative, x_train, y_train, epochs, verbose = True):
 
+    mse = []
+
     for e in range(epochs):
         error = 0
         for x, y in zip(x_train, y_train):
@@ -34,9 +36,12 @@ def train(network, error_function, error_derivative, x_train, y_train, epochs, v
                 grad = layer.backward(grad)
 
         error /= len(x_train)
+
+        mse.append(error)
         if verbose:
             print(f"{e + 1}/{epochs}, error={error}")
 
+    return mse
 
 class Layer:
     def __init__(self):
