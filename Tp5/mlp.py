@@ -4,6 +4,7 @@ def predict(network, input):
     output = input
     for layer in network:
         output = layer.forward(output)
+    # output es una lista con una unica lista adentro
     return output
 
 def predict_with_layer_value(network, input, layer_index):
@@ -14,6 +15,7 @@ def predict_with_layer_value(network, input, layer_index):
         output = layer.forward(output)
         values_at_layer.append(output)
 
+    
     return output, values_at_layer[layer_index]
 
 def train(network, error_function, error_derivative, x_train, y_train, epochs, verbose = True):
