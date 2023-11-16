@@ -1,7 +1,7 @@
 from mlp import train, predict, Dense, Activation
 from activation_functions import Tanh
 from mse import mse, mse_derivative
-import utils
+from utils import bitmap_as_matrix, fonts_to_bitmap
 from data.font import fontDict
 import numpy as np
 import matplotlib.pyplot as plt
@@ -33,7 +33,7 @@ def plot_latent_space(latent_space, labels):
     plt.show()
 
 if __name__ == "__main__":
-    bitmapDict = utils.fonts_to_bitmap(fontDict)
+    bitmapDict = fonts_to_bitmap(fontDict)
     bitmapList = list(bitmapDict.values())  
     X = np.reshape(bitmapList,(len(bitmapList), 35, 1))
 
