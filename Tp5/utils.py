@@ -1,6 +1,7 @@
 import json
 import matplotlib.pyplot as plt
 import pandas as pd
+import numpy as np
 
 #TODO: Conviene convertir la lista a np.array?
 def fonts_to_bitmap(fonts:dict):
@@ -75,6 +76,57 @@ def plot_latent_spaces(latent_space, characters):
 
     # Mostrar el gráfico
     plt.show()
+
+
+# Imprime 3 matrices de 7x5, una con el caracter original, otra con ruido y otra con el caracter predicho
+def plot_bitmap_matrix_with_noise(original, noisy, predicted, character):
+    # Crear un heatmap con imshow de matplotlib
+    fig, axs = plt.subplots(1, 3, figsize=(3, 2)) # 1 fila, 2 columnas
+
+    # Caso borde
+    if(character == "DEL"):
+        colors1 = ['black']
+        custom_cmap1 = plt.matplotlib.colors.ListedColormap(colors1)
+        colors2 = ['gray', 'black']
+        custom_cmap2 = plt.matplotlib.colors.ListedColormap(colors2)
+
+        axs[0].imshow(original, cmap=custom_cmap1, interpolation='none')
+        axs[1].imshow(noisy, cmap=custom_cmap2, interpolation='none')
+        axs[2].imshow(predicted, cmap=custom_cmap2, interpolation='none')
+    else:
+        axs[0].imshow(original, cmap='binary', interpolation='none')
+        axs[1].imshow(noisy, cmap='binary', interpolation='none')
+        axs[2].imshow(predicted, cmap='binary', interpolation='none')
+
+    # Crear heatmaps para cada par de matrices
+
+    axs[0].set_title('Original ' + character)
+    axs[0].set_xticks([])
+    axs[0].set_yticks([])
+
+    axs[1].set_title('Noisy ' + character)
+    axs[1].set_xticks([])
+    axs[1].set_yticks([])
+
+    axs[2].set_title('Predicted ' + character)
+    axs[2].set_xticks([])
+    axs[2].set_yticks([])
+
+
+def add_noise_to_dataset(dataset, noiseLevel=0.3):
+    noisy_dataset = dataset.copy()
+
+    for i in range(len(noisy_dataset)):
+        for j in range(len(noisy_dataset[i])):
+            # Agregar ruido "salt"
+            if np.random.rand() < noiseLevel:
+                noisy_dataset[i, j] = 1
+
+            # Agregar ruido "pepper"
+            elif np.random.rand() < noiseLevel:
+                noisy_dataset[i, j] = 0
+        
+    return noisy_dataset
 
 
 def get_config_params(config_file: str):

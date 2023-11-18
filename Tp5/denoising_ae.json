@@ -1,0 +1,13 @@
+{
+    "learning_rate": 0.001,
+    "max_epochs": 5000,
+    "bias": 1,
+    "beta1": 0.9,
+    "beta2": 0.999,
+    "epsilon": 1e-8,
+    "optimizer": "ADAM",
+    "activation": "TANH",
+
+    "hidden_layers": [20, 10],
+    "latent_space": 2
+}
