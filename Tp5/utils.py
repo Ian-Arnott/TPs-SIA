@@ -1,9 +1,9 @@
 import json
-import matplotlib.pyplot as plt
-import pandas as pd
 import numpy as np
+from mlp import train, Dense
+from activation_functions import Sigmoid
+from mse import mse, mse_derivative
 
-#TODO: Conviene convertir la lista a np.array?
 def fonts_to_bitmap(fonts:dict):
     bitmaps = {}
     for (character, hexaList) in fonts.items():
@@ -27,90 +27,6 @@ def print_bitmap(bitmap:list):
 # Devuelve una matriz de 7x5
 def bitmap_as_matrix(bitmap:list): 
     return [[bitmap[i*5 + j] for j in range(5)] for i in range(7)]
-
-
-# Imprime dos matrices de 7x5, una con el caracter original y otra con el caracter predicho
-def plot_bitmap_matrix(original, predicted, character):
-    # Crear un heatmap con imshow de matplotlib
-    fig, axs = plt.subplots(1, 2, figsize=(3, 2)) # 1 fila, 2 columnas
-
-    # Caso borde
-    if(character == "DEL"):
-        colors1 = ['black']
-        custom_cmap1 = plt.matplotlib.colors.ListedColormap(colors1)
-        colors2 = ['gray', 'black']
-        custom_cmap2 = plt.matplotlib.colors.ListedColormap(colors2)
-
-        axs[0].imshow(original, cmap=custom_cmap1, interpolation='none')
-        axs[1].imshow(predicted, cmap=custom_cmap2, interpolation='none')
-    else:
-        axs[0].imshow(original, cmap='binary', interpolation='none')
-        axs[1].imshow(predicted, cmap='binary', interpolation='none')
-
-    # Crear heatmaps para cada par de matrices
-
-    axs[0].set_title('Original ' + character)
-    axs[0].set_xticks([])
-    axs[0].set_yticks([])
-
-    axs[1].set_title('Predicted ' + character)
-    axs[1].set_xticks([])
-    axs[1].set_yticks([])
-
-
-def plot_latent_spaces(latent_space, characters):
-    # Convertir la lista de tuplas y etiquetas a un DataFrame de Pandas
-    df = pd.DataFrame({'x': [p[0] for p in latent_space], 'y': [p[1] for p in latent_space], 'etiqueta': characters})
-
-    # Graficar los puntos usando Pandas
-    ax = df.plot.scatter(x='x', y='y', color='blue', marker='o', s=50)
-
-    # Anotar cada punto con su respectiva etiqueta
-    for i, row in df.iterrows():
-        ax.annotate(row['etiqueta'], (row['x'], row['y']), textcoords="offset points", xytext=(0,5), ha='center')
-
-    # Configurar etiquetas y título
-    ax.set_xlabel('Dimension 1')
-    ax.set_ylabel('Dimension 2')
-    ax.set_title('Gráfico del Espacio Latente para cada Caracter')
-
-    # Mostrar el gráfico
-    plt.show()
-
-
-# Imprime 3 matrices de 7x5, una con el caracter original, otra con ruido y otra con el caracter predicho
-def plot_bitmap_matrix_with_noise(original, noisy, predicted, character):
-    # Crear un heatmap con imshow de matplotlib
-    fig, axs = plt.subplots(1, 3, figsize=(3, 2)) # 1 fila, 2 columnas
-
-    # Caso borde
-    if(character == "DEL"):
-        colors1 = ['black']
-        custom_cmap1 = plt.matplotlib.colors.ListedColormap(colors1)
-        colors2 = ['gray', 'black']
-        custom_cmap2 = plt.matplotlib.colors.ListedColormap(colors2)
-
-        axs[0].imshow(original, cmap=custom_cmap1, interpolation='none')
-        axs[1].imshow(noisy, cmap=custom_cmap2, interpolation='none')
-        axs[2].imshow(predicted, cmap=custom_cmap2, interpolation='none')
-    else:
-        axs[0].imshow(original, cmap='binary', interpolation='none')
-        axs[1].imshow(noisy, cmap='binary', interpolation='none')
-        axs[2].imshow(predicted, cmap='binary', interpolation='none')
-
-    # Crear heatmaps para cada par de matrices
-
-    axs[0].set_title('Original ' + character)
-    axs[0].set_xticks([])
-    axs[0].set_yticks([])
-
-    axs[1].set_title('Noisy ' + character)
-    axs[1].set_xticks([])
-    axs[1].set_yticks([])
-
-    axs[2].set_title('Predicted ' + character)
-    axs[2].set_xticks([])
-    axs[2].set_yticks([])
 
 
 def add_noise_to_dataset(dataset, noiseLevel=0.3):
@@ -154,3 +70,73 @@ def get_config_params(config_file: str):
     latent_space = config["latent_space"]
 
     return learning_rate, max_epochs, bias, beta1, beta2, epsilon, optimizer, activation, hidden_layers, latent_space
+
+
+def train_different_architectures(optimizer, learning_rate, max_epochs, dataset):
+    mse_list = []
+
+    # 35-20-10-2-10-20-35
+    autoencoder = [
+    Dense(35, 20, optimizer_type=optimizer, learning_rate=learning_rate),
+    Sigmoid(),
+    Dense(20, 10, optimizer_type=optimizer, learning_rate=learning_rate),
+    Sigmoid(),
+    Dense(10, 2, optimizer_type=optimizer, learning_rate=learning_rate),
+    Sigmoid(),
+    Dense(2, 10, optimizer_type=optimizer, learning_rate=learning_rate),
+    Sigmoid(),
+    Dense(10, 20, optimizer_type=optimizer, learning_rate=learning_rate),
+    Sigmoid(),
+    Dense(20, 35, optimizer_type=optimizer, learning_rate=learning_rate),
+    Sigmoid(),
+    ]   
+    error = train(autoencoder, mse, mse_derivative, dataset, dataset, epochs=max_epochs, verbose=False)
+    mse_list.append(error)
+
+    # 35-15-5-2-5-15-35
+    autoencoder = [
+    Dense(35, 15, optimizer_type=optimizer, learning_rate=learning_rate),
+    Sigmoid(),
+    Dense(15, 5, optimizer_type=optimizer, learning_rate=learning_rate),
+    Sigmoid(),
+    Dense(5, 2, optimizer_type=optimizer, learning_rate=learning_rate),
+    Sigmoid(),
+    Dense(2, 5, optimizer_type=optimizer, learning_rate=learning_rate),
+    Sigmoid(),
+    Dense(5, 15, optimizer_type=optimizer, learning_rate=learning_rate),
+    Sigmoid(),
+    Dense(15, 35, optimizer_type=optimizer, learning_rate=learning_rate),
+    Sigmoid(),
+    ]   
+    error = train(autoencoder, mse, mse_derivative, dataset, dataset, epochs=max_epochs, verbose=False)
+    mse_list.append(error)
+
+    # 35-15-2-15-35
+    autoencoder = [
+    Dense(35, 15, optimizer_type=optimizer, learning_rate=learning_rate),
+    Sigmoid(),
+    Dense(15, 2, optimizer_type=optimizer, learning_rate=learning_rate),
+    Sigmoid(),
+    Dense(2, 15, optimizer_type=optimizer, learning_rate=learning_rate),
+    Sigmoid(),
+    Dense(15, 35, optimizer_type=optimizer, learning_rate=learning_rate),
+    Sigmoid(),
+    ]
+    error = train(autoencoder, mse, mse_derivative, dataset, dataset, epochs=max_epochs, verbose=False)
+    mse_list.append(error)
+
+    # 35-10-2-10-35
+    autoencoder = [
+    Dense(35, 10, optimizer_type=optimizer, learning_rate=learning_rate),
+    Sigmoid(),
+    Dense(10, 2, optimizer_type=optimizer, learning_rate=learning_rate),
+    Sigmoid(),
+    Dense(2, 10, optimizer_type=optimizer, learning_rate=learning_rate),
+    Sigmoid(),
+    Dense(10, 35, optimizer_type=optimizer, learning_rate=learning_rate),
+    Sigmoid(),
+    ]
+    error = train(autoencoder, mse, mse_derivative, dataset, dataset, epochs=max_epochs, verbose=False)
+    mse_list.append(error)
+
+    return mse_list
