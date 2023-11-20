@@ -24,6 +24,13 @@ Implementación de diferentes programas en Python en donde podemos ver en funcio
 - El modelo de Hopfield utlizado para recuperar patrones de memoria.
 - La regla de Oja utilizada para reducir la dimensionalidad de los datos, extrayendo componentes principales o caracteristicas relevantes de los mismos
 
+## TP5 - [Deep Learning](https://github.com/Ian-Arnott/TPs-SIA/tree/master/Tp5)
+
+Implementación de diferentes programas en Python en donde podemos ver en funcionamiento 3 tipos de autoencoders: 
+- Lineal Autoencoder
+- Denoising Autoencoder
+- Variational Autoencoder
+
 ## Autores
 Nombre | Legajo
 -------|--------
