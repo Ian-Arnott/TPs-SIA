@@ -65,11 +65,7 @@ def get_config_params(config_file: str):
 
     activation = config["activation"]
 
-    hidden_layers = config["hidden_layers"]
-
-    latent_space = config["latent_space"]
-
-    return learning_rate, max_epochs, bias, beta1, beta2, epsilon, optimizer, activation, hidden_layers, latent_space
+    return learning_rate, max_epochs, bias, beta1, beta2, epsilon, optimizer, activation
 
 
 def train_different_architectures(optimizer, learning_rate, max_epochs, dataset):
