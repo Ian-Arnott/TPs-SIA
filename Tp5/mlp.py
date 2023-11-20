@@ -32,7 +32,7 @@ def train(network, error_function, error_derivative, x_train, y_train, epochs, v
 
             for layer in reversed(network):
                 grad = layer.backward(grad)
-
+        
         error /= len(x_train)
 
         mse.append(error)
@@ -49,7 +49,7 @@ class Layer:
     def forward(self, input):
         pass
 
-    def backwards(self, output_derivative):
+    def backward(self, output_derivative):
         pass
     
 class Dense(Layer):
@@ -90,7 +90,6 @@ class NormalDistribution:
 class NormalLayer(Layer):
     def __init__(self, input_size, output_size, learning_rate = 0.001, optimizer_type = None):
         super().__init__()
-        # Size of the output is double because it needs room for the mu values and for the variance.
         self.dense = Dense(input_size,output_size*2, learning_rate, optimizer_type)
         self.output_size = output_size
         
@@ -99,15 +98,15 @@ class NormalLayer(Layer):
         self.normal_dist = NormalDistribution(zeros, ones)
     
     def forward(self, input):
-        outputs = self.dense.forward(input)
-        scale = outputs[..., :self.output_size]
-        location = outputs[..., self.output_size:]
+        output = self.dense.forward(input)
+        scale = output[:self.output_size]
+        location = output[self.output_size:]
         
         samples = self.normal_dist.sample(self.output_size)
         return samples * scale + location
     
-    def backwards(self, output_derivative):
-        return self.dense.backwards(output_derivative)
+    def backward(self, output_derivative):
+        return self.dense.backward(output_derivative)
     
 class Activation(Layer):
     def __init__(self, activation, activation_derivative):
