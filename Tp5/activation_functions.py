@@ -7,6 +7,11 @@ class Tanh(Activation):
         tanh_derivative = lambda x: 1 - np.tanh(x) ** 2
         super().__init__(tanh, tanh_derivative)
 
+class Mish(Activation):
+    def __init__(self):
+        mish = lambda x: x * np.tanh(x)
+        mish_derivative = lambda x: np.tanh(x) + x * (1 / np.cosh(x))**2
+        super().__init__(mish, mish_derivative)
 
 class Sigmoid(Activation):
     def __init__(self):

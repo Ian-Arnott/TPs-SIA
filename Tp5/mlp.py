@@ -4,18 +4,14 @@ def predict(network, input):
     output = input
     for layer in network:
         output = layer.forward(output)
-    # output es una lista con una unica lista adentro
     return output
 
 def predict_with_layer_value(network, input, layer_index):
     output = input
     values_at_layer = [output]
-
     for layer in network:
         output = layer.forward(output)
         values_at_layer.append(output)
-
-    
     return output, values_at_layer[layer_index]
 
 def train(network, error_function, error_derivative, x_train, y_train, epochs, verbose = True):
@@ -50,13 +46,12 @@ class Layer:
         self.input = None
         self.output = None
 
-    def fowards(self, input):
+    def forward(self, input):
         pass
 
     def backwards(self, output_derivative):
         pass
-
-
+    
 class Dense(Layer):
     def __init__(self, input_size, output_size, learning_rate = 0.001, optimizer_type = None):
         self.weights = np.random.randn(output_size, input_size)
@@ -84,6 +79,36 @@ class Dense(Layer):
         self.bias -= self.learning_rate * output_derivative
         return input_gradient
 
+class NormalDistribution:
+    def __init__(self, mean, std_dev):
+        self.mean = mean
+        self.std_dev = std_dev
+
+    def sample(self, size=1):
+        return np.random.normal(self.mean, self.std_dev, size)
+
+class NormalLayer(Layer):
+    def __init__(self, input_size, output_size, learning_rate = 0.001, optimizer_type = None):
+        super().__init__()
+        # Size of the output is double because it needs room for the mu values and for the variance.
+        self.dense = Dense(input_size,output_size*2, learning_rate, optimizer_type)
+        self.output_size = output_size
+        
+        zeros = np.zeros(output_size)
+        ones = np.ones(output_size)
+        self.normal_dist = NormalDistribution(zeros, ones)
+    
+    def forward(self, input):
+        outputs = self.dense.forward(input)
+        scale = outputs[..., :self.output_size]
+        location = outputs[..., self.output_size:]
+        
+        samples = self.normal_dist.sample(self.output_size)
+        return samples * scale + location
+    
+    def backwards(self, output_derivative):
+        return self.dense.backwards(output_derivative)
+    
 class Activation(Layer):
     def __init__(self, activation, activation_derivative):
         self.activation = activation
@@ -95,8 +120,6 @@ class Activation(Layer):
 
     def backward(self, output_gradient):
         return np.multiply(output_gradient, self.activation_derivative (self.input))
-
-# Implementacion de optimizer
 
 class Optimizer:
     def __init__(self, learning_rate):
