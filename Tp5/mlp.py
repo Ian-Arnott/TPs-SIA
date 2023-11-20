@@ -79,34 +79,6 @@ class Dense(Layer):
         self.bias -= self.learning_rate * output_derivative
         return input_gradient
 
-class NormalDistribution:
-    def __init__(self, mean, std_dev):
-        self.mean = mean
-        self.std_dev = std_dev
-
-    def sample(self, size=1):
-        return np.random.normal(self.mean, self.std_dev, size)
-
-class NormalLayer(Layer):
-    def __init__(self, input_size, output_size, learning_rate = 0.001, optimizer_type = None):
-        super().__init__()
-        self.dense = Dense(input_size,output_size*2, learning_rate, optimizer_type)
-        self.output_size = output_size
-        
-        zeros = np.zeros(output_size)
-        ones = np.ones(output_size)
-        self.normal_dist = NormalDistribution(zeros, ones)
-    
-    def forward(self, input):
-        output = self.dense.forward(input)
-        scale = output[:self.output_size]
-        location = output[self.output_size:]
-        
-        samples = self.normal_dist.sample(self.output_size)
-        return samples * scale + location
-    
-    def backward(self, output_derivative):
-        return self.dense.backward(output_derivative)
     
 class Activation(Layer):
     def __init__(self, activation, activation_derivative):
@@ -118,7 +90,43 @@ class Activation(Layer):
         return self.activation(self.input)
 
     def backward(self, output_gradient):
-        return np.multiply(output_gradient, self.activation_derivative (self.input))
+        return np.multiply(output_gradient, self.activation_derivative(self.input))
+    
+class Sampler(Layer):
+    def __init__(self, input_size, output_size, learning_rate = 0.001, optimizer_type = None, activation=None):
+        self.input_size = input_size
+        self.output_size = output_size
+        self.mean = Dense(input_size, output_size, learning_rate, optimizer_type)
+        self.log_var = Dense(input_size, output_size, learning_rate, optimizer_type)
+        self.activation = activation
+
+    def forward(self, input):
+        self.latent_mean = self.activation.forward(self.mean.forward(input))
+        self.latent_log_var = self.activation.forward(self.log_var.forward(input))
+
+        self.epsilon = np.random.standard_normal(size=(self.output_size, input.shape[1]))
+        self.sample = self.latent_mean + np.exp(self.latent_log_var / 2.) * self.epsilon
+        return self.sample
+    
+    def backward(self, output_derivative):
+        log_var_grad = {}
+        mean_grad = {}
+        aux = self.output_size * output_derivative.shape[1]
+
+        # KL divergence gradients
+        log_var_grad["KL"] = (np.exp(self.latent_log_var) - 1) / (2 * aux)
+        mean_grad["KL"] = self.latent_mean / aux
+
+        # MSE gradients
+        log_var_grad["MSE"] = 0.5 * output_derivative * self.epsilon * np.exp(self.latent_log_var / 2.)
+        mean_grad["MSE"] = output_derivative
+        return self.mean.backward(self.activation.backward(mean_grad["KL"] + mean_grad["MSE"])) + self.log_var.backward(
+            self.activation.backward(log_var_grad["KL"] + log_var_grad["MSE"]))
+    
+    def getKLDivergence(self, output):
+        return - np.sum(1 + self.latent_log_var - np.square(self.latent_mean) - np.exp(self.latent_log_var)) / (
+                    2 * self.output_size * output.shape[1])
+
 
 class Optimizer:
     def __init__(self, learning_rate):
