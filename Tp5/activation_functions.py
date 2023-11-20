@@ -35,7 +35,7 @@ class Linear(Activation):
         super().__init__(linear, linear_derivative)
 
 class Identity(Activation):
-    def __init__(self, ):
+    def __init__(self ):
         def identity(x):
             return x
 
@@ -43,3 +43,13 @@ class Identity(Activation):
             return np.ones(x.shape)
         
         super().__init__(identity,identity_derivative)
+
+class ReLU(Activation):
+    def __init__(self ):
+        def apply(x):
+            return x * (x > 0)
+
+        def derivative(x):
+            return 1. * (x > 0)
+
+        super().__init__(apply,derivative)
