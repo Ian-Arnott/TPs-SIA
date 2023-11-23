@@ -136,3 +136,16 @@ def train_different_architectures(optimizer, learning_rate, max_epochs, dataset)
     mse_list.append(error)
 
     return mse_list
+
+def compare_matrixes(matrix1, matrix2):
+    if len(matrix1) != len(matrix2) or len(matrix1[0]) != len(matrix2[0]):
+        raise ValueError("Las matrices deben tener las mismas dimensiones")
+
+    count = 0
+
+    for i in range(len(matrix1)):
+        for j in range(len(matrix1[0])):
+            if matrix1[i][j] == matrix2[i][j]:
+                count += 1
+
+    return count
