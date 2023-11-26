@@ -1,4 +1,5 @@
 import numpy as np
+import random
 
 def predict(network, input):
     output = input
@@ -17,8 +18,39 @@ def predict_with_layer_value(network, input, layer_index):
 def train(network, error_function, error_derivative, x_train, y_train, epochs, verbose = True):
 
     mse = []
+    max_index = len(x_train) - 1
 
     for e in range(epochs):
+        error = 0
+        
+        for x, y in zip(x_train, y_train):
+            # forward
+            output = predict(network, x)
+
+            # error
+            error += error_function(y, output)
+
+            # backward
+            grad = error_derivative(y, output)
+
+            for layer in reversed(network):
+                grad = layer.backward(grad)
+        
+        
+        error /= len(x_train)
+
+        mse.append(error)
+        if verbose:
+            print(f"{e + 1}/{epochs}, error={error}")
+
+    return mse
+
+def train_with_max_error(network, error_function, error_derivative, x_train, y_train, max_epochs, max_error, verbose = True):
+
+    mse = []
+
+    epochs = 0
+    for e in range(max_epochs):
         error = 0
         for x, y in zip(x_train, y_train):
             # forward
@@ -37,9 +69,14 @@ def train(network, error_function, error_derivative, x_train, y_train, epochs, v
 
         mse.append(error)
         if verbose:
-            print(f"{e + 1}/{epochs}, error={error}")
+            print(f"{epochs + 1} epochs, error={error}")
 
-    return mse
+        if error < max_error:
+            break
+
+        epochs += 1
+
+    return mse, epochs
 
 class Layer:
     def __init__(self):
