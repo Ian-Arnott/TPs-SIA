@@ -29,7 +29,7 @@ def bitmap_as_matrix(bitmap:list):
     return [[bitmap[i*5 + j] for j in range(5)] for i in range(7)]
 
 
-def add_noise_to_dataset(dataset, noiseLevel=0.3):
+def add_salt_and_pepper_noise_to_dataset(dataset, noiseLevel=0.3):
     noisy_dataset = dataset.copy()
 
     for i in range(len(noisy_dataset)):
@@ -42,6 +42,21 @@ def add_noise_to_dataset(dataset, noiseLevel=0.3):
             elif np.random.rand() < noiseLevel:
                 noisy_dataset[i, j] = 0
         
+    return noisy_dataset
+
+
+def add_noise_to_dataset(dataset, noise_level=0.3):
+    noisy_dataset = dataset.astype(np.float64)
+
+    for i in range(len(noisy_dataset)):
+        for j in range(len(noisy_dataset[i])):
+             if np.random.rand() < noise_level:
+                delta = np.random.normal(0, 0.5)
+                if noisy_dataset[i, j] == 1.:
+                    noisy_dataset[i, j] -= np.abs(delta)
+                else:
+                    noisy_dataset[i, j] += np.abs(delta)
+
     return noisy_dataset
 
 
